@@ -3,14 +3,14 @@
 This framework is a part of the [Pip.Services](https://github.com/pip-services/pip-services) project.
 It provides the following synchronous communication components:
 
-- [**Direct**](https://rawgit.com/pip-services-node/pip-services-rpc-node/master/doc/api/classes/clients.directclient.html) - Direct client
-- **Rest** - RESTful [services](https://rawgit.com/pip-services-node/pip-services-rpc-node/master/doc/api/classes/services.restservice.html) and [clients](https://rawgit.com/pip-services-node/pip-services-rpc-node/master/doc/api/classes/clients.restclient.html)
-- **Status** - [Heartbeat](https://rawgit.com/pip-services-node/pip-services-rpc-node/master/doc/api/classes/services.heartbeatrestservice.html) and [status](https://rawgit.com/pip-services-node/pip-services-rpc-node/master/doc/api/classes/services.statusrestservice.html) services
+- [**Direct**]() - Direct client
+- **Rest** - RESTful [services]() and [clients]()
+- **Status** - [Heartbeat]() and [status]() services
 
 Quick Links:
 
 * [Downloads](https://github.com/pip-services-node/pip-services-rpc-node/blob/master/doc/Downloads.md)
-* [API Reference](https://rawgit.com/pip-services-node/pip-services-rpc-node/master/doc/api/globals.html)
+* [API Reference]()
 * [Building and Testing](https://github.com/pip-services/pip-services-rpc-node/blob/master/doc/Development.md)
 * [Contributing](https://github.com/pip-services/pip-services-rpc-node/blob/master/doc/Development.md/#contrib)
 
