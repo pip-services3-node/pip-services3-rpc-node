@@ -1,8 +1,10 @@
 /** @module services */
 /** @hidden */
-let _ = require('lodash');
+const _ = require('lodash');
 
-import { IOpenable, IUnreferenceable, InvalidStateException } from 'pip-services3-commons-node';
+import { IOpenable } from 'pip-services3-commons-node';
+import { IUnreferenceable } from 'pip-services3-commons-node';
+import { InvalidStateException } from 'pip-services3-commons-node';
 import { IConfigurable } from 'pip-services3-commons-node';
 import { IReferenceable } from 'pip-services3-commons-node';
 import { IReferences } from 'pip-services3-commons-node';
@@ -32,6 +34,10 @@ import { HttpResponseSender } from './HttpResponseSender';
  *   - host:                  host name or IP address
  *   - port:                  port number
  *   - uri:                   resource URI or connection string with all parameters in it
+ * - credential - the HTTPS credentials:
+ *   - ssl_key_file:         the SSL private key in PEM
+ *   - ssl_crt_file:         the SSL certificate in PEM
+ *   - ssl_ca_file:          the certificate authorities (root cerfiticates) in PEM
  * 
  * ### References ###
  * 
@@ -323,6 +329,16 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
         HttpResponseSender.sendError(req, res, error);
     }
 
+    private appendBaseRoute(route: string): string {
+        if (this._baseRoute != null && this._baseRoute.length > 0) {
+            let baseRoute = this._baseRoute;
+            if (baseRoute[0] != '/') baseRoute = '/' + baseRoute;
+            route = baseRoute + route;
+        }
+
+        return route;
+    }
+
     /**
      * Registers a route in HTTP endpoint.
      * 
@@ -335,16 +351,61 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
         action: (req: any, res: any) => void): void {
         if (this._endpoint == null) return;
 
-        if (this._baseRoute != null && this._baseRoute.length > 0) {
-            let baseRoute = this._baseRoute;
-            if (baseRoute[0] != '/') baseRoute = '/' + baseRoute;
-            route = baseRoute + route;
-        }
+        route = this.appendBaseRoute(route);
 
         this._endpoint.registerRoute(
             method, route, schema,
             (req, res) => {
                 action.call(this, req, res);
+            }
+        );
+    }    
+
+    /**
+     * Registers a route with authorization in HTTP endpoint.
+     * 
+     * @param method        HTTP method: "get", "head", "post", "put", "delete"
+     * @param route         a command route. Base route will be added to this route
+     * @param schema        a validation schema to validate received parameters.
+     * @param authorize     an authorization interceptor
+     * @param action        an action function that is called when operation is invoked.
+     */
+    protected registerRouteWithAuth(method: string, route: string, schema: Schema,
+        authorize: (req: any, res: any, next: () => void) => void,
+        action: (req: any, res: any) => void): void {
+        if (this._endpoint == null) return;
+
+        route = this.appendBaseRoute(route);
+
+        this._endpoint.registerRouteWithAuth(
+            method, route, schema,
+            (req, res, next) => {
+                if (authorize)
+                    authorize.call(this, req, res, next);
+                else next();
+            },
+            (req, res) => {
+                action.call(this, req, res);
+            }
+        );
+    }    
+
+    /**
+     * Registers a middleware for a given route in HTTP endpoint.
+     * 
+     * @param route         a command route. Base route will be added to this route
+     * @param action        an action function that is called when middleware is invoked.
+     */
+    protected registerMiddleware(route: string,
+        action: (req: any, res: any, next: () => void) => void): void {
+        if (this._endpoint == null) return;
+
+        route = this.appendBaseRoute(route);
+
+        this._endpoint.registerMiddleware(
+            route,
+            (req, res, next) => {
+                action.call(this, req, res, next);
             }
         );
     }    

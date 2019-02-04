@@ -12,12 +12,16 @@ import { IRegisterable } from './IRegisterable';
  *
  * Parameters to pass to the [[configure]] method for component configuration:
  *
- * - connection(s) - the connection resolver's connections;
+ * - connection(s) - the connection resolver's connections:
  *     - "connection.discovery_key" - the key to use for connection resolving in a discovery service;
  *     - "connection.protocol" - the connection's protocol;
  *     - "connection.host" - the target host;
  *     - "connection.port" - the target port;
  *     - "connection.uri" - the target URI.
+ * - credential - the HTTPS credentials:
+ *     - "credential.ssl_key_file" - the SSL private key in PEM
+ *     - "credential.ssl_crt_file" - the SSL certificate in PEM
+ *     - "credential.ssl_ca_file" - the certificate authorities (root cerfiticates) in PEM
  *
  * ### References ###
  *
@@ -51,6 +55,7 @@ export declare class HttpEndpoint implements IOpenable, IConfigurable, IReferenc
     private _connectionResolver;
     private _logger;
     private _counters;
+    private _maintenance_enabled;
     private _uri;
     private _registrations;
     /**
@@ -63,6 +68,9 @@ export declare class HttpEndpoint implements IOpenable, IConfigurable, IReferenc
      *     - "connection.host" - the target host;
      *     - "connection.port" - the target port;
      *     - "connection.uri" - the target URI.
+     *     - "credential.ssl_key_file" - SSL private key in PEM
+     *     - "credential.ssl_crt_file" - SSL certificate in PEM
+     *     - "credential.ssl_ca_file" - Certificate authority (root certificate) in PEM
      *
      * @param config    configuration parameters, containing a "connection(s)" section.
      *
@@ -96,6 +104,8 @@ export declare class HttpEndpoint implements IOpenable, IConfigurable, IReferenc
      *                          Will be called with an error if one is raised.
      */
     open(correlationId: string, callback?: (err: any) => void): void;
+    private noCache;
+    private doMaintenance;
     /**
      * Closes this endpoint and the REST server (service) that was opened earlier.
      *
@@ -122,6 +132,7 @@ export declare class HttpEndpoint implements IOpenable, IConfigurable, IReferenc
      */
     unregister(registration: IRegisterable): void;
     private performRegistrations;
+    private fixRoute;
     /**
      * Registers an action in this objects REST server (service) by the given method and route.
      *
@@ -131,4 +142,22 @@ export declare class HttpEndpoint implements IOpenable, IConfigurable, IReferenc
      * @param action        the action to perform at the given route.
      */
     registerRoute(method: string, route: string, schema: Schema, action: (req: any, res: any) => void): void;
+    /**
+     * Registers an action with authorization in this objects REST server (service)
+     * by the given method and route.
+     *
+     * @param method        the HTTP method of the route.
+     * @param route         the route to register in this object's REST server (service).
+     * @param schema        the schema to use for parameter validation.
+     * @param authorize     the authorization interceptor
+     * @param action        the action to perform at the given route.
+     */
+    registerRouteWithAuth(method: string, route: string, schema: Schema, authorize: (req: any, res: any, next: () => void) => void, action: (req: any, res: any) => void): void;
+    /**
+     * Registers a middleware action for the given route.
+     *
+     * @param route         the route to register in this object's REST server (service).
+     * @param action        the middleware action to perform at the given route.
+     */
+    registerMiddleware(route: string, action: (req: any, res: any, next: () => void) => void): void;
 }

@@ -1,4 +1,5 @@
-import { IOpenable, IUnreferenceable } from 'pip-services3-commons-node';
+import { IOpenable } from 'pip-services3-commons-node';
+import { IUnreferenceable } from 'pip-services3-commons-node';
 import { IConfigurable } from 'pip-services3-commons-node';
 import { IReferenceable } from 'pip-services3-commons-node';
 import { IReferences } from 'pip-services3-commons-node';
@@ -25,6 +26,10 @@ import { IRegisterable } from './IRegisterable';
  *   - host:                  host name or IP address
  *   - port:                  port number
  *   - uri:                   resource URI or connection string with all parameters in it
+ * - credential - the HTTPS credentials:
+ *   - ssl_key_file:         the SSL private key in PEM
+ *   - ssl_crt_file:         the SSL certificate in PEM
+ *   - ssl_ca_file:          the certificate authorities (root cerfiticates) in PEM
  *
  * ### References ###
  *
@@ -201,6 +206,7 @@ export declare abstract class RestService implements IOpenable, IConfigurable, I
      * @param error     an error object to be sent.
      */
     protected sendError(req: any, res: any, error: any): void;
+    private appendBaseRoute;
     /**
      * Registers a route in HTTP endpoint.
      *
@@ -210,6 +216,23 @@ export declare abstract class RestService implements IOpenable, IConfigurable, I
      * @param action        an action function that is called when operation is invoked.
      */
     protected registerRoute(method: string, route: string, schema: Schema, action: (req: any, res: any) => void): void;
+    /**
+     * Registers a route with authorization in HTTP endpoint.
+     *
+     * @param method        HTTP method: "get", "head", "post", "put", "delete"
+     * @param route         a command route. Base route will be added to this route
+     * @param schema        a validation schema to validate received parameters.
+     * @param authorize     an authorization interceptor
+     * @param action        an action function that is called when operation is invoked.
+     */
+    protected registerRouteWithAuth(method: string, route: string, schema: Schema, authorize: (req: any, res: any, next: () => void) => void, action: (req: any, res: any) => void): void;
+    /**
+     * Registers a middleware for a given route in HTTP endpoint.
+     *
+     * @param route         a command route. Base route will be added to this route
+     * @param action        an action function that is called when middleware is invoked.
+     */
+    protected registerMiddleware(route: string, action: (req: any, res: any, next: () => void) => void): void;
     /**
      * Registers all service routes in HTTP endpoint.
      *

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 /** @module services */
 /** @hidden */
-let _ = require('lodash');
+const _ = require('lodash');
 const pip_services3_commons_node_1 = require("pip-services3-commons-node");
 const pip_services3_commons_node_2 = require("pip-services3-commons-node");
 const pip_services3_commons_node_3 = require("pip-services3-commons-node");
@@ -25,6 +25,10 @@ const HttpResponseSender_1 = require("./HttpResponseSender");
  *   - host:                  host name or IP address
  *   - port:                  port number
  *   - uri:                   resource URI or connection string with all parameters in it
+ * - credential - the HTTPS credentials:
+ *   - ssl_key_file:         the SSL private key in PEM
+ *   - ssl_crt_file:         the SSL certificate in PEM
+ *   - ssl_ca_file:          the certificate authorities (root cerfiticates) in PEM
  *
  * ### References ###
  *
@@ -277,6 +281,15 @@ class RestService {
     sendError(req, res, error) {
         HttpResponseSender_1.HttpResponseSender.sendError(req, res, error);
     }
+    appendBaseRoute(route) {
+        if (this._baseRoute != null && this._baseRoute.length > 0) {
+            let baseRoute = this._baseRoute;
+            if (baseRoute[0] != '/')
+                baseRoute = '/' + baseRoute;
+            route = baseRoute + route;
+        }
+        return route;
+    }
     /**
      * Registers a route in HTTP endpoint.
      *
@@ -288,14 +301,45 @@ class RestService {
     registerRoute(method, route, schema, action) {
         if (this._endpoint == null)
             return;
-        if (this._baseRoute != null && this._baseRoute.length > 0) {
-            let baseRoute = this._baseRoute;
-            if (baseRoute[0] != '/')
-                baseRoute = '/' + baseRoute;
-            route = baseRoute + route;
-        }
+        route = this.appendBaseRoute(route);
         this._endpoint.registerRoute(method, route, schema, (req, res) => {
             action.call(this, req, res);
+        });
+    }
+    /**
+     * Registers a route with authorization in HTTP endpoint.
+     *
+     * @param method        HTTP method: "get", "head", "post", "put", "delete"
+     * @param route         a command route. Base route will be added to this route
+     * @param schema        a validation schema to validate received parameters.
+     * @param authorize     an authorization interceptor
+     * @param action        an action function that is called when operation is invoked.
+     */
+    registerRouteWithAuth(method, route, schema, authorize, action) {
+        if (this._endpoint == null)
+            return;
+        route = this.appendBaseRoute(route);
+        this._endpoint.registerRouteWithAuth(method, route, schema, (req, res, next) => {
+            if (authorize)
+                authorize.call(this, req, res, next);
+            else
+                next();
+        }, (req, res) => {
+            action.call(this, req, res);
+        });
+    }
+    /**
+     * Registers a middleware for a given route in HTTP endpoint.
+     *
+     * @param route         a command route. Base route will be added to this route
+     * @param action        an action function that is called when middleware is invoked.
+     */
+    registerMiddleware(route, action) {
+        if (this._endpoint == null)
+            return;
+        route = this.appendBaseRoute(route);
+        this._endpoint.registerMiddleware(route, (req, res, next) => {
+            action.call(this, req, res, next);
         });
     }
 }

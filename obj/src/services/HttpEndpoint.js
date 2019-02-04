@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 /** @module services */
 /** @hidden */
-let _ = require('lodash');
+const _ = require('lodash');
+const fs = require('fs');
 const pip_services3_commons_node_1 = require("pip-services3-commons-node");
 const pip_services3_components_node_1 = require("pip-services3-components-node");
 const pip_services3_components_node_2 = require("pip-services3-components-node");
@@ -16,12 +17,16 @@ const HttpConnectionResolver_1 = require("../connect/HttpConnectionResolver");
  *
  * Parameters to pass to the [[configure]] method for component configuration:
  *
- * - connection(s) - the connection resolver's connections;
+ * - connection(s) - the connection resolver's connections:
  *     - "connection.discovery_key" - the key to use for connection resolving in a discovery service;
  *     - "connection.protocol" - the connection's protocol;
  *     - "connection.host" - the target host;
  *     - "connection.port" - the target port;
  *     - "connection.uri" - the target URI.
+ * - credential - the HTTPS credentials:
+ *     - "credential.ssl_key_file" - the SSL private key in PEM
+ *     - "credential.ssl_crt_file" - the SSL certificate in PEM
+ *     - "credential.ssl_ca_file" - the certificate authorities (root cerfiticates) in PEM
  *
  * ### References ###
  *
@@ -54,6 +59,7 @@ class HttpEndpoint {
         this._connectionResolver = new HttpConnectionResolver_1.HttpConnectionResolver();
         this._logger = new pip_services3_components_node_1.CompositeLogger();
         this._counters = new pip_services3_components_node_2.CompositeCounters();
+        this._maintenance_enabled = false;
         this._registrations = [];
     }
     /**
@@ -66,6 +72,9 @@ class HttpEndpoint {
      *     - "connection.host" - the target host;
      *     - "connection.port" - the target port;
      *     - "connection.uri" - the target URI.
+     *     - "credential.ssl_key_file" - SSL private key in PEM
+     *     - "credential.ssl_crt_file" - SSL certificate in PEM
+     *     - "credential.ssl_ca_file" - Certificate authority (root certificate) in PEM
      *
      * @param config    configuration parameters, containing a "connection(s)" section.
      *
@@ -74,6 +83,7 @@ class HttpEndpoint {
     configure(config) {
         config = config.setDefaults(HttpEndpoint._defaultConfig);
         this._connectionResolver.configure(config);
+        this._maintenance_enabled = config.getAsBooleanWithDefault('options.maintenance_enabled', this._maintenance_enabled);
     }
     /**
      * Sets references to this endpoint's logger, counters, and connection resolver.
@@ -113,29 +123,61 @@ class HttpEndpoint {
             callback(null);
             return;
         }
-        this._connectionResolver.resolve(correlationId, (err, connection) => {
+        this._connectionResolver.resolve(correlationId, (err, connection, credential) => {
             if (err != null) {
                 callback(err);
                 return;
             }
             this._uri = connection.getUri();
             try {
+                let options = {};
+                if (connection.getProtocol('http') == 'https') {
+                    let sslKeyFile = credential.getAsNullableString('ssl_key_file');
+                    let privateKey = fs.readFileSync(sslKeyFile).toString();
+                    let sslCrtFile = credential.getAsNullableString('ssl_crt_file');
+                    let certificate = fs.readFileSync(sslCrtFile).toString();
+                    let ca = [];
+                    let sslCaFile = credential.getAsNullableString('ssl_ca_file');
+                    if (sslCaFile != null) {
+                        let caText = fs.readFileSync(sslCaFile).toString();
+                        while (caText != null && caText.trim().length > 0) {
+                            let crtIndex = caText.lastIndexOf('-----BEGIN CERTIFICATE-----');
+                            if (crtIndex > -1) {
+                                ca.push(caText.substring(crtIndex));
+                                caText = caText.substring(0, crtIndex);
+                            }
+                        }
+                    }
+                    options.key = privateKey;
+                    options.certificate = certificate;
+                    //options.ca = ca;
+                }
                 // Create instance of express application   
                 let restify = require('restify');
-                this._server = restify.createServer({}); // options);
+                this._server = restify.createServer(options);
                 // Configure express application
-                this._server.use(restify.acceptParser(this._server.acceptable));
+                this._server.use(restify.plugins.acceptParser(this._server.acceptable));
                 //this._server.use(restify.authorizationParser());
-                this._server.use(restify.CORS());
-                this._server.use(restify.dateParser());
-                this._server.use(restify.queryParser());
-                this._server.use(restify.jsonp());
-                this._server.use(restify.gzipResponse());
-                this._server.use(restify.bodyParser());
-                this._server.use(restify.conditionalRequest());
-                //this._server.use(restify.requestExpiry());
-                // if (options.get("throttle") != null)
-                //     this._server.use(restify.throttle(options.get("throttle")));
+                //this._server.use(restify.CORS());
+                this._server.use(restify.plugins.dateParser());
+                this._server.use(restify.plugins.queryParser());
+                this._server.use(restify.plugins.jsonp());
+                this._server.use(restify.plugins.gzipResponse());
+                this._server.use(restify.plugins.bodyParser());
+                this._server.use(restify.plugins.conditionalRequest());
+                //this._server.use(restify.plugins.requestExpiry());
+                //if (options.get("throttle") != null)
+                //     this._server.use(restify.plugins.throttle(options.get("throttle")));
+                // Configure CORS requests
+                let corsMiddleware = require('restify-cors-middleware');
+                let cors = corsMiddleware({
+                    preflightMaxAge: 5,
+                    origins: ['*'],
+                });
+                this._server.pre(cors.preflight);
+                this._server.use(cors.actual);
+                this._server.use((req, res, next) => { this.noCache(req, res, next); });
+                this._server.use((req, res, next) => { this.doMaintenance(req, res, next); });
                 this.performRegistrations();
                 this._server.listen(connection.getPort(), connection.getHost(), (err) => {
                     if (err == null) {
@@ -164,6 +206,23 @@ class HttpEndpoint {
                     callback(err);
             }
         });
+    }
+    // Prevents IE from caching REST requests
+    noCache(req, res, next) {
+        res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
+        res.header('Pragma', 'no-cache');
+        res.header('Expires', 0);
+        next();
+    }
+    // Returns maintenance error code
+    doMaintenance(req, res, next) {
+        // Make this more sophisticated
+        if (this._maintenance_enabled) {
+            res.header('Retry-After', 3600);
+            res.json(503);
+        }
+        else
+            next();
     }
     /**
      * Closes this endpoint and the REST server (service) that was opened earlier.
@@ -213,6 +272,11 @@ class HttpEndpoint {
             registration.register();
         }
     }
+    fixRoute(route) {
+        if (route && route.length > 0 && !route.startsWith("/"))
+            route = "/" + route;
+        return route;
+    }
     /**
      * Registers an action in this objects REST server (service) by the given method and route.
      *
@@ -225,6 +289,7 @@ class HttpEndpoint {
         method = method.toLowerCase();
         if (method == 'delete')
             method = 'del';
+        route = this.fixRoute(route);
         // Hack!!! Wrapping action to preserve prototyping context
         let actionCurl = (req, res) => {
             // Perform validation
@@ -244,7 +309,40 @@ class HttpEndpoint {
         let self = this;
         this._server[method](route, actionCurl);
     }
+    /**
+     * Registers an action with authorization in this objects REST server (service)
+     * by the given method and route.
+     *
+     * @param method        the HTTP method of the route.
+     * @param route         the route to register in this object's REST server (service).
+     * @param schema        the schema to use for parameter validation.
+     * @param authorize     the authorization interceptor
+     * @param action        the action to perform at the given route.
+     */
+    registerRouteWithAuth(method, route, schema, authorize, action) {
+        if (authorize) {
+            action = (req, res) => {
+                authorize(req, res, () => { action(req, res); });
+            };
+        }
+        this.registerRoute(method, route, schema, action);
+    }
+    /**
+     * Registers a middleware action for the given route.
+     *
+     * @param route         the route to register in this object's REST server (service).
+     * @param action        the middleware action to perform at the given route.
+     */
+    registerMiddleware(route, action) {
+        route = this.fixRoute(route);
+        this._server.use((req, res, next) => {
+            if (route != null && route != "" && !req.url.startsWith(route))
+                next();
+            else
+                action(req, res, next);
+        });
+    }
 }
-HttpEndpoint._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples("connection.protocol", "http", "connection.host", "0.0.0.0", "connection.port", 3000, "options.request_max_size", 1024 * 1024, "options.connect_timeout", 60000, "options.debug", true);
+HttpEndpoint._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples("connection.protocol", "http", "connection.host", "0.0.0.0", "connection.port", 3000, "credential.ssl_key_file", null, "credential.ssl_crt_file", null, "credential.ssl_ca_file", null, "options.maintenance_enabled", false, "options.request_max_size", 1024 * 1024, "options.connect_timeout", 60000, "options.debug", true);
 exports.HttpEndpoint = HttpEndpoint;
 //# sourceMappingURL=HttpEndpoint.js.map

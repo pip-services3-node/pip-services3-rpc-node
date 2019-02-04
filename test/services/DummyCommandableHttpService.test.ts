@@ -1,5 +1,5 @@
 let assert = require('chai').assert;
-let restify = require('restify');
+let restify = require('restify-clients');
 let async = require('async');
 
 import {

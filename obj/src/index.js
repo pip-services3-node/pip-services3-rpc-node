@@ -7,5 +7,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./connect"));
 __export(require("./clients"));
 __export(require("./services"));
+__export(require("./auth"));
 __export(require("./build"));
 //# sourceMappingURL=index.js.map

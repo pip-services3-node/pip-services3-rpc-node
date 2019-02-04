@@ -165,7 +165,7 @@ class RestClient {
             }
             try {
                 this._uri = connection.getUri();
-                let restify = require('restify');
+                let restify = require('restify-clients');
                 this._client = restify.createJsonClient({
                     url: this._uri,
                     connectTimeout: this._connectTimeout,

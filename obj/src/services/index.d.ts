@@ -10,3 +10,7 @@ export { HttpRequestDetector } from './HttpRequestDetector';
 export { CommandableHttpService } from './CommandableHttpService';
 export { HeartbeatRestService } from './HeartbeatRestService';
 export { StatusRestService } from './StatusRestService';
+export { RestOperations } from './RestOperations';
+export { AboutOperations } from './AboutOperations';
+export { HeartbeatOperations } from './HeartbeatOperations';
+export { StatusOperations } from './StatusOperations';

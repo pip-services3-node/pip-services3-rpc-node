@@ -4,6 +4,8 @@ import { IConfigurable } from 'pip-services3-commons-node';
 import { ConfigParams } from 'pip-services3-commons-node';
 import { ConnectionResolver } from 'pip-services3-components-node';
 import { ConnectionParams } from 'pip-services3-components-node';
+import { CredentialResolver } from 'pip-services3-components-node';
+import { CredentialParams } from 'pip-services3-components-node';
 /**
  * Helper class to retrieve connections for HTTP-based services abd clients.
  *
@@ -50,6 +52,10 @@ export declare class HttpConnectionResolver implements IReferenceable, IConfigur
      */
     protected _connectionResolver: ConnectionResolver;
     /**
+     * The base credential resolver.
+     */
+    protected _credentialResolver: CredentialResolver;
+    /**
      * Configures component by passing configuration parameters.
      *
      * @param config    configuration parameters to be set.
@@ -70,7 +76,7 @@ export declare class HttpConnectionResolver implements IReferenceable, IConfigur
      * @param correlationId     (optional) transaction id to trace execution through call chain.
      * @param callback 			callback function that receives resolved connection or error.
      */
-    resolve(correlationId: string, callback: (err: any, connection: ConnectionParams) => void): void;
+    resolve(correlationId: string, callback: (err: any, connection: ConnectionParams, credential: CredentialParams) => void): void;
     /**
      * Resolves all component connection. If connections are configured to be retrieved
      * from Discovery service it finds a IDiscovery and resolves the connection there.
@@ -78,7 +84,7 @@ export declare class HttpConnectionResolver implements IReferenceable, IConfigur
      * @param correlationId     (optional) transaction id to trace execution through call chain.
      * @param callback 			callback function that receives resolved connections or error.
      */
-    resolveAll(correlationId: string, callback: (err: any, connections: ConnectionParams[]) => void): void;
+    resolveAll(correlationId: string, callback: (err: any, connections: ConnectionParams[], credential: CredentialParams) => void): void;
     /**
      * Registers the given connection in all referenced discovery services.
      * This method can be used for dynamic service discovery.

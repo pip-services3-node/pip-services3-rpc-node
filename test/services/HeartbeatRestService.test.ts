@@ -1,5 +1,5 @@
 let assert = require('chai').assert;
-let restify = require('restify');
+let restify = require('restify-clients');
 
 import { ConfigParams } from 'pip-services3-commons-node';
 

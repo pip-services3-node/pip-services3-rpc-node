@@ -11,7 +11,8 @@ import { RestService } from '../../src/services/RestService';
 import { IDummyController } from '../IDummyController';
 
 export class DummyRestService extends RestService {
-	private _controller: IDummyController;
+    private _controller: IDummyController;
+    private _numberOfCalls: number = 0;
 	
     public constructor() {
         super();
@@ -21,7 +22,16 @@ export class DummyRestService extends RestService {
 	public setReferences(references: IReferences): void {
 		super.setReferences(references);
         this._controller = this._dependencyResolver.getOneRequired<IDummyController>('controller');
-	}
+    }
+    
+    public getNumberOfCalls(): number {
+        return this._numberOfCalls;
+    }
+
+    private incrementNumberOfCalls(req: any, res: any, next: () => void) {
+        this._numberOfCalls++;
+        next();
+    }
 
     private getPageByFilter(req: any, res: any) {
         this._controller.getPageByFilter(
@@ -65,6 +75,8 @@ export class DummyRestService extends RestService {
     }    
         
     public register() {
+        this.registerMiddleware('/dummies', this.incrementNumberOfCalls);
+
         this.registerRoute(
             'get', '/dummies', 
             new ObjectSchema(true)

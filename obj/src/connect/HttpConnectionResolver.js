@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /** @hidden */
 let url = require('url');
 const pip_services3_components_node_1 = require("pip-services3-components-node");
+const pip_services3_components_node_2 = require("pip-services3-components-node");
 const pip_services3_commons_node_1 = require("pip-services3-commons-node");
 /**
  * Helper class to retrieve connections for HTTP-based services abd clients.
@@ -51,6 +52,10 @@ class HttpConnectionResolver {
          * The base connection resolver.
          */
         this._connectionResolver = new pip_services3_components_node_1.ConnectionResolver();
+        /**
+         * The base credential resolver.
+         */
+        this._credentialResolver = new pip_services3_components_node_2.CredentialResolver();
     }
     /**
      * Configures component by passing configuration parameters.
@@ -59,6 +64,7 @@ class HttpConnectionResolver {
      */
     configure(config) {
         this._connectionResolver.configure(config);
+        this._credentialResolver.configure(config);
     }
     /**
      * Sets references to dependent components.
@@ -67,15 +73,16 @@ class HttpConnectionResolver {
      */
     setReferences(references) {
         this._connectionResolver.setReferences(references);
+        this._credentialResolver.setReferences(references);
     }
-    validateConnection(correlationId, connection) {
+    validateConnection(correlationId, connection, credential) {
         if (connection == null)
             return new pip_services3_commons_node_1.ConfigException(correlationId, "NO_CONNECTION", "HTTP connection is not set");
         let uri = connection.getUri();
         if (uri != null)
             return null;
         let protocol = connection.getProtocol("http");
-        if ("http" != protocol) {
+        if ("http" != protocol && "https" != protocol) {
             return new pip_services3_commons_node_1.ConfigException(correlationId, "WRONG_PROTOCOL", "Protocol is not supported by REST connection")
                 .withDetails("protocol", protocol);
         }
@@ -85,6 +92,21 @@ class HttpConnectionResolver {
         let port = connection.getPort();
         if (port == 0)
             return new pip_services3_commons_node_1.ConfigException(correlationId, "NO_PORT", "Connection port is not set");
+        // Check HTTPS credentials
+        if (protocol == "https") {
+            // Check for credential
+            if (credential == null) {
+                return new pip_services3_commons_node_1.ConfigException(correlationId, "NO_CREDENTIAL", "SSL certificates are not configured for HTTPS protocol");
+            }
+            else {
+                if (credential.getAsNullableString('ssl_key_file') == null) {
+                    return new pip_services3_commons_node_1.ConfigException(correlationId, "NO_SSL_KEY_FILE", "SSL key file is not configured in credentials");
+                }
+                else if (credential.getAsNullableString('ssl_crt_file') == null) {
+                    return new pip_services3_commons_node_1.ConfigException(correlationId, "NO_SSL_CRT_FILE", "SSL crt file is not configured in credentials");
+                }
+            }
+        }
         return null;
     }
     updateConnection(connection) {
@@ -117,11 +139,17 @@ class HttpConnectionResolver {
      */
     resolve(correlationId, callback) {
         this._connectionResolver.resolve(correlationId, (err, connection) => {
-            if (err == null)
-                err = this.validateConnection(correlationId, connection);
-            if (err == null && connection != null)
-                this.updateConnection(connection);
-            callback(err, connection);
+            if (err) {
+                callback(err, null, null);
+                return;
+            }
+            this._credentialResolver.lookup(correlationId, (err, credential) => {
+                if (err == null)
+                    err = this.validateConnection(correlationId, connection, credential);
+                if (err == null && connection != null)
+                    this.updateConnection(connection);
+                callback(err, connection, credential);
+            });
         });
     }
     /**
@@ -133,14 +161,20 @@ class HttpConnectionResolver {
      */
     resolveAll(correlationId, callback) {
         this._connectionResolver.resolveAll(correlationId, (err, connections) => {
-            connections = connections || [];
-            for (let connection of connections) {
-                if (err == null)
-                    err = this.validateConnection(correlationId, connection);
-                if (err == null && connection != null)
-                    this.updateConnection(connection);
+            if (err) {
+                callback(err, null, null);
+                return;
             }
-            callback(err, connections);
+            this._credentialResolver.lookup(correlationId, (err, credential) => {
+                connections = connections || [];
+                for (let connection of connections) {
+                    if (err == null)
+                        err = this.validateConnection(correlationId, connection, credential);
+                    if (err == null && connection != null)
+                        this.updateConnection(connection);
+                }
+                callback(err, connections, credential);
+            });
         });
     }
     /**
@@ -153,13 +187,19 @@ class HttpConnectionResolver {
      */
     register(correlationId, callback) {
         this._connectionResolver.resolve(correlationId, (err, connection) => {
-            // Validate connection
-            if (err == null)
-                err = this.validateConnection(correlationId, connection);
-            if (err == null)
-                this._connectionResolver.register(correlationId, connection, callback);
-            else
+            if (err) {
                 callback(err);
+                return;
+            }
+            this._credentialResolver.lookup(correlationId, (err, credential) => {
+                // Validate connection
+                if (err == null)
+                    err = this.validateConnection(correlationId, connection, credential);
+                if (err == null)
+                    this._connectionResolver.register(correlationId, connection, callback);
+                else
+                    callback(err);
+            });
         });
     }
 }

@@ -8,6 +8,8 @@ import { IConfigurable } from 'pip-services3-commons-node';
 import { ConfigParams } from 'pip-services3-commons-node';
 import { ConnectionResolver } from 'pip-services3-components-node';
 import { ConnectionParams } from 'pip-services3-components-node';
+import { CredentialResolver } from 'pip-services3-components-node';
+import { CredentialParams } from 'pip-services3-components-node';
 import { ConfigException } from 'pip-services3-commons-node';
 
 /**
@@ -55,6 +57,10 @@ export class HttpConnectionResolver implements IReferenceable, IConfigurable {
      * The base connection resolver.
      */
     protected _connectionResolver: ConnectionResolver = new ConnectionResolver();
+    /**
+     * The base credential resolver.
+     */
+    protected _credentialResolver: CredentialResolver = new CredentialResolver();
 
     /**
      * Configures component by passing configuration parameters.
@@ -63,6 +69,7 @@ export class HttpConnectionResolver implements IReferenceable, IConfigurable {
      */
     public configure(config: ConfigParams): void {
         this._connectionResolver.configure(config);
+        this._credentialResolver.configure(config);
     }
 
     /**
@@ -72,9 +79,11 @@ export class HttpConnectionResolver implements IReferenceable, IConfigurable {
      */
     public setReferences(references: IReferences): void {
         this._connectionResolver.setReferences(references);
+        this._credentialResolver.setReferences(references);
     }
 
-    private validateConnection(correlationId: string, connection: ConnectionParams): any {
+    private validateConnection(correlationId: string,
+        connection: ConnectionParams, credential: CredentialParams): any {
         if (connection == null)
             return new ConfigException(correlationId, "NO_CONNECTION", "HTTP connection is not set");
 
@@ -82,7 +91,7 @@ export class HttpConnectionResolver implements IReferenceable, IConfigurable {
         if (uri != null) return null;
 
         let protocol: string = connection.getProtocol("http");
-        if ("http" != protocol) {
+        if ("http" != protocol && "https" != protocol) {
             return new ConfigException(
                 correlationId, "WRONG_PROTOCOL", "Protocol is not supported by REST connection")
                 .withDetails("protocol", protocol);
@@ -95,6 +104,23 @@ export class HttpConnectionResolver implements IReferenceable, IConfigurable {
         let port = connection.getPort();
         if (port == 0)
             return new ConfigException(correlationId, "NO_PORT", "Connection port is not set");
+
+        // Check HTTPS credentials
+        if (protocol == "https") {
+            // Check for credential
+            if (credential == null) {
+                return new ConfigException(
+                    correlationId, "NO_CREDENTIAL", "SSL certificates are not configured for HTTPS protocol");
+            } else {
+                if (credential.getAsNullableString('ssl_key_file') == null) {
+                    return new ConfigException(
+                        correlationId, "NO_SSL_KEY_FILE", "SSL key file is not configured in credentials");
+                } else if (credential.getAsNullableString('ssl_crt_file') == null) {
+                    return new ConfigException(
+                        correlationId, "NO_SSL_CRT_FILE", "SSL crt file is not configured in credentials");
+                }
+            }
+        }
 
         return null;
     }
@@ -130,15 +156,24 @@ export class HttpConnectionResolver implements IReferenceable, IConfigurable {
      * @param correlationId     (optional) transaction id to trace execution through call chain.
      * @param callback 			callback function that receives resolved connection or error.
      */
-    public resolve(correlationId: string, callback: (err: any, connection: ConnectionParams) => void): void {
+    public resolve(correlationId: string,
+        callback: (err: any, connection: ConnectionParams, credential: CredentialParams) => void): void {
+        
         this._connectionResolver.resolve(correlationId, (err: any, connection: ConnectionParams) => {
-            if (err == null)
-                err = this.validateConnection(correlationId, connection);
+            if (err) {
+                callback(err, null, null);
+                return;
+            }
 
-            if (err == null && connection != null)
-                this.updateConnection(connection);
-    
-            callback(err, connection);
+            this._credentialResolver.lookup(correlationId, (err: any, credential: CredentialParams) => {
+                if (err == null)
+                    err = this.validateConnection(correlationId, connection, credential);
+
+                if (err == null && connection != null)
+                    this.updateConnection(connection);
+        
+                callback(err, connection, credential);
+            });
         });
     }
 
@@ -149,19 +184,28 @@ export class HttpConnectionResolver implements IReferenceable, IConfigurable {
      * @param correlationId     (optional) transaction id to trace execution through call chain.
      * @param callback 			callback function that receives resolved connections or error.
      */
-    public resolveAll(correlationId: string, callback: (err: any, connections: ConnectionParams[]) => void): void {
-        this._connectionResolver.resolveAll(correlationId, (err: any, connections: ConnectionParams[]) => {
-            connections = connections || [];
-            
-            for (let connection of connections) {
-                if (err == null)
-                    err = this.validateConnection(correlationId, connection);
+    public resolveAll(correlationId: string, callback: (err: any,
+        connections: ConnectionParams[], credential: CredentialParams) => void): void {
 
-                if (err == null && connection != null)
-                    this.updateConnection(connection);
+        this._connectionResolver.resolveAll(correlationId, (err: any, connections: ConnectionParams[]) => {
+            if (err) {
+                callback(err, null, null);
+                return;
             }
+            
+            this._credentialResolver.lookup(correlationId, (err, credential) => {
+                connections = connections || [];
+            
+                for (let connection of connections) {
+                    if (err == null)
+                        err = this.validateConnection(correlationId, connection, credential);
     
-            callback(err, connections);
+                    if (err == null && connection != null)
+                        this.updateConnection(connection);
+                }
+        
+                callback(err, connections, credential);    
+            });
         });
     }
     
@@ -175,13 +219,20 @@ export class HttpConnectionResolver implements IReferenceable, IConfigurable {
      */
     public register(correlationId: string, callback: (err: any) => void): void {
         this._connectionResolver.resolve(correlationId, (err: any, connection: ConnectionParams) => {
-            // Validate connection
-            if (err == null)
-                err = this.validateConnection(correlationId, connection);
+            if (err) {
+                callback(err);
+                return;
+            }
 
-            if (err == null) 
-                this._connectionResolver.register(correlationId, connection, callback);
-            else callback(err);
+            this._credentialResolver.lookup(correlationId, (err, credential) => {
+                // Validate connection
+                if (err == null)
+                    err = this.validateConnection(correlationId, connection, credential);
+
+                if (err == null) 
+                    this._connectionResolver.register(correlationId, connection, callback);
+                else callback(err);
+            });
         });
     }
 
