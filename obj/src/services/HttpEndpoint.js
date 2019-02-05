@@ -176,6 +176,7 @@ class HttpEndpoint {
                 });
                 this._server.pre(cors.preflight);
                 this._server.use(cors.actual);
+                this._server.use((req, res, next) => { this.addCompatibility(req, res, next); });
                 this._server.use((req, res, next) => { this.noCache(req, res, next); });
                 this._server.use((req, res, next) => { this.doMaintenance(req, res, next); });
                 this.performRegistrations();
@@ -206,6 +207,27 @@ class HttpEndpoint {
                     callback(err);
             }
         });
+    }
+    addCompatibility(req, res, next) {
+        req.param = (name) => {
+            if (req.query) {
+                let param = req.query[name];
+                if (param)
+                    return param;
+            }
+            if (req.body) {
+                let param = req.body[name];
+                if (param)
+                    return param;
+            }
+            if (req.params) {
+                let param = req.params[name];
+                if (param)
+                    return param;
+            }
+            return null;
+        };
+        next();
     }
     // Prevents IE from caching REST requests
     noCache(req, res, next) {

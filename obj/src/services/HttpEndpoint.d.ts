@@ -104,6 +104,7 @@ export declare class HttpEndpoint implements IOpenable, IConfigurable, IReferenc
      *                          Will be called with an error if one is raised.
      */
     open(correlationId: string, callback?: (err: any) => void): void;
+    private addCompatibility;
     private noCache;
     private doMaintenance;
     /**
