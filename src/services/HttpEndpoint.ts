@@ -420,7 +420,7 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
      * @param route         the route to register in this object's REST server (service).
      * @param action        the middleware action to perform at the given route.
      */
-    public registerMiddleware(route: string,
+    public registerInterceptor(route: string,
         action: (req: any, res: any, next: () => void) => void): void {
 
         route = this.fixRoute(route);

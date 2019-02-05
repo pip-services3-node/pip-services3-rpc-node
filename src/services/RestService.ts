@@ -330,6 +330,8 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
     }
 
     private appendBaseRoute(route: string): string {
+        route = route || "";
+
         if (this._baseRoute != null && this._baseRoute.length > 0) {
             let baseRoute = this._baseRoute;
             if (baseRoute[0] != '/') baseRoute = '/' + baseRoute;
@@ -396,13 +398,13 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
      * @param route         a command route. Base route will be added to this route
      * @param action        an action function that is called when middleware is invoked.
      */
-    protected registerMiddleware(route: string,
+    protected registerInterceptor(route: string,
         action: (req: any, res: any, next: () => void) => void): void {
         if (this._endpoint == null) return;
 
         route = this.appendBaseRoute(route);
 
-        this._endpoint.registerMiddleware(
+        this._endpoint.registerInterceptor(
             route,
             (req, res, next) => {
                 action.call(this, req, res, next);

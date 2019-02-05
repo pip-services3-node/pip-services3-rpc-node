@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const _ = require('lodash');
 const pip_services3_commons_node_1 = require("pip-services3-commons-node");
 const HttpResponseSender_1 = require("../services/HttpResponseSender");
-class BasicAuthManager {
+class BasicAuthorizer {
     anybody() {
         return (req, res, next) => {
             next();
@@ -21,5 +21,5 @@ class BasicAuthManager {
         };
     }
 }
-exports.BasicAuthManager = BasicAuthManager;
-//# sourceMappingURL=BasicAuthManager.js.map
+exports.BasicAuthorizer = BasicAuthorizer;
+//# sourceMappingURL=BasicAuthorizer.js.map

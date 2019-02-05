@@ -1,8 +1,7 @@
 /**
  * @module auth
  * @preferred
- *
  */
-export { BasicAuthManager } from './BasicAuthManager';
-export { OwnerAuthManager } from './OwnerAuthManager';
-export { RoleAuthManager } from './RoleAuthManager';
+export { BasicAuthorizer as BasicAuthManager } from './BasicAuthorizer';
+export { OwnerAuthorizer as OwnerAuthManager } from './OwnerAuthorizer';
+export { RoleAuthorizer as RoleAuthManager } from './RoleAuthorizer';

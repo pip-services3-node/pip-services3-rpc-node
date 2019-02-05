@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const _ = require('lodash');
 const pip_services3_commons_node_1 = require("pip-services3-commons-node");
 const HttpResponseSender_1 = require("../services/HttpResponseSender");
-class RoleAuthManager {
+class RoleAuthorizer {
     userInRoles(roles) {
         return (req, res, next) => {
             let user = req.user;
@@ -31,5 +31,5 @@ class RoleAuthManager {
         return this.userInRole('admin');
     }
 }
-exports.RoleAuthManager = RoleAuthManager;
-//# sourceMappingURL=RoleAuthManager.js.map
+exports.RoleAuthorizer = RoleAuthorizer;
+//# sourceMappingURL=RoleAuthorizer.js.map

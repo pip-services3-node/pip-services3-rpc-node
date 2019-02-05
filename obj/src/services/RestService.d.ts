@@ -232,7 +232,7 @@ export declare abstract class RestService implements IOpenable, IConfigurable, I
      * @param route         a command route. Base route will be added to this route
      * @param action        an action function that is called when middleware is invoked.
      */
-    protected registerMiddleware(route: string, action: (req: any, res: any, next: () => void) => void): void;
+    protected registerInterceptor(route: string, action: (req: any, res: any, next: () => void) => void): void;
     /**
      * Registers all service routes in HTTP endpoint.
      *

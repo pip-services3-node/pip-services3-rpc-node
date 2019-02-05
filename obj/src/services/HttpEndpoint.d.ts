@@ -160,5 +160,5 @@ export declare class HttpEndpoint implements IOpenable, IConfigurable, IReferenc
      * @param route         the route to register in this object's REST server (service).
      * @param action        the middleware action to perform at the given route.
      */
-    registerMiddleware(route: string, action: (req: any, res: any, next: () => void) => void): void;
+    registerInterceptor(route: string, action: (req: any, res: any, next: () => void) => void): void;
 }

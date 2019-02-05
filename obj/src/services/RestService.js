@@ -282,6 +282,7 @@ class RestService {
         HttpResponseSender_1.HttpResponseSender.sendError(req, res, error);
     }
     appendBaseRoute(route) {
+        route = route || "";
         if (this._baseRoute != null && this._baseRoute.length > 0) {
             let baseRoute = this._baseRoute;
             if (baseRoute[0] != '/')
@@ -334,11 +335,11 @@ class RestService {
      * @param route         a command route. Base route will be added to this route
      * @param action        an action function that is called when middleware is invoked.
      */
-    registerMiddleware(route, action) {
+    registerInterceptor(route, action) {
         if (this._endpoint == null)
             return;
         route = this.appendBaseRoute(route);
-        this._endpoint.registerMiddleware(route, (req, res, next) => {
+        this._endpoint.registerInterceptor(route, (req, res, next) => {
             action.call(this, req, res, next);
         });
     }

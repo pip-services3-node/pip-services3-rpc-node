@@ -4,14 +4,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const _ = require('lodash');
 const pip_services3_commons_node_1 = require("pip-services3-commons-node");
 const HttpResponseSender_1 = require("../services/HttpResponseSender");
-class OwnerAuthManager {
+class OwnerAuthorizer {
     owner(idParam = 'user_id') {
         return (req, res, next) => {
             if (req.user == null) {
                 HttpResponseSender_1.HttpResponseSender.sendError(req, res, new pip_services3_commons_node_1.UnauthorizedException(null, 'NOT_SIGNED', 'User must be signed in to perform this operation').withStatus(401));
             }
             else {
-                let userId = req.route.params[idParam] || req.param(idParam);
+                let userId = req.params[idParam] || req.param(idParam);
                 if (req.user_id != userId) {
                     HttpResponseSender_1.HttpResponseSender.sendError(req, res, new pip_services3_commons_node_1.UnauthorizedException(null, 'FORBIDDEN', 'Only data owner can perform this operation').withStatus(403));
                 }
@@ -27,7 +27,7 @@ class OwnerAuthManager {
                 HttpResponseSender_1.HttpResponseSender.sendError(req, res, new pip_services3_commons_node_1.UnauthorizedException(null, 'NOT_SIGNED', 'User must be signed in to perform this operation').withStatus(401));
             }
             else {
-                let userId = req.route.params[idParam] || req.param(idParam);
+                let userId = req.params[idParam] || req.param(idParam);
                 let roles = req.user != null ? req.user.roles : null;
                 let admin = _.includes(roles, 'admin');
                 if (req.user_id != userId && !admin) {
@@ -40,5 +40,5 @@ class OwnerAuthManager {
         };
     }
 }
-exports.OwnerAuthManager = OwnerAuthManager;
-//# sourceMappingURL=OwnerAuthManager.js.map
+exports.OwnerAuthorizer = OwnerAuthorizer;
+//# sourceMappingURL=OwnerAuthorizer.js.map

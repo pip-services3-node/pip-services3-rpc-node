@@ -3,11 +3,11 @@
 ## <a name="3.1.0"></a> 3.1.0 (2019-02-04)
 
 ### Features
-* **auth** Authentication managers: BasicAuthManager, OwnerAuthManager and RoleAuthManager
+* **auth** Added authorizers: BasicAuthorizer, OwnerAuthorither and RoleAuthorither
 * **connect** HttpConnectionResolver now supports HTTPS certificates
 * **services** HttpEndpoint now supports HTTPS protocol and maintenance mode
 * **services** Added RestOperations, AboutOperations, HeartbeatOperations and StatusOperations
-* **services** Added registerRouteWithAuth and registerMiddleware methods in RestService
+* **services** Added registerRouteWithAuth and registerInterceptor methods in RestService
 
 ## <a name="2.9.0"></a> 2.9.0 (2018-04-05)
 

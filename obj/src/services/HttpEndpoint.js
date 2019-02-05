@@ -357,7 +357,7 @@ class HttpEndpoint {
      * @param route         the route to register in this object's REST server (service).
      * @param action        the middleware action to perform at the given route.
      */
-    registerMiddleware(route, action) {
+    registerInterceptor(route, action) {
         route = this.fixRoute(route);
         this._server.use((req, res, next) => {
             if (route != null && route != "" && !req.url.startsWith(route))
