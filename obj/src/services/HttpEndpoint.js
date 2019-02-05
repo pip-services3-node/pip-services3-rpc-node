@@ -227,6 +227,7 @@ class HttpEndpoint {
             }
             return null;
         };
+        req.route.params = req.params;
         next();
     }
     // Prevents IE from caching REST requests

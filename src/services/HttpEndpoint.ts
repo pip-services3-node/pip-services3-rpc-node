@@ -271,6 +271,9 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
             }
             return null;
         }
+
+        req.route.params = req.params;
+
         next();
     }
 
