@@ -120,7 +120,7 @@ export class HttpRequestDetector {
      * @returns the destination server's host name.
      */
     public static detectServerHost(req: any): string {
-        return req.host;
+        return "" + req.socket.localAddress;
     }
 
     /**
@@ -130,15 +130,7 @@ export class HttpRequestDetector {
      * @returns the detected port number or <code>80</code> (if none are detected).
      */
     public static detectServerPort(req) {
-        var
-            host = req.get('host'),
-            index = host.indexOf(':');
-
-        if (index > 0) {
-            return parseInt(host.substring(index + 1)) || 80;
-        }
-
-        return 80;
+        return req.socket.localPort;
     }
 
 }

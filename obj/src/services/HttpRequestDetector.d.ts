@@ -41,5 +41,5 @@ export declare class HttpRequestDetector {
      * @param req   an HTTP request to process.
      * @returns the detected port number or <code>80</code> (if none are detected).
      */
-    static detectServerPort(req: any): number;
+    static detectServerPort(req: any): any;
 }
