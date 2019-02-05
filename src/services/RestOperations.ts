@@ -116,4 +116,10 @@ export abstract class RestOperations implements IConfigurable, IReferenceable {
         this.sendError(req, res, error);
     }
 
+    public invoke(operation: string): (req: any, res: any) => void {
+        return (req, res) => {
+            this[operation](req, res);
+        }
+    }
+
 }
