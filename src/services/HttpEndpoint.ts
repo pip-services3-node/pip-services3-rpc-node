@@ -382,8 +382,9 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
         action: (req: any, res: any) => void): void {
             
         if (authorize) {
+            let nextAction = action;
             action = (req, res) => {
-                authorize(req, res, () => { action(req, res); });
+                authorize(req, res, () => { nextAction(req, res); });
             }
         }
 

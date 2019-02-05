@@ -90,6 +90,11 @@ class RestOperations {
         error.status = 503;
         this.sendError(req, res, error);
     }
+    invoke(operation) {
+        return (req, res) => {
+            this[operation](req, res);
+        };
+    }
 }
 exports.RestOperations = RestOperations;
 //# sourceMappingURL=RestOperations.js.map

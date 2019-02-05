@@ -321,8 +321,9 @@ class HttpEndpoint {
      */
     registerRouteWithAuth(method, route, schema, authorize, action) {
         if (authorize) {
+            let nextAction = action;
             action = (req, res) => {
-                authorize(req, res, () => { action(req, res); });
+                authorize(req, res, () => { nextAction(req, res); });
             };
         }
         this.registerRoute(method, route, schema, action);

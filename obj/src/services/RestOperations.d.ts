@@ -29,4 +29,5 @@ export declare abstract class RestOperations implements IConfigurable, IReferenc
     protected sendSessionExpired(req: any, res: any, message: string): void;
     protected sendInternalError(req: any, res: any, message: string): void;
     protected sendServerUnavailable(req: any, res: any, message: string): void;
+    invoke(operation: string): (req: any, res: any) => void;
 }
