@@ -211,8 +211,8 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
                 let cors = corsMiddleware({
                     preflightMaxAge: 5, //Optional
                     origins: ['*'],
-                    // allowHeaders: ['authenticate', 'x-session-id'],
-                    // exposeHeaders: ['Authenticate', 'x-session-id']
+                    allowHeaders: ['Authenticate', 'x-session-id'],
+                    exposeHeaders: ['Authenticate', 'x-session-id']
                   });
                 this._server.pre(cors.preflight);
                 this._server.use(cors.actual);
