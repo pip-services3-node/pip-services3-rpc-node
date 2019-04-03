@@ -74,6 +74,7 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
 
         "options.maintenance_enabled", false,
         "options.request_max_size", 1024*1024,
+        "options.file_max_size", 200*1024*1024,
         "options.connect_timeout", 60000,
         "options.debug", true
     );
@@ -82,7 +83,8 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
 	private _connectionResolver: HttpConnectionResolver = new HttpConnectionResolver();
 	private _logger: CompositeLogger = new CompositeLogger();
 	private _counters: CompositeCounters = new CompositeCounters();
-    private _maintenance_enabled = false;
+    private _maintenanceEnabled: boolean = false;
+    private _fileMaxSize: number = 200 * 1024 * 1024;
     private _uri: string;
     private _registrations: IRegisterable[] = [];
     
@@ -108,7 +110,8 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
 		config = config.setDefaults(HttpEndpoint._defaultConfig);
 		this._connectionResolver.configure(config);
 
-        this._maintenance_enabled = config.getAsBooleanWithDefault('options.maintenance_enabled', this._maintenance_enabled);
+        this._maintenanceEnabled = config.getAsBooleanWithDefault('options.maintenance_enabled', this._maintenanceEnabled);
+        this._fileMaxSize = config.getAsLongWithDefault('options.file_max_size', this._fileMaxSize)
     }
         
     /**
@@ -200,7 +203,9 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
                 this._server.use(restify.plugins.queryParser());
                 this._server.use(restify.plugins.jsonp());
                 this._server.use(restify.plugins.gzipResponse());
-                this._server.use(restify.plugins.bodyParser());
+                this._server.use(restify.plugins.bodyParser({ 
+                    maxFileSize: this._fileMaxSize
+                }));
                 this._server.use(restify.plugins.conditionalRequest());
                 //this._server.use(restify.plugins.requestExpiry());
                 //if (options.get("throttle") != null)
@@ -288,7 +293,7 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
     // Returns maintenance error code
     private doMaintenance(req: any, res: any, next: () => void): void {
         // Make this more sophisticated
-        if (this._maintenance_enabled) {
+        if (this._maintenanceEnabled) {
             res.header('Retry-After', 3600);
             res.json(503);
         } else next();

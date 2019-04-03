@@ -55,7 +55,8 @@ export declare class HttpEndpoint implements IOpenable, IConfigurable, IReferenc
     private _connectionResolver;
     private _logger;
     private _counters;
-    private _maintenance_enabled;
+    private _maintenanceEnabled;
+    private _fileMaxSize;
     private _uri;
     private _registrations;
     /**

@@ -59,7 +59,8 @@ class HttpEndpoint {
         this._connectionResolver = new HttpConnectionResolver_1.HttpConnectionResolver();
         this._logger = new pip_services3_components_node_1.CompositeLogger();
         this._counters = new pip_services3_components_node_2.CompositeCounters();
-        this._maintenance_enabled = false;
+        this._maintenanceEnabled = false;
+        this._fileMaxSize = 200 * 1024 * 1024;
         this._registrations = [];
     }
     /**
@@ -83,7 +84,8 @@ class HttpEndpoint {
     configure(config) {
         config = config.setDefaults(HttpEndpoint._defaultConfig);
         this._connectionResolver.configure(config);
-        this._maintenance_enabled = config.getAsBooleanWithDefault('options.maintenance_enabled', this._maintenance_enabled);
+        this._maintenanceEnabled = config.getAsBooleanWithDefault('options.maintenance_enabled', this._maintenanceEnabled);
+        this._fileMaxSize = config.getAsLongWithDefault('options.file_max_size', this._fileMaxSize);
     }
     /**
      * Sets references to this endpoint's logger, counters, and connection resolver.
@@ -163,7 +165,9 @@ class HttpEndpoint {
                 this._server.use(restify.plugins.queryParser());
                 this._server.use(restify.plugins.jsonp());
                 this._server.use(restify.plugins.gzipResponse());
-                this._server.use(restify.plugins.bodyParser());
+                this._server.use(restify.plugins.bodyParser({
+                    maxFileSize: this._fileMaxSize
+                }));
                 this._server.use(restify.plugins.conditionalRequest());
                 //this._server.use(restify.plugins.requestExpiry());
                 //if (options.get("throttle") != null)
@@ -242,7 +246,7 @@ class HttpEndpoint {
     // Returns maintenance error code
     doMaintenance(req, res, next) {
         // Make this more sophisticated
-        if (this._maintenance_enabled) {
+        if (this._maintenanceEnabled) {
             res.header('Retry-After', 3600);
             res.json(503);
         }
@@ -369,6 +373,6 @@ class HttpEndpoint {
         });
     }
 }
-HttpEndpoint._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples("connection.protocol", "http", "connection.host", "0.0.0.0", "connection.port", 3000, "credential.ssl_key_file", null, "credential.ssl_crt_file", null, "credential.ssl_ca_file", null, "options.maintenance_enabled", false, "options.request_max_size", 1024 * 1024, "options.connect_timeout", 60000, "options.debug", true);
+HttpEndpoint._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples("connection.protocol", "http", "connection.host", "0.0.0.0", "connection.port", 3000, "credential.ssl_key_file", null, "credential.ssl_crt_file", null, "credential.ssl_ca_file", null, "options.maintenance_enabled", false, "options.request_max_size", 1024 * 1024, "options.file_max_size", 200 * 1024 * 1024, "options.connect_timeout", 60000, "options.debug", true);
 exports.HttpEndpoint = HttpEndpoint;
 //# sourceMappingURL=HttpEndpoint.js.map
