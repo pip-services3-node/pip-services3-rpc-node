@@ -9,10 +9,10 @@ It provides the following synchronous communication components:
 
 Quick Links:
 
-* [Downloads](https://github.com/pip-services-node/pip-services-rpc-node/blob/master/doc/Downloads.md)
+* [Downloads](https://github.com/pip-services3-node/pip-services3-rpc-node/blob/master/docs/Downloads.md)
 * [API Reference](https://pip-services3-node.github.io/pip-services3-rpc-node/globals.html)
-* [Building and Testing](https://github.com/pip-services/pip-services-rpc-node/blob/master/doc/Development.md)
-* [Contributing](https://github.com/pip-services/pip-services-rpc-node/blob/master/doc/Development.md/#contrib)
+* [Building and Testing](https://github.com/pip-services3-node/pip-services3-rpc-node/blob/master/docs/Development.md)
+* [Contributing](https://github.com/pip-services3-node/pip-services3-rpc-node/blob/master/docs/Development.md#contrib)
 
 ## Acknowledgements
 
