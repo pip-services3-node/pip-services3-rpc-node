@@ -124,7 +124,7 @@ export declare abstract class RestService implements IOpenable, IConfigurable, I
      * Unsets (clears) previously set references to dependent components.
      */
     unsetReferences(): void;
-    private createEndpoint;
+    private createEndpoint();
     /**
      * Adds instrumentation to log calls and measure call time.
      * It returns a Timing object that is used to end the time measurement.
@@ -206,7 +206,7 @@ export declare abstract class RestService implements IOpenable, IConfigurable, I
      * @param error     an error object to be sent.
      */
     protected sendError(req: any, res: any, error: any): void;
-    private appendBaseRoute;
+    private appendBaseRoute(route);
     /**
      * Registers a route in HTTP endpoint.
      *

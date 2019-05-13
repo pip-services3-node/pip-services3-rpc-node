@@ -173,7 +173,7 @@ export declare abstract class RestClient implements IOpenable, IConfigurable, IR
      * @returns invocation parameters with added paging parameters.
      */
     protected addPagingParams(params: any, paging: any): void;
-    private createRequestRoute;
+    private createRequestRoute(route);
     /**
      * Calls a remote method via HTTP/REST protocol.
      *

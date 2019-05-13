@@ -42,8 +42,13 @@ class HttpRequestDetector {
             return 'mac ' + version;
         }
         if (/Windows NT/.test(ua)) {
-            version = /Windows NT ([0-9\._]+)[\);]/.exec(ua)[1];
-            return 'windows ' + version;
+            try {
+                version = /Windows NT ([0-9\._]+)[\);]/.exec(ua)[1];
+                return 'windows ' + version;
+            }
+            catch (ex) {
+                return 'unknown';
+            }
         }
         return 'unknown';
     }
