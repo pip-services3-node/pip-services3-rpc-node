@@ -67,8 +67,8 @@ export declare class HttpConnectionResolver implements IReferenceable, IConfigur
      * @param references 	references to locate the component dependencies.
      */
     setReferences(references: IReferences): void;
-    private validateConnection(correlationId, connection, credential);
-    private updateConnection(connection);
+    private validateConnection;
+    private updateConnection;
     /**
      * Resolves a single component connection. If connections are configured to be retrieved
      * from Discovery service it finds a IDiscovery and resolves the connection there.

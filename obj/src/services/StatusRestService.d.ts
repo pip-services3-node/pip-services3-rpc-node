@@ -84,5 +84,5 @@ export declare class StatusRestService extends RestService {
      * @param req   an HTTP request
      * @param res   an HTTP response
      */
-    private status(req, res);
+    private status;
 }

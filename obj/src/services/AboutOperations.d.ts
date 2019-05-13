@@ -4,6 +4,6 @@ export declare class AboutOperations extends RestOperations {
     private _contextInfo;
     setReferences(references: IReferences): void;
     getAboutOperation(): (req: any, res: any) => void;
-    private getNetworkAddresses();
+    private getNetworkAddresses;
     about(req: any, res: any): void;
 }

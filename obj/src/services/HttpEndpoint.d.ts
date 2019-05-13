@@ -105,9 +105,9 @@ export declare class HttpEndpoint implements IOpenable, IConfigurable, IReferenc
      *                          Will be called with an error if one is raised.
      */
     open(correlationId: string, callback?: (err: any) => void): void;
-    private addCompatibility(req, res, next);
-    private noCache(req, res, next);
-    private doMaintenance(req, res, next);
+    private addCompatibility;
+    private noCache;
+    private doMaintenance;
     /**
      * Closes this endpoint and the REST server (service) that was opened earlier.
      *
@@ -133,8 +133,8 @@ export declare class HttpEndpoint implements IOpenable, IConfigurable, IReferenc
      * @see [[IRegisterable]]
      */
     unregister(registration: IRegisterable): void;
-    private performRegistrations();
-    private fixRoute(route);
+    private performRegistrations;
+    private fixRoute;
     /**
      * Registers an action in this objects REST server (service) by the given method and route.
      *

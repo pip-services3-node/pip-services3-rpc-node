@@ -69,5 +69,5 @@ export declare class HeartbeatRestService extends RestService {
      * @param req   an HTTP request
      * @param res   an HTTP response
      */
-    private heartbeat(req, res);
+    private heartbeat;
 }
