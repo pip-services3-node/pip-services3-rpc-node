@@ -344,6 +344,6 @@ class RestService {
         });
     }
 }
-RestService._defaultConfig = pip_services3_commons_node_2.ConfigParams.fromTuples("base_route", "", "dependencies.endpoint", "*:endpoint:http:*:1.0");
 exports.RestService = RestService;
+RestService._defaultConfig = pip_services3_commons_node_2.ConfigParams.fromTuples("base_route", "", "dependencies.endpoint", "*:endpoint:http:*:1.0");
 //# sourceMappingURL=RestService.js.map

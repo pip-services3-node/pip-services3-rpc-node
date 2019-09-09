@@ -165,9 +165,10 @@ class HttpEndpoint {
                 this._server.use(restify.plugins.queryParser());
                 this._server.use(restify.plugins.jsonp());
                 this._server.use(restify.plugins.gzipResponse());
-                this._server.use(restify.plugins.bodyParser({
-                    maxFileSize: this._fileMaxSize
-                }));
+                this._server.use(restify.plugins.jsonBodyParser());
+                // this._server.use(restify.plugins.bodyParser({ 
+                //     maxFileSize: this._fileMaxSize
+                // }));
                 this._server.use(restify.plugins.conditionalRequest());
                 //this._server.use(restify.plugins.requestExpiry());
                 //if (options.get("throttle") != null)
@@ -373,6 +374,6 @@ class HttpEndpoint {
         });
     }
 }
-HttpEndpoint._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples("connection.protocol", "http", "connection.host", "0.0.0.0", "connection.port", 3000, "credential.ssl_key_file", null, "credential.ssl_crt_file", null, "credential.ssl_ca_file", null, "options.maintenance_enabled", false, "options.request_max_size", 1024 * 1024, "options.file_max_size", 200 * 1024 * 1024, "options.connect_timeout", 60000, "options.debug", true);
 exports.HttpEndpoint = HttpEndpoint;
+HttpEndpoint._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples("connection.protocol", "http", "connection.host", "0.0.0.0", "connection.port", 3000, "credential.ssl_key_file", null, "credential.ssl_crt_file", null, "credential.ssl_ca_file", null, "options.maintenance_enabled", false, "options.request_max_size", 1024 * 1024, "options.file_max_size", 200 * 1024 * 1024, "options.connect_timeout", 60000, "options.debug", true);
 //# sourceMappingURL=HttpEndpoint.js.map

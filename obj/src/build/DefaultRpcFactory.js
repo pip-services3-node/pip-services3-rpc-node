@@ -25,9 +25,9 @@ class DefaultRpcFactory extends pip_services3_components_node_1.Factory {
         this.registerAsType(DefaultRpcFactory.StatusServiceDescriptor, StatusRestService_1.StatusRestService);
     }
 }
+exports.DefaultRpcFactory = DefaultRpcFactory;
 DefaultRpcFactory.Descriptor = new pip_services3_commons_node_1.Descriptor("pip-services", "factory", "rpc", "default", "1.0");
 DefaultRpcFactory.HttpEndpointDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services", "endpoint", "http", "*", "1.0");
 DefaultRpcFactory.StatusServiceDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services", "status-service", "http", "*", "1.0");
 DefaultRpcFactory.HeartbeatServiceDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services", "heartbeat-service", "http", "*", "1.0");
-exports.DefaultRpcFactory = DefaultRpcFactory;
 //# sourceMappingURL=DefaultRpcFactory.js.map

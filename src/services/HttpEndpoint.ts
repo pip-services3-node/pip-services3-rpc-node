@@ -203,9 +203,10 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
                 this._server.use(restify.plugins.queryParser());
                 this._server.use(restify.plugins.jsonp());
                 this._server.use(restify.plugins.gzipResponse());
-                this._server.use(restify.plugins.bodyParser({ 
-                    maxFileSize: this._fileMaxSize
-                }));
+                this._server.use(restify.plugins.jsonBodyParser());
+                // this._server.use(restify.plugins.bodyParser({ 
+                //     maxFileSize: this._fileMaxSize
+                // }));
                 this._server.use(restify.plugins.conditionalRequest());
                 //this._server.use(restify.plugins.requestExpiry());
                 //if (options.get("throttle") != null)
