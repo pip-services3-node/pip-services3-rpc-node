@@ -90,7 +90,7 @@ export class CommandableHttpClient extends RestClient {
             params || {},
             (err, result) => {
                 timing.endTiming();
-                if (callback) callback(err, result);
+                this.instrumentError(correlationId, this._baseRoute + '.' + name, err, result, callback);
             }
         );
     }

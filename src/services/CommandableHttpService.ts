@@ -98,7 +98,9 @@ export abstract class CommandableHttpService extends RestService {
 
                 command.execute(correlationId, args, (err, result) => {
                     timing.endTiming();
-                    this.sendResult(req, res)(err, result);
+                    this.instrumentError(correlationId,
+                        this._baseRoute + '.' + command.getName(),
+                        err, result, this.sendResult(req, res));
                 })
             });
         }

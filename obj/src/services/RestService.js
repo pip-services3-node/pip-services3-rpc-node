@@ -158,7 +158,25 @@ class RestService {
      */
     instrument(correlationId, name) {
         this._logger.trace(correlationId, "Executing %s method", name);
+        this._counters.incrementOne(name + ".exec_count");
         return this._counters.beginTiming(name + ".exec_time");
+    }
+    /**
+     * Adds instrumentation to error handling.
+     *
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param name              a method name.
+     * @param err               an occured error
+     * @param result            (optional) an execution result
+     * @param callback          (optional) an execution callback
+     */
+    instrumentError(correlationId, name, err, result = null, callback = null) {
+        if (err != null) {
+            this._logger.error(correlationId, err, "Failed to execute %s method", name);
+            this._counters.incrementOne(name + '.exec_errors');
+        }
+        if (callback)
+            callback(err, result);
     }
     /**
      * Checks if the component is opened.

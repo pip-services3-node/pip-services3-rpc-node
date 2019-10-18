@@ -39,7 +39,7 @@ const pip_services3_commons_node_2 = require("pip-services3-commons-node");
  *           let timing = this.instrument(correlationId, 'myclient.get_data');
  *           this._controller.getData(correlationId, id, (err, result) => {
  *              timing.endTiming();
- *              callback(err, result);
+ *              this.instrumentError(correlationId, 'myclient.get_data', err, result, callback);
  *           });
  *         }
  *         ...
@@ -105,8 +105,26 @@ class DirectClient {
      * @returns Timing object to end the time measurement.
      */
     instrument(correlationId, name) {
-        this._logger.trace(correlationId, "Executing %s method", name);
+        this._logger.trace(correlationId, "Calling %s method", name);
+        this._counters.incrementOne(name + '.call_count');
         return this._counters.beginTiming(name + ".call_time");
+    }
+    /**
+     * Adds instrumentation to error handling.
+     *
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param name              a method name.
+     * @param err               an occured error
+     * @param result            (optional) an execution result
+     * @param callback          (optional) an execution callback
+     */
+    instrumentError(correlationId, name, err, result = null, callback = null) {
+        if (err != null) {
+            this._logger.error(correlationId, err, "Failed to call %s method", name);
+            this._counters.incrementOne(name + '.call_errors');
+        }
+        if (callback)
+            callback(err, result);
     }
     /**
      * Checks if the component is opened.

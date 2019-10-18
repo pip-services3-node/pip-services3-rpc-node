@@ -45,7 +45,7 @@ import { ConnectionException } from 'pip-services3-commons-node';
  *           let timing = this.instrument(correlationId, 'myclient.get_data');
  *           this._controller.getData(correlationId, id, (err, result) => {
  *              timing.endTiming();
- *              callback(err, result);
+ *              this.instrumentError(correlationId, 'myclient.get_data', err, result, callback);
  *           });        
  *         }
  *         ...
@@ -119,9 +119,29 @@ export abstract class DirectClient<T> implements IConfigurable, IReferenceable, 
      * @returns Timing object to end the time measurement.
      */
 	protected instrument(correlationId: string, name: string): Timing {
-		this._logger.trace(correlationId, "Executing %s method", name);
+        this._logger.trace(correlationId, "Calling %s method", name);
+        this._counters.incrementOne(name + '.call_count');
 		return this._counters.beginTiming(name + ".call_time");
 	}
+
+    /**
+     * Adds instrumentation to error handling.
+     * 
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param name              a method name.
+     * @param err               an occured error
+     * @param result            (optional) an execution result
+     * @param callback          (optional) an execution callback
+     */
+    protected instrumentError(correlationId: string, name: string, err: any,
+        result: any = null, callback: (err: any, result: any) => void = null): void {
+        if (err != null) {
+            this._logger.error(correlationId, err, "Failed to call %s method", name);
+            this._counters.incrementOne(name + '.call_errors');    
+        }
+
+        if (callback) callback(err, result);
+    }
 
     /**
 	 * Checks if the component is opened.

@@ -85,8 +85,7 @@ class CommandableHttpClient extends RestClient_1.RestClient {
         let timing = this.instrument(correlationId, this._baseRoute + '.' + name);
         this.call('post', name, correlationId, {}, params || {}, (err, result) => {
             timing.endTiming();
-            if (callback)
-                callback(err, result);
+            this.instrumentError(correlationId, this._baseRoute + '.' + name, err, result, callback);
         });
     }
 }

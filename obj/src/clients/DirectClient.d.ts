@@ -43,7 +43,7 @@ import { Timing } from 'pip-services3-components-node';
  *           let timing = this.instrument(correlationId, 'myclient.get_data');
  *           this._controller.getData(correlationId, id, (err, result) => {
  *              timing.endTiming();
- *              callback(err, result);
+ *              this.instrumentError(correlationId, 'myclient.get_data', err, result, callback);
  *           });
  *         }
  *         ...
@@ -104,6 +104,16 @@ export declare abstract class DirectClient<T> implements IConfigurable, IReferen
      * @returns Timing object to end the time measurement.
      */
     protected instrument(correlationId: string, name: string): Timing;
+    /**
+     * Adds instrumentation to error handling.
+     *
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param name              a method name.
+     * @param err               an occured error
+     * @param result            (optional) an execution result
+     * @param callback          (optional) an execution callback
+     */
+    protected instrumentError(correlationId: string, name: string, err: any, result?: any, callback?: (err: any, result: any) => void): void;
     /**
      * Checks if the component is opened.
      *
