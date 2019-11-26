@@ -85,6 +85,7 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
 	private _counters: CompositeCounters = new CompositeCounters();
     private _maintenanceEnabled: boolean = false;
     private _fileMaxSize: number = 200 * 1024 * 1024;
+    private _protocolUpgradeEnabled: boolean = false;
     private _uri: string;
     private _registrations: IRegisterable[] = [];
     
@@ -111,7 +112,8 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
 		this._connectionResolver.configure(config);
 
         this._maintenanceEnabled = config.getAsBooleanWithDefault('options.maintenance_enabled', this._maintenanceEnabled);
-        this._fileMaxSize = config.getAsLongWithDefault('options.file_max_size', this._fileMaxSize)
+        this._fileMaxSize = config.getAsLongWithDefault('options.file_max_size', this._fileMaxSize);
+        this._protocolUpgradeEnabled = config.getAsBooleanWithDefault('options.protocol_upgrade_enabled', this._protocolUpgradeEnabled);
     }
         
     /**
@@ -190,12 +192,13 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
                     options.certificate = certificate;
                     //options.ca = ca;
                 }
-         
-                // Create instance of express application   
+                options.handleUpgrades = this._protocolUpgradeEnabled;
+                         
+                // Create instance of restify application   
                 let restify = require('restify'); 
                 this._server = restify.createServer(options);
                 
-                // Configure express application
+                // Configure restify application
                 this._server.use(restify.plugins.acceptParser(this._server.acceptable));
                 //this._server.use(restify.authorizationParser());
                 //this._server.use(restify.CORS());

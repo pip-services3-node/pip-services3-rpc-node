@@ -1,5 +1,10 @@
 # Remote Procedure Calls for Pip.Services in Node.js Changelog
 
+## <a name="3.2.1"></a> 3.2.1 (2019-11-22)
+
+### Features
+* **options** Added option for protocol upgrade
+
 ## <a name="3.1.0"></a> 3.1.0 (2019-02-04)
 
 ### Features
