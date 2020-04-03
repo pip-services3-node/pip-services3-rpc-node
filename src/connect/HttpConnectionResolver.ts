@@ -115,7 +115,7 @@ export class HttpConnectionResolver implements IReferenceable, IConfigurable {
                 // Sometimes when we use https we are on an internal network and do not want to have to deal with security.
                 // When we need a https connection and we don't want to pass credentials, flag is 'credential.internal_network',
                 // this flag just has to be present and non null for this functionality to work.
-                if (credential.GetAsNullableString("internal_network") == null) {
+                if (credential.getAsNullableString("internal_network") == null) {
                     if (credential.getAsNullableString('ssl_key_file') == null) {
                         return new ConfigException(
                             correlationId, "NO_SSL_KEY_FILE", "SSL key file is not configured in credentials");
@@ -130,7 +130,7 @@ export class HttpConnectionResolver implements IReferenceable, IConfigurable {
         return null;
     }
 
-    private updateConnection(connection: ConnectionParams): void {
+    private updateConnection(connection: ConnectionParams, credential: CredentialParams): void {
         if (connection == null) return;
 
         let uri = connection.getUri();
@@ -152,6 +152,13 @@ export class HttpConnectionResolver implements IReferenceable, IConfigurable {
             connection.setHost(address.hostname);
             connection.setPort(address.port);
         }
+
+        if (connection.getProtocol() == "https") {
+            connection.addSection("credential",
+                credential.getAsNullableString("internal_network") == null ? credential : new CredentialParams());
+        } else {
+            connection.addSection("credential", new CredentialParams());
+        }
     }
 
     /**
@@ -171,12 +178,12 @@ export class HttpConnectionResolver implements IReferenceable, IConfigurable {
             }
 
             this._credentialResolver.lookup(correlationId, (err: any, credential: CredentialParams) => {
-                if (err == null)
+                if (err == null) {
                     err = this.validateConnection(correlationId, connection, credential);
-
-                if (err == null && connection != null)
-                    this.updateConnection(connection);
-
+                }
+                if (err == null && connection != null) {
+                    this.updateConnection(connection, credential);
+                }
                 callback(err, connection, credential);
             });
         });
@@ -202,11 +209,12 @@ export class HttpConnectionResolver implements IReferenceable, IConfigurable {
                 connections = connections || [];
 
                 for (let connection of connections) {
-                    if (err == null)
+                    if (err == null) {
                         err = this.validateConnection(correlationId, connection, credential);
-
-                    if (err == null && connection != null)
-                        this.updateConnection(connection);
+                    }
+                    if (err == null && connection != null) {
+                        this.updateConnection(connection, credential);
+                    }
                 }
 
                 callback(err, connections, credential);
