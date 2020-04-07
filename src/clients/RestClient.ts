@@ -168,9 +168,10 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
      * @returns Timing object to end the time measurement.
      */
     protected instrument(correlationId: string, name: string): Timing {
-        this._logger.trace(correlationId, "Calling %s method", name);
-        this._counters.incrementOne(name + '.call_count');
-        return this._counters.beginTiming(name + ".call_time");
+        const typeName = this.constructor.name || "unknown-target";
+        this._logger.trace(correlationId, "Calling %s method of %s", name, typeName);
+        this._counters.incrementOne(typeName + "." + name + '.call_count');
+        return this._counters.beginTiming(typeName + "." + name + ".call_time");
     }
 
     /**
@@ -185,8 +186,9 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
     protected instrumentError(correlationId: string, name: string, err: any,
         result: any = null, callback: (err: any, result: any) => void = null): void {
         if (err != null) {
-            this._logger.error(correlationId, err, "Failed to call %s method", name);
-            this._counters.incrementOne(name + '.call_errors');
+            const typeName = this.constructor.name || "unknown-target";
+            this._logger.error(correlationId, err, "Failed to call %s method of %s", name, typeName);
+            this._counters.incrementOne(typeName + "." + name + '.call_errors');
         }
 
         if (callback) callback(err, result);
