@@ -79,7 +79,7 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
         "connection.host", "0.0.0.0",
         "connection.port", 3000,
 
-        "options.request_max_size", 1024*1024,
+        "options.request_max_size", 1024 * 1024,
         "options.connect_timeout", 10000,
         "options.timeout", 10000,
         "options.retries", 3,
@@ -129,16 +129,16 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
     /**
      * The remote service uri which is calculated on open.
      */
-	protected _uri: string;
+    protected _uri: string;
 
     /**
      * Configures component by passing configuration parameters.
      * 
      * @param config    configuration parameters to be set.
      */
-	public configure(config: ConfigParams): void {
-		config = config.setDefaults(RestClient._defaultConfig);
-		this._connectionResolver.configure(config);
+    public configure(config: ConfigParams): void {
+        config = config.setDefaults(RestClient._defaultConfig);
+        this._connectionResolver.configure(config);
         this._options = this._options.override(config.getSection("options"));
 
         this._retries = config.getAsIntegerWithDefault("options.retries", this._retries);
@@ -146,18 +146,18 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
         this._timeout = config.getAsIntegerWithDefault("options.timeout", this._timeout);
 
         this._baseRoute = config.getAsStringWithDefault("base_route", this._baseRoute);
-	}
-        
+    }
+
     /**
 	 * Sets references to dependent components.
 	 * 
 	 * @param references 	references to locate the component dependencies. 
      */
-	public setReferences(references: IReferences): void {
-		this._logger.setReferences(references);
-		this._counters.setReferences(references);
-		this._connectionResolver.setReferences(references);
-	}
+    public setReferences(references: IReferences): void {
+        this._logger.setReferences(references);
+        this._counters.setReferences(references);
+        this._connectionResolver.setReferences(references);
+    }
 
     /**
      * Adds instrumentation to log calls and measure call time.
@@ -167,12 +167,13 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
      * @param name              a method name.
      * @returns Timing object to end the time measurement.
      */
-	protected instrument(correlationId: string, name: string): Timing {
-		this._logger.trace(correlationId, "Calling %s method", name);
-        this._counters.incrementOne(name + '.call_count');
-		return this._counters.beginTiming(name + ".call_time");
+    protected instrument(correlationId: string, name: string): Timing {
+        const typeName = this.constructor.name || "unknown-target";
+        this._logger.trace(correlationId, "Calling %s method of %s", name, typeName);
+        this._counters.incrementOne(typeName + "." + name + '.call_count');
+        return this._counters.beginTiming(typeName + "." + name + ".call_time");
     }
-    
+
     /**
      * Adds instrumentation to error handling.
      * 
@@ -185,8 +186,9 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
     protected instrumentError(correlationId: string, name: string, err: any,
         result: any = null, callback: (err: any, result: any) => void = null): void {
         if (err != null) {
-            this._logger.error(correlationId, err, "Failed to call %s method", name);
-            this._counters.incrementOne(name + '.call_errors');    
+            const typeName = this.constructor.name || "unknown-target";
+            this._logger.error(correlationId, err, "Failed to call %s method of %s", name, typeName);
+            this._counters.incrementOne(typeName + "." + name + '.call_errors');
         }
 
         if (callback) callback(err, result);
@@ -197,23 +199,23 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
 	 * 
 	 * @returns true if the component has been opened and false otherwise.
      */
-	public isOpen(): boolean {
-		return this._client != null;
-	}
-    
+    public isOpen(): boolean {
+        return this._client != null;
+    }
+
     /**
 	 * Opens the component.
 	 * 
 	 * @param correlationId 	(optional) transaction id to trace execution through call chain.
      * @param callback 			callback function that receives error or null no errors occured.
      */
-	public open(correlationId: string, callback?: (err: any) => void): void {
+    public open(correlationId: string, callback?: (err: any) => void): void {
         if (this.isOpen()) {
             if (callback) callback(null);
             return;
         }
-    	
-		this._connectionResolver.resolve(correlationId, (err, connection) => {
+
+        this._connectionResolver.resolve(correlationId, (err, connection) => {
             if (err) {
                 if (callback) callback(err);
                 return;
@@ -222,8 +224,8 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
             try {
                 this._uri = connection.getUri();
                 let restify = require('restify-clients');
-                this._client = restify.createJsonClient({ 
-                    url: this._uri, 
+                this._client = restify.createJsonClient({
+                    url: this._uri,
                     connectTimeout: this._connectTimeout,
                     requestTimeout: this._timeout,
                     headers: this._headers,
@@ -232,18 +234,19 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
                         maxTimeout: Infinity,
                         retries: this._retries
                     },
-                    version: '*' 
+                    version: '*'
                 });
-                
+
+                this._logger.debug(correlationId, "Connected via REST to %s", this._uri);
                 if (callback) callback(null);
             } catch (err) {
-                this._client = null;            
+                this._client = null;
                 let ex = new ConnectionException(correlationId, "CANNOT_CONNECT", "Connection to REST service failed")
                     .wrap(err).withDetails("url", this._uri);
                 if (callback) callback(ex);
             }
         });
-		
+
     }
 
     /**
@@ -297,7 +300,7 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
     protected addFilterParams(params: any, filter: any): void {
         params = params || {};
 
-        if (filter) {       
+        if (filter) {
             for (let prop in filter) {
                 if (filter.hasOwnProperty(prop))
                     params[prop] = filter[prop];
@@ -355,11 +358,11 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
      * @param data              (optional) body object.
      * @param callback          (optional) callback function that receives result object or error.
      */
-    protected call(method: string, route: string, correlationId?: string, params: any = {}, data?: any, 
+    protected call(method: string, route: string, correlationId?: string, params: any = {}, data?: any,
         callback?: (err: any, result: any) => void): void {
-        
+
         method = method.toLowerCase();
-                
+
         if (_.isFunction(data)) {
             callback = data;
             data = {};
@@ -370,9 +373,9 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
         params = this.addCorrelationId(params, correlationId)
         if (!_.isEmpty(params))
             route += '?' + querystring.stringify(params);
-                    
+
         let self = this;
-        let action = null;    
+        let action = null;
         if (callback) {
             action = (err, req, res, data) => {
                 // Handling 204 codes
@@ -384,11 +387,11 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
                     // Restore application exception
                     if (data != null)
                         err = ApplicationExceptionFactory.create(data).withCause(err);
-                    callback.call(self, err, null);  
+                    callback.call(self, err, null);
                 }
             };
         }
-        
+
         if (method == 'get') this._client.get(route, action);
         else if (method == 'head') this._client.head(route, action);
         else if (method == 'post') this._client.post(route, data, action);
@@ -401,6 +404,6 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
             if (callback) callback(error, null)
             else throw error;
         }
-    }    
+    }
 
 }
