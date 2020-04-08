@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 let url = require('url');
 const pip_services3_components_node_1 = require("pip-services3-components-node");
 const pip_services3_components_node_2 = require("pip-services3-components-node");
+const pip_services3_components_node_3 = require("pip-services3-components-node");
 const pip_services3_commons_node_1 = require("pip-services3-commons-node");
 /**
  * Helper class to retrieve connections for HTTP-based services abd clients.
@@ -99,17 +100,22 @@ class HttpConnectionResolver {
                 return new pip_services3_commons_node_1.ConfigException(correlationId, "NO_CREDENTIAL", "SSL certificates are not configured for HTTPS protocol");
             }
             else {
-                if (credential.getAsNullableString('ssl_key_file') == null) {
-                    return new pip_services3_commons_node_1.ConfigException(correlationId, "NO_SSL_KEY_FILE", "SSL key file is not configured in credentials");
-                }
-                else if (credential.getAsNullableString('ssl_crt_file') == null) {
-                    return new pip_services3_commons_node_1.ConfigException(correlationId, "NO_SSL_CRT_FILE", "SSL crt file is not configured in credentials");
+                // Sometimes when we use https we are on an internal network and do not want to have to deal with security.
+                // When we need a https connection and we don't want to pass credentials, flag is 'credential.internal_network',
+                // this flag just has to be present and non null for this functionality to work.
+                if (credential.getAsNullableString("internal_network") == null) {
+                    if (credential.getAsNullableString('ssl_key_file') == null) {
+                        return new pip_services3_commons_node_1.ConfigException(correlationId, "NO_SSL_KEY_FILE", "SSL key file is not configured in credentials");
+                    }
+                    else if (credential.getAsNullableString('ssl_crt_file') == null) {
+                        return new pip_services3_commons_node_1.ConfigException(correlationId, "NO_SSL_CRT_FILE", "SSL crt file is not configured in credentials");
+                    }
                 }
             }
         }
         return null;
     }
-    updateConnection(connection) {
+    updateConnection(connection, credential) {
         if (connection == null)
             return;
         let uri = connection.getUri();
@@ -129,6 +135,12 @@ class HttpConnectionResolver {
             connection.setHost(address.hostname);
             connection.setPort(address.port);
         }
+        if (connection.getProtocol() == "https") {
+            connection.addSection("credential", credential.getAsNullableString("internal_network") == null ? credential : new pip_services3_components_node_3.CredentialParams());
+        }
+        else {
+            connection.addSection("credential", new pip_services3_components_node_3.CredentialParams());
+        }
     }
     /**
      * Resolves a single component connection. If connections are configured to be retrieved
@@ -144,10 +156,12 @@ class HttpConnectionResolver {
                 return;
             }
             this._credentialResolver.lookup(correlationId, (err, credential) => {
-                if (err == null)
+                if (err == null) {
                     err = this.validateConnection(correlationId, connection, credential);
-                if (err == null && connection != null)
-                    this.updateConnection(connection);
+                }
+                if (err == null && connection != null) {
+                    this.updateConnection(connection, credential);
+                }
                 callback(err, connection, credential);
             });
         });
@@ -168,10 +182,12 @@ class HttpConnectionResolver {
             this._credentialResolver.lookup(correlationId, (err, credential) => {
                 connections = connections || [];
                 for (let connection of connections) {
-                    if (err == null)
+                    if (err == null) {
                         err = this.validateConnection(correlationId, connection, credential);
-                    if (err == null && connection != null)
-                        this.updateConnection(connection);
+                    }
+                    if (err == null && connection != null) {
+                        this.updateConnection(connection, credential);
+                    }
                 }
                 callback(err, connections, credential);
             });

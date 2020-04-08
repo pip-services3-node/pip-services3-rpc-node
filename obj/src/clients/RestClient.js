@@ -134,9 +134,10 @@ class RestClient {
      * @returns Timing object to end the time measurement.
      */
     instrument(correlationId, name) {
-        this._logger.trace(correlationId, "Calling %s method", name);
-        this._counters.incrementOne(name + '.call_count');
-        return this._counters.beginTiming(name + ".call_time");
+        const typeName = this.constructor.name || "unknown-target";
+        this._logger.trace(correlationId, "Calling %s method of %s", name, typeName);
+        this._counters.incrementOne(typeName + "." + name + '.call_count');
+        return this._counters.beginTiming(typeName + "." + name + ".call_time");
     }
     /**
      * Adds instrumentation to error handling.
@@ -149,8 +150,9 @@ class RestClient {
      */
     instrumentError(correlationId, name, err, result = null, callback = null) {
         if (err != null) {
-            this._logger.error(correlationId, err, "Failed to call %s method", name);
-            this._counters.incrementOne(name + '.call_errors');
+            const typeName = this.constructor.name || "unknown-target";
+            this._logger.error(correlationId, err, "Failed to call %s method of %s", name, typeName);
+            this._counters.incrementOne(typeName + "." + name + '.call_errors');
         }
         if (callback)
             callback(err, result);
@@ -196,6 +198,7 @@ class RestClient {
                     },
                     version: '*'
                 });
+                this._logger.debug(correlationId, "Connected via REST to %s", this._uri);
                 if (callback)
                     callback(null);
             }
