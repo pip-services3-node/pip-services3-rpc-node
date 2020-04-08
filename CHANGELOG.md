@@ -1,5 +1,17 @@
 # Remote Procedure Calls for Pip.Services in Node.js Changelog
 
+## <a name="3.2.2"></a> 3.2.2 (2020-04-08)
+
+### Features
+* **connect** HTTPS connection resolution with no credentials implemented for internal networks
+* **tests** Added the color switch to the mocha task
+* **log** Implemented a configurable date format for the elasticsearch index pattern.
+
+### Bug Fixes
+* Fixed the container logging about opening a rest client.
+* Fixed the commandable service and client work with correlation id issues.
+* Fixed the call counter metrics labels issue.
+
 ## <a name="3.2.1"></a> 3.2.1 (2019-11-22)
 
 ### Features
