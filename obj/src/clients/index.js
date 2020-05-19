@@ -11,4 +11,5 @@ var RestClient_1 = require("./RestClient");
 exports.RestClient = RestClient_1.RestClient;
 var CommandableHttpClient_1 = require("./CommandableHttpClient");
 exports.CommandableHttpClient = CommandableHttpClient_1.CommandableHttpClient;
+// export { CommandableRestClient } from './CommandableRestClient';
 //# sourceMappingURL=index.js.map

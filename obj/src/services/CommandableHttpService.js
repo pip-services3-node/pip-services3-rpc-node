@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/** @module services */
+let _ = require('lodash');
 const pip_services3_commons_node_1 = require("pip-services3-commons-node");
 const RestService_1 = require("./RestService");
 /**
- * Abstract service that receives remove calls via HTTP/REST protocol
+ * Abstract service that receives remove calls via HTTP protocol
  * to operations automatically generated for commands defined in [[https://rawgit.com/pip-services-node/pip-services3-commons-node/master/doc/api/interfaces/commands.icommandable.html ICommandable components]].
  * Each command is exposed as POST operation that receives all parameters in body object.
  *

@@ -15,6 +15,7 @@ var HttpRequestDetector_1 = require("./HttpRequestDetector");
 exports.HttpRequestDetector = HttpRequestDetector_1.HttpRequestDetector;
 var CommandableHttpService_1 = require("./CommandableHttpService");
 exports.CommandableHttpService = CommandableHttpService_1.CommandableHttpService;
+// export { CommandableRestService } from './CommandableRestService';
 var HeartbeatRestService_1 = require("./HeartbeatRestService");
 exports.HeartbeatRestService = HeartbeatRestService_1.HeartbeatRestService;
 var StatusRestService_1 = require("./StatusRestService");

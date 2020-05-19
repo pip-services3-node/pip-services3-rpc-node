@@ -2,11 +2,9 @@ let assert = require('chai').assert;
 let restify = require('restify-clients');
 let async = require('async');
 
-import {
-    Descriptor,
-    ConfigParams,
-    References
-} from 'pip-services3-commons-node';
+import { Descriptor } from 'pip-services3-commons-node';
+import { ConfigParams } from 'pip-services3-commons-node';
+import { References } from 'pip-services3-commons-node';
 
 import { Dummy } from '../Dummy';
 import { DummyController } from '../DummyController';

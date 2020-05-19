@@ -1,12 +1,6 @@
-let assert = require('chai').assert;
-let restify = require('restify');
-let async = require('async');
-
-import {
-    Descriptor,
-    ConfigParams,
-    References
-} from 'pip-services3-commons-node';
+import { Descriptor } from 'pip-services3-commons-node';
+import { ConfigParams } from 'pip-services3-commons-node';
+import { References } from 'pip-services3-commons-node';
 
 import { Dummy } from '../Dummy';
 import { DummyController } from '../DummyController';
@@ -24,7 +18,6 @@ suite('DummyCommandableHttpClient', ()=> {
     let service: DummyCommandableHttpService;
     let client: DummyCommandableHttpClient;
 
-    let rest: any;
     let fixture: DummyClientFixture;
 
     suiteSetup((done) => {

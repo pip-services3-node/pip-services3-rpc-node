@@ -1,6 +1,7 @@
+import { CommandSet } from 'pip-services3-commons-node';
 import { RestService } from './RestService';
 /**
- * Abstract service that receives remove calls via HTTP/REST protocol
+ * Abstract service that receives remove calls via HTTP protocol
  * to operations automatically generated for commands defined in [[https://rawgit.com/pip-services-node/pip-services3-commons-node/master/doc/api/interfaces/commands.icommandable.html ICommandable components]].
  * Each command is exposed as POST operation that receives all parameters in body object.
  *
@@ -57,7 +58,7 @@ import { RestService } from './RestService';
  *     });
  */
 export declare abstract class CommandableHttpService extends RestService {
-    private _commandSet;
+    protected _commandSet: CommandSet;
     /**
      * Creates a new instance of the service.
      *

@@ -8,6 +8,7 @@ export { RestService } from './RestService';
 export { HttpResponseSender } from './HttpResponseSender';
 export { HttpRequestDetector } from './HttpRequestDetector';
 export { CommandableHttpService } from './CommandableHttpService';
+// export { CommandableRestService } from './CommandableRestService';
 export { HeartbeatRestService } from './HeartbeatRestService';
 export { StatusRestService } from './StatusRestService';
 
