@@ -5,9 +5,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @preferred
  */
 var BasicAuthorizer_1 = require("./BasicAuthorizer");
-exports.BasicAuthManager = BasicAuthorizer_1.BasicAuthorizer;
+Object.defineProperty(exports, "BasicAuthManager", { enumerable: true, get: function () { return BasicAuthorizer_1.BasicAuthorizer; } });
 var OwnerAuthorizer_1 = require("./OwnerAuthorizer");
-exports.OwnerAuthManager = OwnerAuthorizer_1.OwnerAuthorizer;
+Object.defineProperty(exports, "OwnerAuthManager", { enumerable: true, get: function () { return OwnerAuthorizer_1.OwnerAuthorizer; } });
 var RoleAuthorizer_1 = require("./RoleAuthorizer");
-exports.RoleAuthManager = RoleAuthorizer_1.RoleAuthorizer;
+Object.defineProperty(exports, "RoleAuthManager", { enumerable: true, get: function () { return RoleAuthorizer_1.RoleAuthorizer; } });
 //# sourceMappingURL=index.js.map

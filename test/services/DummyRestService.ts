@@ -1,4 +1,5 @@
 import { IReferences } from 'pip-services3-commons-node';
+import { ConfigParams } from 'pip-services3-commons-node';
 import { Descriptor } from 'pip-services3-commons-node';
 import { FilterParams } from 'pip-services3-commons-node';
 import { PagingParams } from 'pip-services3-commons-node';
@@ -13,10 +14,19 @@ import { IDummyController } from '../IDummyController';
 export class DummyRestService extends RestService {
     private _controller: IDummyController;
     private _numberOfCalls: number = 0;
-	
+    private _openApiContent: string;
+    private _openApiFile: string;
+
     public constructor() {
         super();
         this._dependencyResolver.put('controller', new Descriptor("pip-services-dummies", "controller", "default", "*", "*"));
+    }
+
+    public configure(config: ConfigParams): void {
+        super.configure(config);
+
+        this._openApiContent = config.getAsNullableString("openapi_content");
+        this._openApiFile = config.getAsNullableString("openapi_file");
     }
 
 	public setReferences(references: IReferences): void {
@@ -114,5 +124,11 @@ export class DummyRestService extends RestService {
                 .withRequiredProperty("dummy_id", TypeCode.String),
             this.deleteById
         );
+
+		if (this._openApiContent)
+            this.registerOpenApiSpec(this._openApiContent);
+
+        if (this._openApiFile)
+            this.registerOpenApiSpecFromFile(this._openApiFile);
     }
 }

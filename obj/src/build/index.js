@@ -6,5 +6,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  */
 var DefaultRpcFactory_1 = require("./DefaultRpcFactory");
-exports.DefaultRpcFactory = DefaultRpcFactory_1.DefaultRpcFactory;
+Object.defineProperty(exports, "DefaultRpcFactory", { enumerable: true, get: function () { return DefaultRpcFactory_1.DefaultRpcFactory; } });
 //# sourceMappingURL=index.js.map

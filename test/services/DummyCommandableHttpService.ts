@@ -6,4 +6,14 @@ export class DummyCommandableHttpService extends CommandableHttpService {
         super('dummy');
         this._dependencyResolver.put('controller', new Descriptor('pip-services-dummies', 'controller', 'default', '*', '*'));
     }
+
+    public register(): void
+    {
+        if (!this._swaggerAuto && this._swaggerEnable)
+        {
+            this.registerOpenApiSpec("swagger yaml content");
+        }
+
+        super.register();
+    }
 }

@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.RestService = void 0;
 /** @module services */
 /** @hidden */
 const _ = require('lodash');
+const fs = require('fs');
 const pip_services3_commons_node_1 = require("pip-services3-commons-node");
 const pip_services3_commons_node_2 = require("pip-services3-commons-node");
 const pip_services3_commons_node_3 = require("pip-services3-commons-node");
@@ -95,6 +97,8 @@ class RestService {
          * The performance counters.
          */
         this._counters = new pip_services3_components_node_2.CompositeCounters();
+        this._swaggerEnable = false;
+        this._swaggerRoute = "swagger";
     }
     /**
      * Configures component by passing configuration parameters.
@@ -106,6 +110,8 @@ class RestService {
         this._config = config;
         this._dependencyResolver.configure(config);
         this._baseRoute = config.getAsStringWithDefault("base_route", this._baseRoute);
+        this._swaggerEnable = config.getAsBooleanWithDefault("swagger.enable", this._swaggerEnable);
+        this._swaggerRoute = config.getAsStringWithDefault("swagger.route", this._swaggerRoute);
     }
     /**
      * Sets references to dependent components.
@@ -300,9 +306,13 @@ class RestService {
         HttpResponseSender_1.HttpResponseSender.sendError(req, res, error);
     }
     appendBaseRoute(route) {
-        route = route || "";
+        route = route || "/";
         if (this._baseRoute != null && this._baseRoute.length > 0) {
             let baseRoute = this._baseRoute;
+            if (route.length == 0)
+                route = "/";
+            if (route[0] != '/')
+                route = "/" + route;
             if (baseRoute[0] != '/')
                 baseRoute = '/' + baseRoute;
             route = baseRoute + route;
@@ -360,6 +370,17 @@ class RestService {
         this._endpoint.registerInterceptor(route, (req, res, next) => {
             action.call(this, req, res, next);
         });
+    }
+    registerOpenApiSpecFromFile(path) {
+        var content = fs.readFileSync(path).toString();
+        this.registerOpenApiSpec(content);
+    }
+    registerOpenApiSpec(content) {
+        if (this._swaggerEnable) {
+            this.registerRoute("get", this._swaggerRoute, null, (req, res) => {
+                res.send(content);
+            });
+        }
     }
 }
 exports.RestService = RestService;

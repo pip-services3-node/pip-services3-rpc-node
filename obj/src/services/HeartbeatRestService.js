@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.HeartbeatRestService = void 0;
 /** @module services */
 const RestService_1 = require("./RestService");
 /**

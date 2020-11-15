@@ -1,6 +1,7 @@
 /** @module services */
 /** @hidden */
 const _ = require('lodash');
+const fs = require('fs');
 
 import { IOpenable } from 'pip-services3-commons-node';
 import { IUnreferenceable } from 'pip-services3-commons-node';
@@ -98,7 +99,7 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
         "dependencies.endpoint", "*:endpoint:http:*:1.0"
     );
 
-    private _config: ConfigParams;
+    protected _config: ConfigParams;
     private _references: IReferences;
     private _localEndpoint: boolean;
     private _opened: boolean;
@@ -110,7 +111,7 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
     /**
      * The HTTP endpoint that exposes this service.
      */
-    protected _endpoint: HttpEndpoint;    
+    protected _endpoint: HttpEndpoint;
     /**
      * The dependency resolver.
      */
@@ -122,31 +123,37 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
     /**
      * The performance counters.
      */
-	protected _counters: CompositeCounters = new CompositeCounters();
+    protected _counters: CompositeCounters = new CompositeCounters();
+
+    protected _swaggerEnable: boolean = false;
+    protected _swaggerRoute: string = "swagger";
 
     /**
      * Configures component by passing configuration parameters.
      * 
      * @param config    configuration parameters to be set.
      */
-	public configure(config: ConfigParams): void {
+    public configure(config: ConfigParams): void {
         config = config.setDefaults(RestService._defaultConfig);
 
         this._config = config;
         this._dependencyResolver.configure(config);
 
         this._baseRoute = config.getAsStringWithDefault("base_route", this._baseRoute);
-	}
+
+        this._swaggerEnable = config.getAsBooleanWithDefault("swagger.enable", this._swaggerEnable);
+        this._swaggerRoute = config.getAsStringWithDefault("swagger.route", this._swaggerRoute);
+    }
 
     /**
-	 * Sets references to dependent components.
-	 * 
-	 * @param references 	references to locate the component dependencies. 
+     * Sets references to dependent components.
+     * 
+     * @param references 	references to locate the component dependencies. 
      */
-	public setReferences(references: IReferences): void {
+    public setReferences(references: IReferences): void {
         this._references = references;
 
-		this._logger.setReferences(references);
+        this._logger.setReferences(references);
         this._counters.setReferences(references);
         this._dependencyResolver.setReferences(references);
 
@@ -162,9 +169,9 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
         // Add registration callback to the endpoint
         this._endpoint.register(this);
     }
-    
+
     /**
-	 * Unsets (clears) previously set references to dependent components. 
+     * Unsets (clears) previously set references to dependent components. 
      */
     public unsetReferences(): void {
         // Remove registration callback from endpoint
@@ -176,13 +183,13 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
 
     private createEndpoint(): HttpEndpoint {
         let endpoint = new HttpEndpoint();
-        
+
         if (this._config)
             endpoint.configure(this._config);
-        
+
         if (this._references)
             endpoint.setReferences(this._references);
-            
+
         return endpoint;
     }
 
@@ -194,11 +201,11 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
      * @param name              a method name.
      * @returns Timing object to end the time measurement.
      */
-	protected instrument(correlationId: string, name: string): Timing {
+    protected instrument(correlationId: string, name: string): Timing {
         this._logger.trace(correlationId, "Executing %s method", name);
         this._counters.incrementOne(name + ".exec_count");
-		return this._counters.beginTiming(name + ".exec_time");
-	}
+        return this._counters.beginTiming(name + ".exec_time");
+    }
 
     /**
      * Adds instrumentation to error handling.
@@ -213,33 +220,33 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
         result: any = null, callback: (err: any, result: any) => void = null): void {
         if (err != null) {
             this._logger.error(correlationId, err, "Failed to execute %s method", name);
-            this._counters.incrementOne(name + '.exec_errors');    
+            this._counters.incrementOne(name + '.exec_errors');
         }
 
         if (callback) callback(err, result);
     }
 
     /**
-	 * Checks if the component is opened.
-	 * 
-	 * @returns true if the component has been opened and false otherwise.
+     * Checks if the component is opened.
+     * 
+     * @returns true if the component has been opened and false otherwise.
      */
-	public isOpen(): boolean {
-		return this._opened;
-	}
-    
+    public isOpen(): boolean {
+        return this._opened;
+    }
+
     /**
-	 * Opens the component.
-	 * 
-	 * @param correlationId 	(optional) transaction id to trace execution through call chain.
+     * Opens the component.
+     * 
+     * @param correlationId 	(optional) transaction id to trace execution through call chain.
      * @param callback 			callback function that receives error or null no errors occured.
      */
-	public open(correlationId: string, callback?: (err: any) => void): void {
-    	if (this._opened) {
+    public open(correlationId: string, callback?: (err: any) => void): void {
+        if (this._opened) {
             callback(null);
             return;
         }
-        
+
         if (this._endpoint == null) {
             this._endpoint = this.createEndpoint();
             this._endpoint.register(this);
@@ -258,13 +265,13 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
     }
 
     /**
-	 * Closes component and frees used resources.
-	 * 
-	 * @param correlationId 	(optional) transaction id to trace execution through call chain.
+     * Closes component and frees used resources.
+     * 
+     * @param correlationId 	(optional) transaction id to trace execution through call chain.
      * @param callback 			callback function that receives error or null no errors occured.
      */
     public close(correlationId: string, callback?: (err: any) => void): void {
-    	if (!this._opened) {
+        if (!this._opened) {
             callback(null);
             return;
         }
@@ -273,7 +280,7 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
             callback(new InvalidStateException(correlationId, 'NO_ENDPOINT', 'HTTP endpoint is missing'));
             return;
         }
-        
+
         if (this._localEndpoint) {
             this._endpoint.close(correlationId, (err) => {
                 this._opened = false;
@@ -350,10 +357,12 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
     }
 
     private appendBaseRoute(route: string): string {
-        route = route || "";
+        route = route || "/";
 
         if (this._baseRoute != null && this._baseRoute.length > 0) {
             let baseRoute = this._baseRoute;
+            if (route.length == 0) route = "/";
+            if (route[0] != '/') route = "/" + route;
             if (baseRoute[0] != '/') baseRoute = '/' + baseRoute;
             route = baseRoute + route;
         }
@@ -381,7 +390,7 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
                 action.call(this, req, res);
             }
         );
-    }    
+    }
 
     /**
      * Registers a route with authorization in HTTP endpoint.
@@ -410,7 +419,7 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
                 action.call(this, req, res);
             }
         );
-    }    
+    }
 
     /**
      * Registers a middleware for a given route in HTTP endpoint.
@@ -430,8 +439,8 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
                 action.call(this, req, res, next);
             }
         );
-    }    
-    
+    }
+
     /**
      * Registers all service routes in HTTP endpoint.
      * 
@@ -440,4 +449,16 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
      */
     public abstract register(): void;
 
+    protected registerOpenApiSpecFromFile(path: string) {
+        var content = fs.readFileSync(path).toString();
+        this.registerOpenApiSpec(content);
+    }
+
+    protected registerOpenApiSpec(content: string) {
+        if (this._swaggerEnable) {
+            this.registerRoute("get", this._swaggerRoute, null, (req, res) => {
+                res.send(content);
+            });
+        }
+    }
 }

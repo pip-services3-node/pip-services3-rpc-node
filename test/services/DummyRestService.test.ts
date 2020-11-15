@@ -1,8 +1,9 @@
 let assert = require('chai').assert;
 let restify = require('restify-clients');
 let async = require('async');
+let fs = require('fs');
 
-import { Descriptor } from 'pip-services3-commons-node';
+import { Descriptor, IdGenerator } from 'pip-services3-commons-node';
 import { ConfigParams } from 'pip-services3-commons-node';
 import { References } from 'pip-services3-commons-node';
 
@@ -13,7 +14,9 @@ import { DummyRestService } from './DummyRestService';
 var restConfig = ConfigParams.fromTuples(
     "connection.protocol", "http",
     "connection.host", "localhost",
-    "connection.port", 3000
+    "connection.port", 3000,
+    "openapi_content", "swagger yaml or json content",  // for test only
+    "swagger.enable", "true"
 );
 
 suite('DummyRestService', ()=> {
@@ -145,4 +148,69 @@ suite('DummyRestService', ()=> {
         ], done);
     });
 
+    test('Get OpenApi Spec From String', (done) => {
+        async.series([
+            (callback) => {
+                rest.get("/swagger", (err, req, res) => {
+                    assert.isNull(err);
+
+                    var openApiContent = restConfig.getAsString("openapi_content");
+                    assert.equal(openApiContent, JSON.parse(res.body));
+        
+                    callback();
+                });
+            },
+        ], done);
+    });
+
+    test('Get OpenApi Spec From File', (done) => {
+        let openApiContent = "swagger yaml content from file";
+        let filename = 'dummy_'+ IdGenerator.nextLong() + '.tmp';
+
+        async.series([
+            // create temp file
+            (callback) => {
+                fs.writeFile(filename, openApiContent, callback);
+            },
+            // recreate service with new configuration
+            (callback) => {
+                service.close(null, callback);
+            },
+            (callback) => {
+                let serviceConfig = ConfigParams.fromTuples(
+                    "connection.protocol", "http",
+                    "connection.host", "localhost",
+                    "connection.port", 3000,
+                    "openapi_file", filename,  // for test only
+                    "swagger.enable", "true"
+                );
+
+                let ctrl = new DummyController();
+
+                service = new DummyRestService();
+                service.configure(serviceConfig);
+
+                let references: References = References.fromTuples(
+                    new Descriptor('pip-services-dummies', 'controller', 'default', 'default', '1.0'), ctrl,
+                    new Descriptor('pip-services-dummies', 'service', 'rest', 'default', '1.0'), service
+                );
+                service.setReferences(references);
+
+                service.open(null, callback);
+            },
+            (callback) => {
+                rest.get("/swagger", (err, req, res) => {
+                    assert.isNull(err);
+
+                    assert.equal(openApiContent, JSON.parse(res.body));
+        
+                    callback();
+                });
+            },
+            // delete temp file
+            (callback) => {
+                fs.unlink(filename, callback);
+            },
+        ], done);
+    });
 });

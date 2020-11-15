@@ -13,7 +13,8 @@ import { DummyCommandableHttpService } from './DummyCommandableHttpService';
 var restConfig = ConfigParams.fromTuples(
     "connection.protocol", "http",
     "connection.host", "localhost",
-    "connection.port", 3000
+    "connection.port", 3000,
+    "swagger.enable", "true"
 );
 
 suite('DummyCommandableHttpService', ()=> {
@@ -158,4 +159,53 @@ suite('DummyCommandableHttpService', ()=> {
         ], done);
     });
 
+    test('Get OpenApi Spec', (done) => {
+        async.series([
+            (callback) => {
+                rest.get("/dummy/swagger", (err, req, res) => {
+                    assert.isNull(err);
+
+                    assert.isTrue(JSON.parse(res.body).startsWith("openapi:"));
+        
+                    callback();
+                });
+            },
+        ], done);
+    });
+
+    test('OpenApi Spec Override', (done) => {
+        let openApiContent = "swagger yaml content";
+
+        async.series([
+            // recreate service with new configuration
+            (callback) => {
+                service.close(null, callback);
+            },
+            (callback) => {
+                var config = restConfig.setDefaults(ConfigParams.fromTuples("swagger.auto", false));
+
+                let ctrl = new DummyController();
+
+                service = new DummyCommandableHttpService();
+                service.configure(config);
+
+                let references: References = References.fromTuples(
+                    new Descriptor('pip-services-dummies', 'controller', 'default', 'default', '1.0'), ctrl,
+                    new Descriptor('pip-services-dummies', 'service', 'http', 'default', '1.0'), service
+                );
+                service.setReferences(references);
+
+                service.open(null, callback);
+            },
+            (callback) => {
+                rest.get("/dummy/swagger", (err, req, res) => {
+                    assert.isNull(err);
+
+                    assert.equal(openApiContent, JSON.parse(res.body));
+        
+                    callback();
+                });
+            },
+        ], done);
+    });
 });

@@ -1,6 +1,7 @@
 "use strict";
 /** @module services */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.HttpRequestDetector = void 0;
 /**
  * Helper class that retrieves parameters from HTTP requests.
  */

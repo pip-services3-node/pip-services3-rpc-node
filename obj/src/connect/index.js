@@ -6,5 +6,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  */
 var HttpConnectionResolver_1 = require("./HttpConnectionResolver");
-exports.HttpConnectionResolver = HttpConnectionResolver_1.HttpConnectionResolver;
+Object.defineProperty(exports, "HttpConnectionResolver", { enumerable: true, get: function () { return HttpConnectionResolver_1.HttpConnectionResolver; } });
 //# sourceMappingURL=index.js.map
