@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.HeartbeatOperations = void 0;
 /** @module services */
 const RestOperations_1 = require("./RestOperations");
 class HeartbeatOperations extends RestOperations_1.RestOperations {

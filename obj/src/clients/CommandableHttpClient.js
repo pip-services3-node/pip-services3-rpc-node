@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.CommandableHttpClient = void 0;
 /** @module clients */
 const RestClient_1 = require("./RestClient");
 /**

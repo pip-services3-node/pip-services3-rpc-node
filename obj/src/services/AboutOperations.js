@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.AboutOperations = void 0;
 /** @module services */
 const os = require('os');
 const pip_services3_commons_node_1 = require("pip-services3-commons-node");

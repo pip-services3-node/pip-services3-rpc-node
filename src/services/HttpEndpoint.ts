@@ -381,7 +381,7 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
         let actionCurl = (req, res) => { 
             // Perform validation
             if (schema != null) {
-                let params = _.extend({}, req.params, { body: req.body });
+                let params = _.extend({}, req.params, req.query, { body: req.body });
                 let correlationId = params.correlaton_id;
                 let err = schema.validateAndReturnException(correlationId, params, false);
                 if (err != null) {
