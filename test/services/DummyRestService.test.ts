@@ -149,13 +149,15 @@ suite('DummyRestService', ()=> {
     });
 
     test('Get OpenApi Spec From String', (done) => {
+        var client = restify.createStringClient({ url: 'http://localhost:3000', version: '*' });
+
         async.series([
             (callback) => {
-                rest.get("/swagger", (err, req, res) => {
+                client.get("/swagger", (err, req, res) => {
                     assert.isNull(err);
 
                     var openApiContent = restConfig.getAsString("openapi_content");
-                    assert.equal(openApiContent, JSON.parse(res.body));
+                    assert.equal(openApiContent, res.body);
         
                     callback();
                 });
@@ -166,6 +168,8 @@ suite('DummyRestService', ()=> {
     test('Get OpenApi Spec From File', (done) => {
         let openApiContent = "swagger yaml content from file";
         let filename = 'dummy_'+ IdGenerator.nextLong() + '.tmp';
+
+        var client = restify.createStringClient({ url: 'http://localhost:3000', version: '*' });
 
         async.series([
             // create temp file
@@ -199,10 +203,10 @@ suite('DummyRestService', ()=> {
                 service.open(null, callback);
             },
             (callback) => {
-                rest.get("/swagger", (err, req, res) => {
+                client.get("/swagger", (err, req, res) => {
                     assert.isNull(err);
 
-                    assert.equal(openApiContent, JSON.parse(res.body));
+                    assert.equal(openApiContent, res.body);
         
                     callback();
                 });

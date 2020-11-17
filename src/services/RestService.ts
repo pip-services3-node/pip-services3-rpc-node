@@ -457,7 +457,12 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
     protected registerOpenApiSpec(content: string) {
         if (this._swaggerEnable) {
             this.registerRoute("get", this._swaggerRoute, null, (req, res) => {
-                res.send(content);
+                res.writeHead(200, {
+                'Content-Length': Buffer.byteLength(content),
+                'Content-Type': 'application/x-yaml'
+                });
+                res.write(content);
+                res.end();
             });
         }
     }

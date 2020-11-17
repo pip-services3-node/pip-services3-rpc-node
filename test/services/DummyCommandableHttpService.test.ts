@@ -160,12 +160,15 @@ suite('DummyCommandableHttpService', ()=> {
     });
 
     test('Get OpenApi Spec', (done) => {
+        let url = 'http://localhost:3000';
+        var client = restify.createStringClient({ url: url, version: '*' });
+        
         async.series([
             (callback) => {
-                rest.get("/dummy/swagger", (err, req, res) => {
+                client.get("/dummy/swagger", (err, req, res) => {
                     assert.isNull(err);
 
-                    assert.isTrue(JSON.parse(res.body).startsWith("openapi:"));
+                    assert.isTrue(res.body.startsWith("openapi:"));
         
                     callback();
                 });
@@ -175,6 +178,9 @@ suite('DummyCommandableHttpService', ()=> {
 
     test('OpenApi Spec Override', (done) => {
         let openApiContent = "swagger yaml content";
+
+        let url = 'http://localhost:3000';
+        var client = restify.createStringClient({ url: url, version: '*' });
 
         async.series([
             // recreate service with new configuration
@@ -198,10 +204,10 @@ suite('DummyCommandableHttpService', ()=> {
                 service.open(null, callback);
             },
             (callback) => {
-                rest.get("/dummy/swagger", (err, req, res) => {
+                client.get("/dummy/swagger", (err, req, res) => {
                     assert.isNull(err);
 
-                    assert.equal(openApiContent, JSON.parse(res.body));
+                    assert.equal(openApiContent, res.body);
         
                     callback();
                 });
