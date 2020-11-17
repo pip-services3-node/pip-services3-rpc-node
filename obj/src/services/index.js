@@ -28,9 +28,6 @@ var HeartbeatOperations_1 = require("./HeartbeatOperations");
 Object.defineProperty(exports, "HeartbeatOperations", { enumerable: true, get: function () { return HeartbeatOperations_1.HeartbeatOperations; } });
 var StatusOperations_1 = require("./StatusOperations");
 Object.defineProperty(exports, "StatusOperations", { enumerable: true, get: function () { return StatusOperations_1.StatusOperations; } });
-<<<<<<< HEAD
-=======
 var CommandableSwaggerDocument_1 = require("./CommandableSwaggerDocument");
 Object.defineProperty(exports, "CommandableSwaggerDocument", { enumerable: true, get: function () { return CommandableSwaggerDocument_1.CommandableSwaggerDocument; } });
->>>>>>> a1bde9c20f50a70a19415dff19e3d0b2b64070d8
 //# sourceMappingURL=index.js.map
