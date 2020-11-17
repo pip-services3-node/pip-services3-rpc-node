@@ -5,6 +5,7 @@ exports.CommandableHttpService = void 0;
 let _ = require('lodash');
 const pip_services3_commons_node_1 = require("pip-services3-commons-node");
 const RestService_1 = require("./RestService");
+const CommandableSwaggerDocument_1 = require("./CommandableSwaggerDocument");
 /**
  * Abstract service that receives remove calls via HTTP protocol
  * to operations automatically generated for commands defined in [[https://rawgit.com/pip-services-node/pip-services3-commons-node/master/doc/api/interfaces/commands.icommandable.html ICommandable components]].
@@ -70,8 +71,18 @@ class CommandableHttpService extends RestService_1.RestService {
      */
     constructor(baseRoute) {
         super();
+        this._swaggerAuto = true;
         this._baseRoute = baseRoute;
         this._dependencyResolver.put('controller', 'none');
+    }
+    /**
+     * Configures component by passing configuration parameters.
+     *
+     * @param config    configuration parameters to be set.
+     */
+    configure(config) {
+        super.configure(config);
+        this._swaggerAuto = config.getAsBooleanWithDefault("swagger.auto", this._swaggerAuto);
     }
     /**
      * Registers all service routes in HTTP endpoint.
@@ -94,6 +105,11 @@ class CommandableHttpService extends RestService_1.RestService {
                     this.instrumentError(correlationId, this._baseRoute + '.' + command.getName(), err, result, this.sendResult(req, res));
                 });
             });
+        }
+        if (this._swaggerAuto) {
+            var swaggerConfig = this._config.getSection("swagger");
+            var doc = new CommandableSwaggerDocument_1.CommandableSwaggerDocument(this._baseRoute, swaggerConfig, commands);
+            this.registerOpenApiSpec(doc.toString());
         }
     }
 }

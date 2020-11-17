@@ -16,3 +16,5 @@ export { RestOperations } from './RestOperations';
 export { AboutOperations } from './AboutOperations';
 export { HeartbeatOperations } from './HeartbeatOperations';
 export { StatusOperations } from './StatusOperations';
+export { ISwaggerService } from './ISwaggerService';
+export { CommandableSwaggerDocument } from './CommandableSwaggerDocument';

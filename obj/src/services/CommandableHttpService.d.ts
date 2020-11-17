@@ -1,3 +1,4 @@
+import { ConfigParams } from 'pip-services3-commons-node';
 import { CommandSet } from 'pip-services3-commons-node';
 import { RestService } from './RestService';
 /**
@@ -59,12 +60,19 @@ import { RestService } from './RestService';
  */
 export declare abstract class CommandableHttpService extends RestService {
     protected _commandSet: CommandSet;
+    protected _swaggerAuto: boolean;
     /**
      * Creates a new instance of the service.
      *
      * @param baseRoute a service base route.
      */
     constructor(baseRoute: string);
+    /**
+     * Configures component by passing configuration parameters.
+     *
+     * @param config    configuration parameters to be set.
+     */
+    configure(config: ConfigParams): void;
     /**
      * Registers all service routes in HTTP endpoint.
      */

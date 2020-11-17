@@ -84,7 +84,7 @@ import { IRegisterable } from './IRegisterable';
  */
 export declare abstract class RestService implements IOpenable, IConfigurable, IReferenceable, IUnreferenceable, IRegisterable {
     private static readonly _defaultConfig;
-    private _config;
+    protected _config: ConfigParams;
     private _references;
     private _localEndpoint;
     private _opened;
@@ -108,6 +108,8 @@ export declare abstract class RestService implements IOpenable, IConfigurable, I
      * The performance counters.
      */
     protected _counters: CompositeCounters;
+    protected _swaggerEnable: boolean;
+    protected _swaggerRoute: string;
     /**
      * Configures component by passing configuration parameters.
      *
@@ -250,4 +252,6 @@ export declare abstract class RestService implements IOpenable, IConfigurable, I
      * in child classes.
      */
     abstract register(): void;
+    protected registerOpenApiSpecFromFile(path: string): void;
+    protected registerOpenApiSpec(content: string): void;
 }
