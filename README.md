@@ -18,7 +18,7 @@ This module contains the following packages:
 * [Microservice Facade](https://www.pipservices.org/docs/tutorials/microservice-facade/microservice-facade-main) 
 * [Client Library. Step 2](https://www.pipservices.org/docs/tutorials/client-lib/direct-client)
 * [Client Library. Step 3](https://www.pipservices.org/docs/tutorials/client-lib/http-client)
-* [API Reference](https://pip-services3-node.github.io/pip-services3-grpc-node/globals.html)
+* [API Reference](https://pip-services3-node.github.io/pip-services3-rpc-node/globals.html)
 * [Change Log](CHANGELOG.md)
 * [Get Help](https://www.pipservices.org/community/help)
 * [Contribute](https://www.pipservices.org/community/contribute)
