@@ -105,7 +105,7 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
      * 
      * @param config    configuration parameters, containing a "connection(s)" section.
      * 
-     * @see [[https://rawgit.com/pip-services-node/pip-services3-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" package)
+     * @see [[https://pip-services3-node.github.io/pip-services3-commons-node/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" package)
      */
 	public configure(config: ConfigParams): void {
 		config = config.setDefaults(HttpEndpoint._defaultConfig);
@@ -127,7 +127,7 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
      * @param references    an IReferences object, containing references to a logger, counters, 
      *                      and a connection resolver.
      * 
-     * @see [[https://rawgit.com/pip-services-node/pip-services3-commons-node/master/doc/api/interfaces/refer.ireferences.html IReferences]] (in the PipServices "Commons" package)
+     * @see [[https://pip-services3-node.github.io/pip-services3-commons-node/interfaces/refer.ireferences.html IReferences]] (in the PipServices "Commons" package)
      */
 	public setReferences(references: IReferences): void {
 		this._logger.setReferences(references);

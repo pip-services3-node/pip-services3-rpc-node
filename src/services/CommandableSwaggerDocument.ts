@@ -1,3 +1,5 @@
+/** @module services */
+
 const _ = require('lodash');
 
 import { ConfigParams, ICommand, ObjectSchema, TypeCode } from "pip-services3-commons-node";
