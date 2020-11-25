@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>HttpConnectionResolver | pip-services-rpc-node</title>
+	<title>HttpConnectionResolver | pip-services3-rpc-node</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">pip-services-rpc-node</a>
+					<a href="../index.html" class="title">pip-services3-rpc-node</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -78,7 +78,7 @@
 					<ul>
 						<li><p>connection:</p>
 							<ul>
-								<li>discovery_key:               (optional) a key to retrieve the connection from <a href="https://rawgit.com/pip-services-node/pip-services3-components-node/master/doc/api/interfaces/connect.idiscovery.html" class="external">IDiscovery</a></li>
+								<li>discovery_key:               (optional) a key to retrieve the connection from <a href="https://pip-services3-node.github.io/pip-services3-components-node/interfaces/connect.idiscovery.html" class="external">IDiscovery</a></li>
 								<li>...                          other connection parameters</li>
 							</ul>
 						</li>
@@ -93,14 +93,14 @@
 					</ul>
 					<h3 id="references">References</h3>
 					<ul>
-						<li><code>*:discovery:*:*:1.0</code>            (optional) <a href="https://rawgit.com/pip-services-node/pip-services3-components-node/master/doc/api/interfaces/connect.idiscovery.html" class="external">IDiscovery</a> services</li>
+						<li><code>*:discovery:*:*:1.0</code>            (optional) <a href="https://pip-services3-node.github.io/pip-services3-components-node/interfaces/connect.idiscovery.html" class="external">IDiscovery</a> services</li>
 					</ul>
 					<dl class="tsd-comment-tags">
 						<dt>see</dt>
-						<dd><p><a href="https://rawgit.com/pip-services-node/pip-services3-components-node/master/doc/api/classes/connect.connectionparams.html" class="external">ConnectionParams</a></p>
+						<dd><p><a href="https://pip-services3-node.github.io/pip-services3-components-node/classes/connect.connectionparams.html" class="external">ConnectionParams</a></p>
 						</dd>
 						<dt>see</dt>
-						<dd><p><a href="https://rawgit.com/pip-services-node/pip-services3-components-node/master/doc/api/classes/connect.connectionresolver.html" class="external">ConnectionResolver</a></p>
+						<dd><p><a href="https://pip-services3-node.github.io/pip-services3-components-node/classes/connect.connectionresolver.html" class="external">ConnectionResolver</a></p>
 							<h3 id="example">Example</h3>
 							<pre><code><span class="hljs-keyword">let</span> config = <span class="hljs-type">ConfigParams</span>.fromTuples(
      <span class="hljs-string">"connection.host"</span>, <span class="hljs-string">"10.1.1.100"</span>,
@@ -129,8 +129,8 @@
 			<section class="tsd-panel">
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><span class="tsd-signature-type">IReferenceable</span></li>
-					<li><span class="tsd-signature-type">IConfigurable</span></li>
+					<li><span class="tsd-signature-type">any</span></li>
+					<li><span class="tsd-signature-type">any</span></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -141,6 +141,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="connect.httpconnectionresolver.html#_connectionresolver" class="tsd-kind-icon">_connection<wbr>Resolver</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="connect.httpconnectionresolver.html#_credentialresolver" class="tsd-kind-icon">_credential<wbr>Resolver</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -164,12 +165,27 @@
 					<div class="tsd-signature tsd-kind-icon">_connection<wbr>Resolver<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ConnectionResolver</span><span class="tsd-signature-symbol"> =&nbsp;new ConnectionResolver()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-rpc-node/blob/d0057a6/src/connect/HttpConnectionResolver.ts#L57">connect/HttpConnectionResolver.ts:57</a></li>
+							<li>Defined in connect/HttpConnectionResolver.ts:59</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>The base connection resolver.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a name="_credentialresolver" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _credential<wbr>Resolver</h3>
+					<div class="tsd-signature tsd-kind-icon">_credential<wbr>Resolver<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CredentialResolver</span><span class="tsd-signature-symbol"> =&nbsp;new CredentialResolver()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in connect/HttpConnectionResolver.ts:63</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The base credential resolver.</p>
 						</div>
 					</div>
 				</section>
@@ -186,7 +202,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-rpc-node/blob/d0057a6/src/connect/HttpConnectionResolver.ts#L64">connect/HttpConnectionResolver.ts:64</a></li>
+									<li>Defined in connect/HttpConnectionResolver.ts:70</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -217,7 +233,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-rpc-node/blob/d0057a6/src/connect/HttpConnectionResolver.ts#L176">connect/HttpConnectionResolver.ts:176</a></li>
+									<li>Defined in connect/HttpConnectionResolver.ts:233</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -273,7 +289,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-rpc-node/blob/d0057a6/src/connect/HttpConnectionResolver.ts#L133">connect/HttpConnectionResolver.ts:133</a></li>
+									<li>Defined in connect/HttpConnectionResolver.ts:171</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -298,7 +314,7 @@
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, connection<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ConnectionParams</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, connection<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ConnectionParams</span>, credential<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CredentialParams</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
@@ -309,6 +325,9 @@
 														</li>
 														<li>
 															<h5>connection: <span class="tsd-signature-type">ConnectionParams</span></h5>
+														</li>
+														<li>
+															<h5>credential: <span class="tsd-signature-type">CredentialParams</span></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -332,7 +351,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-rpc-node/blob/d0057a6/src/connect/HttpConnectionResolver.ts#L152">connect/HttpConnectionResolver.ts:152</a></li>
+									<li>Defined in connect/HttpConnectionResolver.ts:199</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -357,7 +376,7 @@
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, connections<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ConnectionParams</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, connections<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ConnectionParams</span><span class="tsd-signature-symbol">[]</span>, credential<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CredentialParams</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
@@ -368,6 +387,9 @@
 														</li>
 														<li>
 															<h5>connections: <span class="tsd-signature-type">ConnectionParams</span><span class="tsd-signature-symbol">[]</span></h5>
+														</li>
+														<li>
+															<h5>credential: <span class="tsd-signature-type">CredentialParams</span></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -391,7 +413,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-rpc-node/blob/d0057a6/src/connect/HttpConnectionResolver.ts#L73">connect/HttpConnectionResolver.ts:73</a></li>
+									<li>Defined in connect/HttpConnectionResolver.ts:80</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -421,6 +443,9 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="../modules/auth.html">auth</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/build.html">build</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -446,6 +471,9 @@
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 								<a href="connect.httpconnectionresolver.html#_connectionresolver" class="tsd-kind-icon">_connection<wbr>Resolver</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="connect.httpconnectionresolver.html#_credentialresolver" class="tsd-kind-icon">_credential<wbr>Resolver</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="connect.httpconnectionresolver.html#configure" class="tsd-kind-icon">configure</a>

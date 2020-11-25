@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>HttpEndpoint | pip-services-rpc-node</title>
+	<title>HttpEndpoint | pip-services3-rpc-node</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">pip-services-rpc-node</a>
+					<a href="../index.html" class="title">pip-services3-rpc-node</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -75,12 +75,18 @@
 					<h3 id="configuration-parameters">Configuration parameters</h3>
 					<p>Parameters to pass to the <a href="services.httpendpoint.html#configure">configure</a> method for component configuration:</p>
 					<ul>
-						<li>connection(s) - the connection resolver&#39;s connections;<ul>
+						<li>connection(s) - the connection resolver&#39;s connections:<ul>
 								<li>&quot;connection.discovery_key&quot; - the key to use for connection resolving in a discovery service;</li>
 								<li>&quot;connection.protocol&quot; - the connection&#39;s protocol;</li>
 								<li>&quot;connection.host&quot; - the target host;</li>
 								<li>&quot;connection.port&quot; - the target port;</li>
 								<li>&quot;connection.uri&quot; - the target URI.</li>
+							</ul>
+						</li>
+						<li>credential - the HTTPS credentials:<ul>
+								<li>&quot;credential.ssl_key_file&quot; - the SSL private key in PEM</li>
+								<li>&quot;credential.ssl_crt_file&quot; - the SSL certificate in PEM</li>
+								<li>&quot;credential.ssl_ca_file&quot; - the certificate authorities (root cerfiticates) in PEM</li>
 							</ul>
 						</li>
 					</ul>
@@ -121,9 +127,9 @@
 			<section class="tsd-panel">
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><span class="tsd-signature-type">IOpenable</span></li>
-					<li><span class="tsd-signature-type">IConfigurable</span></li>
-					<li><span class="tsd-signature-type">IReferenceable</span></li>
+					<li><span class="tsd-signature-type">any</span></li>
+					<li><span class="tsd-signature-type">any</span></li>
+					<li><span class="tsd-signature-type">any</span></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -138,7 +144,9 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="services.httpendpoint.html#isopen" class="tsd-kind-icon">is<wbr>Open</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="services.httpendpoint.html#open" class="tsd-kind-icon">open</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="services.httpendpoint.html#register" class="tsd-kind-icon">register</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="services.httpendpoint.html#registerinterceptor" class="tsd-kind-icon">register<wbr>Interceptor</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="services.httpendpoint.html#registerroute" class="tsd-kind-icon">register<wbr>Route</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="services.httpendpoint.html#registerroutewithauth" class="tsd-kind-icon">register<wbr>Route<wbr>With<wbr>Auth</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="services.httpendpoint.html#setreferences" class="tsd-kind-icon">set<wbr>References</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="services.httpendpoint.html#unregister" class="tsd-kind-icon">unregister</a></li>
 							</ul>
@@ -158,7 +166,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-rpc-node/blob/d0057a6/src/services/HttpEndpoint.ts#L207">services/HttpEndpoint.ts:207</a></li>
+									<li>Defined in services/HttpEndpoint.ts:313</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -214,7 +222,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-rpc-node/blob/d0057a6/src/services/HttpEndpoint.ts#L93">services/HttpEndpoint.ts:93</a></li>
+									<li>Defined in services/HttpEndpoint.ts:110</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -229,12 +237,15 @@
 											<li>&quot;connection.host&quot; - the target host;</li>
 											<li>&quot;connection.port&quot; - the target port;</li>
 											<li>&quot;connection.uri&quot; - the target URI.</li>
+											<li>&quot;credential.ssl_key_file&quot; - SSL private key in PEM</li>
+											<li>&quot;credential.ssl_crt_file&quot; - SSL certificate in PEM</li>
+											<li>&quot;credential.ssl_ca_file&quot; - Certificate authority (root certificate) in PEM</li>
 										</ul>
 									</li>
 								</ul>
 								<dl class="tsd-comment-tags">
 									<dt>see</dt>
-									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services3-commons-node/master/doc/api/classes/config.configparams.html" class="external">ConfigParams</a> (in the PipServices &quot;Commons&quot; package)</p>
+									<dd><p><a href="https://pip-services3-node.github.io/pip-services3-commons-node/classes/config.configparams.html" class="external">ConfigParams</a> (in the PipServices &quot;Commons&quot; package)</p>
 									</dd>
 								</dl>
 							</div>
@@ -261,7 +272,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-rpc-node/blob/d0057a6/src/services/HttpEndpoint.ts#L120">services/HttpEndpoint.ts:120</a></li>
+									<li>Defined in services/HttpEndpoint.ts:141</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -281,7 +292,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-rpc-node/blob/d0057a6/src/services/HttpEndpoint.ts#L133">services/HttpEndpoint.ts:133</a></li>
+									<li>Defined in services/HttpEndpoint.ts:154</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -338,7 +349,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-rpc-node/blob/d0057a6/src/services/HttpEndpoint.ts#L231">services/HttpEndpoint.ts:231</a></li>
+									<li>Defined in services/HttpEndpoint.ts:337</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -365,6 +376,79 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="registerinterceptor" class="tsd-anchor"></a>
+					<h3>register<wbr>Interceptor</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">register<wbr>Interceptor<span class="tsd-signature-symbol">(</span>route<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, action<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in services/HttpEndpoint.ts:432</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Registers a middleware action for the given route.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>route: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the route to register in this object&#39;s REST server (service).</p>
+									</div>
+								</li>
+								<li>
+									<h5>action: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the middleware action to perform at the given route.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, res<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>req: <span class="tsd-signature-type">any</span></h5>
+														</li>
+														<li>
+															<h5>res: <span class="tsd-signature-type">any</span></h5>
+														</li>
+														<li>
+															<h5>next: <span class="tsd-signature-type">function</span></h5>
+															<ul class="tsd-parameters">
+																<li class="tsd-parameter-siganture">
+																	<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+																		<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+																	</ul>
+																	<ul class="tsd-descriptions">
+																		<li class="tsd-description">
+																			<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+																		</li>
+																	</ul>
+																</li>
+															</ul>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="registerroute" class="tsd-anchor"></a>
 					<h3>register<wbr>Route</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -374,7 +458,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-rpc-node/blob/d0057a6/src/services/HttpEndpoint.ts#L261">services/HttpEndpoint.ts:261</a></li>
+									<li>Defined in services/HttpEndpoint.ts:373</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -435,6 +519,119 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="registerroutewithauth" class="tsd-anchor"></a>
+					<h3>register<wbr>Route<wbr>With<wbr>Auth</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">register<wbr>Route<wbr>With<wbr>Auth<span class="tsd-signature-symbol">(</span>method<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, route<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, schema<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Schema</span>, authorize<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, action<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in services/HttpEndpoint.ts:412</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Registers an action with authorization in this objects REST server (service)
+									by the given method and route.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>method: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the HTTP method of the route.</p>
+									</div>
+								</li>
+								<li>
+									<h5>route: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the route to register in this object&#39;s REST server (service).</p>
+									</div>
+								</li>
+								<li>
+									<h5>schema: <span class="tsd-signature-type">Schema</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the schema to use for parameter validation.</p>
+									</div>
+								</li>
+								<li>
+									<h5>authorize: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the authorization interceptor</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, res<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>req: <span class="tsd-signature-type">any</span></h5>
+														</li>
+														<li>
+															<h5>res: <span class="tsd-signature-type">any</span></h5>
+														</li>
+														<li>
+															<h5>next: <span class="tsd-signature-type">function</span></h5>
+															<ul class="tsd-parameters">
+																<li class="tsd-parameter-siganture">
+																	<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+																		<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+																	</ul>
+																	<ul class="tsd-descriptions">
+																		<li class="tsd-description">
+																			<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+																		</li>
+																	</ul>
+																</li>
+															</ul>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5>action: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the action to perform at the given route.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, res<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>req: <span class="tsd-signature-type">any</span></h5>
+														</li>
+														<li>
+															<h5>res: <span class="tsd-signature-type">any</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="setreferences" class="tsd-anchor"></a>
 					<h3>set<wbr>References</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -444,7 +641,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-rpc-node/blob/d0057a6/src/services/HttpEndpoint.ts#L111">services/HttpEndpoint.ts:111</a></li>
+									<li>Defined in services/HttpEndpoint.ts:132</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -459,7 +656,7 @@
 								</ul>
 								<dl class="tsd-comment-tags">
 									<dt>see</dt>
-									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services3-commons-node/master/doc/api/interfaces/refer.ireferences.html" class="external">IReferences</a> (in the PipServices &quot;Commons&quot; package)</p>
+									<dd><p><a href="https://pip-services3-node.github.io/pip-services3-commons-node/interfaces/refer.ireferences.html" class="external">IReferences</a> (in the PipServices &quot;Commons&quot; package)</p>
 									</dd>
 								</dl>
 							</div>
@@ -487,7 +684,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-rpc-node/blob/d0057a6/src/services/HttpEndpoint.ts#L243">services/HttpEndpoint.ts:243</a></li>
+									<li>Defined in services/HttpEndpoint.ts:349</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -523,6 +720,9 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="../modules/auth.html">auth</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/build.html">build</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -542,7 +742,16 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="services.aboutoperations.html" class="tsd-kind-icon">About<wbr>Operations</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="services.commandablehttpservice.html" class="tsd-kind-icon">Commandable<wbr>Http<wbr>Service</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="services.commandableswaggerdocument.html" class="tsd-kind-icon">Commandable<wbr>Swagger<wbr>Document</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="services.heartbeatoperations.html" class="tsd-kind-icon">Heartbeat<wbr>Operations</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="services.heartbeatrestservice.html" class="tsd-kind-icon">Heartbeat<wbr>Rest<wbr>Service</a>
@@ -568,7 +777,13 @@
 								<a href="services.httpendpoint.html#register" class="tsd-kind-icon">register</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="services.httpendpoint.html#registerinterceptor" class="tsd-kind-icon">register<wbr>Interceptor</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="services.httpendpoint.html#registerroute" class="tsd-kind-icon">register<wbr>Route</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="services.httpendpoint.html#registerroutewithauth" class="tsd-kind-icon">register<wbr>Route<wbr>With<wbr>Auth</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="services.httpendpoint.html#setreferences" class="tsd-kind-icon">set<wbr>References</a>
@@ -587,13 +802,40 @@
 						<a href="services.httpresponsesender.html" class="tsd-kind-icon">Http<wbr>Response<wbr>Sender</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="services.restoperations.html" class="tsd-kind-icon">Rest<wbr>Operations</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="services.restservice.html" class="tsd-kind-icon">Rest<wbr>Service</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="services.statusoperations.html" class="tsd-kind-icon">Status<wbr>Operations</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="services.statusrestservice.html" class="tsd-kind-icon">Status<wbr>Rest<wbr>Service</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/services.iregisterable.html" class="tsd-kind-icon">IRegisterable</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="../interfaces/services.iswaggerservice.html" class="tsd-kind-icon">ISwagger<wbr>Service</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/services.html#_" class="tsd-kind-icon">_</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/services.html#_-1" class="tsd-kind-icon">_</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/services.html#_-2" class="tsd-kind-icon">_</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/services.html#fs" class="tsd-kind-icon">fs</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/services.html#fs-1" class="tsd-kind-icon">fs</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/services.html#os" class="tsd-kind-icon">os</a>
 					</li>
 				</ul>
 			</nav>

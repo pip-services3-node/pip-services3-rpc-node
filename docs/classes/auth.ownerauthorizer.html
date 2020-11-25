@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>DefaultRpcFactory | pip-services3-rpc-node</title>
+	<title>OwnerAuthorizer | pip-services3-rpc-node</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,55 +54,24 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/build.html">build</a>
+					<a href="../modules/auth.html">auth</a>
 				</li>
 				<li>
-					<a href="build.defaultrpcfactory.html">DefaultRpcFactory</a>
+					<a href="auth.ownerauthorizer.html">OwnerAuthorizer</a>
 				</li>
 			</ul>
-			<h1>Class DefaultRpcFactory</h1>
+			<h1>Class OwnerAuthorizer</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Creates RPC components by their descriptors.</p>
-					</div>
-					<dl class="tsd-comment-tags">
-						<dt>see</dt>
-						<dd><p><a href="https://pip-services3-node.github.io/pip-services3-components-node/classes/build.factory.html" class="external">Factory</a></p>
-						</dd>
-						<dt>see</dt>
-						<dd><p><a href="services.httpendpoint.html">HttpEndpoint</a></p>
-						</dd>
-						<dt>see</dt>
-						<dd><p><a href="services.heartbeatrestservice.html">HeartbeatRestService</a></p>
-						</dd>
-						<dt>see</dt>
-						<dd><p><a href="services.statusrestservice.html">StatusRestService</a></p>
-						</dd>
-					</dl>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="build.defaultrpcfactory.html" class="tsd-signature-type">DefaultRpcFactory</a>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">DefaultRpcFactory</span>
-								<ul class="tsd-hierarchy">
-									<li>
-										<a href="build.defaultrpcfactory.html" class="tsd-signature-type">DefaultRpcFactory</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
+						<span class="target">OwnerAuthorizer</span>
 					</li>
 				</ul>
 			</section>
@@ -111,89 +80,134 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Constructors</h3>
+							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="build.defaultrpcfactory.html#constructor" class="tsd-kind-icon">constructor</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="build.defaultrpcfactory.html#descriptor" class="tsd-kind-icon">Descriptor</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="build.defaultrpcfactory.html#heartbeatservicedescriptor" class="tsd-kind-icon">Heartbeat<wbr>Service<wbr>Descriptor</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="build.defaultrpcfactory.html#httpendpointdescriptor" class="tsd-kind-icon">Http<wbr>Endpoint<wbr>Descriptor</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="build.defaultrpcfactory.html#statusservicedescriptor" class="tsd-kind-icon">Status<wbr>Service<wbr>Descriptor</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="auth.ownerauthorizer.html#owner" class="tsd-kind-icon">owner</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="auth.ownerauthorizer.html#owneroradmin" class="tsd-kind-icon">owner<wbr>OrAdmin</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Default<wbr>Rpc<wbr>Factory<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="build.defaultrpcfactory.html" class="tsd-signature-type">DefaultRpcFactory</a></li>
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="owner" class="tsd-anchor"></a>
+					<h3>owner</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">owner<span class="tsd-signature-symbol">(</span>idParam<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in build/DefaultRpcFactory.ts:21</li>
+									<li>Defined in auth/OwnerAuthorizer.ts:9</li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Create a new instance of the factory.</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <a href="build.defaultrpcfactory.html" class="tsd-signature-type">DefaultRpcFactory</a></h4>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> idParam: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;user_id&quot;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">function</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-siganture">
+									<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, res<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+									</ul>
+									<ul class="tsd-descriptions">
+										<li class="tsd-description">
+											<h4 class="tsd-parameters-title">Parameters</h4>
+											<ul class="tsd-parameters">
+												<li>
+													<h5>req: <span class="tsd-signature-type">any</span></h5>
+												</li>
+												<li>
+													<h5>res: <span class="tsd-signature-type">any</span></h5>
+												</li>
+												<li>
+													<h5>next: <span class="tsd-signature-type">function</span></h5>
+													<ul class="tsd-parameters">
+														<li class="tsd-parameter-siganture">
+															<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+																<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+															</ul>
+															<ul class="tsd-descriptions">
+																<li class="tsd-description">
+																	<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+																</li>
+															</ul>
+														</li>
+													</ul>
+												</li>
+											</ul>
+											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+										</li>
+									</ul>
+								</li>
+							</ul>
 						</li>
 					</ul>
 				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="descriptor" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Descriptor</h3>
-					<div class="tsd-signature tsd-kind-icon">Descriptor<span class="tsd-signature-symbol">:</span> <a href="build.defaultrpcfactory.html#descriptor" class="tsd-signature-type">Descriptor</a><span class="tsd-signature-symbol"> =&nbsp;new Descriptor(&quot;pip-services&quot;, &quot;factory&quot;, &quot;rpc&quot;, &quot;default&quot;, &quot;1.0&quot;)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in build/DefaultRpcFactory.ts:18</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="heartbeatservicedescriptor" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Heartbeat<wbr>Service<wbr>Descriptor</h3>
-					<div class="tsd-signature tsd-kind-icon">Heartbeat<wbr>Service<wbr>Descriptor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;new Descriptor(&quot;pip-services&quot;, &quot;heartbeat-service&quot;, &quot;http&quot;, &quot;*&quot;, &quot;1.0&quot;)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in build/DefaultRpcFactory.ts:21</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="httpendpointdescriptor" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Http<wbr>Endpoint<wbr>Descriptor</h3>
-					<div class="tsd-signature tsd-kind-icon">Http<wbr>Endpoint<wbr>Descriptor<span class="tsd-signature-symbol">:</span> <a href="build.defaultrpcfactory.html#descriptor" class="tsd-signature-type">Descriptor</a><span class="tsd-signature-symbol"> =&nbsp;new Descriptor(&quot;pip-services&quot;, &quot;endpoint&quot;, &quot;http&quot;, &quot;*&quot;, &quot;1.0&quot;)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in build/DefaultRpcFactory.ts:19</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="statusservicedescriptor" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Status<wbr>Service<wbr>Descriptor</h3>
-					<div class="tsd-signature tsd-kind-icon">Status<wbr>Service<wbr>Descriptor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;new Descriptor(&quot;pip-services&quot;, &quot;status-service&quot;, &quot;http&quot;, &quot;*&quot;, &quot;1.0&quot;)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in build/DefaultRpcFactory.ts:20</li>
-						</ul>
-					</aside>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="owneroradmin" class="tsd-anchor"></a>
+					<h3>owner<wbr>OrAdmin</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">owner<wbr>OrAdmin<span class="tsd-signature-symbol">(</span>idParam<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in auth/OwnerAuthorizer.ts:36</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> idParam: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;user_id&quot;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">function</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-siganture">
+									<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, res<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+									</ul>
+									<ul class="tsd-descriptions">
+										<li class="tsd-description">
+											<h4 class="tsd-parameters-title">Parameters</h4>
+											<ul class="tsd-parameters">
+												<li>
+													<h5>req: <span class="tsd-signature-type">any</span></h5>
+												</li>
+												<li>
+													<h5>res: <span class="tsd-signature-type">any</span></h5>
+												</li>
+												<li>
+													<h5>next: <span class="tsd-signature-type">function</span></h5>
+													<ul class="tsd-parameters">
+														<li class="tsd-parameter-siganture">
+															<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+																<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+															</ul>
+															<ul class="tsd-descriptions">
+																<li class="tsd-description">
+																	<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+																</li>
+															</ul>
+														</li>
+													</ul>
+												</li>
+											</ul>
+											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -203,10 +217,10 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class="current tsd-kind-external-module">
 						<a href="../modules/auth.html">auth</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/build.html">build</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -225,30 +239,36 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="auth.basicauthorizer.html" class="tsd-kind-icon">Basic<wbr>Authorizer</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="build.defaultrpcfactory.html" class="tsd-kind-icon">Default<wbr>Rpc<wbr>Factory</a>
+						<a href="auth.ownerauthorizer.html" class="tsd-kind-icon">Owner<wbr>Authorizer</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="build.defaultrpcfactory.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="auth.ownerauthorizer.html#owner" class="tsd-kind-icon">owner</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="build.defaultrpcfactory.html#descriptor" class="tsd-kind-icon">Descriptor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="build.defaultrpcfactory.html#heartbeatservicedescriptor" class="tsd-kind-icon">Heartbeat<wbr>Service<wbr>Descriptor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="build.defaultrpcfactory.html#httpendpointdescriptor" class="tsd-kind-icon">Http<wbr>Endpoint<wbr>Descriptor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="build.defaultrpcfactory.html#statusservicedescriptor" class="tsd-kind-icon">Status<wbr>Service<wbr>Descriptor</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="auth.ownerauthorizer.html#owneroradmin" class="tsd-kind-icon">owner<wbr>OrAdmin</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="auth.roleauthorizer.html" class="tsd-kind-icon">Role<wbr>Authorizer</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/auth.html#_" class="tsd-kind-icon">_</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/auth.html#_-1" class="tsd-kind-icon">_</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/auth.html#_-2" class="tsd-kind-icon">_</a>
+					</li>
 				</ul>
 			</nav>
 		</div>

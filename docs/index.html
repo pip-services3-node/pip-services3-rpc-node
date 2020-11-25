@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>pip-services-rpc-node</title>
+	<title>pip-services3-rpc-node</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">pip-services-rpc-node</a>
+					<a href="index.html" class="title">pip-services3-rpc-node</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -54,7 +54,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> pip-services-rpc-node</h1>
+			<h1> pip-services3-rpc-node</h1>
 		</div>
 	</div>
 </header>
@@ -62,22 +62,59 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="-img-src-https-github-com-pip-services-pip-services-raw-master-design-logo-png-alt-pip-services-logo-style-max-width-30-br-remote-procedure-calls-for-node-js"><img src="https://github.com/pip-services/pip-services/raw/master/design/Logo.png" alt="Pip.Services Logo" style="max-width:30%"> <br/> Remote Procedure Calls for Node.js</h1>
-				<p>This framework is a part of the <a href="https://github.com/pip-services/pip-services">Pip.Services</a> project.
-				It provides the following synchronous communication components:</p>
+				<h1 id="-img-src-https-uploads-ssl-webflow-com-5ea5d3315186cf5ec60c3ee4-5edf1c94ce4c859f2b188094_logo-svg-alt-pip-services-logo-width-200-br-remote-procedure-calls-for-node-js"><img src="https://uploads-ssl.webflow.com/5ea5d3315186cf5ec60c3ee4/5edf1c94ce4c859f2b188094_logo.svg" alt="Pip.Services Logo" width="200"> <br/> Remote Procedure Calls for Node.js</h1>
+				<p>This module is a part of the <a href="http://pipservices.org">Pip.Services</a> polyglot microservices toolkit.</p>
+				<p>The rpc module provides the synchronous communication using local calls or the HTTP(S) protocol. It contains both server and client side implementations.</p>
+				<p>This module contains the following packages:</p>
 				<ul>
-					<li><a href="https://pip-services3-node.github.io/pip-services3-rpc-node/classes/clients.directclient.html"><strong>Direct</strong></a> - Direct client</li>
-					<li><strong>Rest</strong> - RESTful <a href="https://pip-services3-node.github.io/pip-services3-rpc-node/classes/services.restservice.html">services</a> and <a href="https://pip-services3-node.github.io/pip-services3-rpc-node/classes/clients.restclient.html">clients</a></li>
-					<li><strong>Status</strong> - <a href="https://pip-services3-node.github.io/pip-services3-rpc-node/classes/services.heartbeatrestservice.html">Heartbeat</a> and <a href="https://pip-services3-node.github.io/pip-services3-rpc-node/classes/services.statusrestservice.html">status</a> services</li>
+					<li><strong>Auth</strong> - authentication and authorisation components</li>
+					<li><strong>Build</strong> - HTTP service factory</li>
+					<li><strong>Clients</strong> - mechanisms for retrieving connection settings from the microservice’s configuration and providing clients and services with these settings</li>
+					<li><strong>Connect</strong> - helper module to retrieve connections for HTTP-based services and clients</li>
+					<li><strong>Services</strong> - basic implementation of services for connecting via the HTTP/REST protocol and using the Commandable pattern over HTTP</li>
 				</ul>
-				<p>Quick Links:</p>
+				<p><a name="links"></a> Quick links:</p>
 				<ul>
-					<li><a href="https://github.com/pip-services-node/pip-services-rpc-node/blob/master/doc/Downloads.md">Downloads</a></li>
-					<li><a href="https://pip-services3-node.github.io/pip-services3-rpc-node/globals.html">API Reference</a></li>
-					<li><a href="https://github.com/pip-services/pip-services-rpc-node/blob/master/doc/Development.md">Building and Testing</a></li>
-					<li><a href="https://github.com/pip-services/pip-services-rpc-node/blob/master/doc/Development.md/#contrib">Contributing</a></li>
+					<li><a href="https://www.pipservices.org/docs/quickstart/nodejs">Your first microservice in Node.js</a> </li>
+					<li><a href="https://www.pipservices.org/docs/tutorials/data-microservice/service">Data Microservice. Step 5</a></li>
+					<li><a href="https://www.pipservices.org/docs/tutorials/microservice-facade/microservice-facade-main">Microservice Facade</a> </li>
+					<li><a href="https://www.pipservices.org/docs/tutorials/client-lib/direct-client">Client Library. Step 2</a></li>
+					<li><a href="https://www.pipservices.org/docs/tutorials/client-lib/http-client">Client Library. Step 3</a></li>
+					<li><a href="https://pip-services3-node.github.io/pip-services3-grpc-node/globals.html">API Reference</a></li>
+					<li><a href="CHANGELOG.md">Change Log</a></li>
+					<li><a href="https://www.pipservices.org/community/help">Get Help</a></li>
+					<li><a href="https://www.pipservices.org/community/contribute">Contribute</a></li>
 				</ul>
-				<h2 id="acknowledgements">Acknowledgements</h2>
+				<h2 id="use">Use</h2>
+				<p>Install the NPM package as</p>
+				<pre><code class="lang-bash">npm install pip-services3-rpc-node --save
+</code></pre>
+				<h2 id="develop">Develop</h2>
+				<p>For development you shall install the following prerequisites:</p>
+				<ul>
+					<li>Node.js 8+</li>
+					<li>Visual Studio Code or another IDE of your choice</li>
+					<li>Docker</li>
+					<li>Typescript</li>
+				</ul>
+				<p>Install dependencies:</p>
+				<pre><code class="lang-bash">npm install
+</code></pre>
+				<p>Compile the code:</p>
+				<pre><code class="lang-bash">tsc
+</code></pre>
+				<p>Run automated tests:</p>
+				<pre><code class="lang-bash">npm <span class="hljs-built_in">test</span>
+</code></pre>
+				<p>Generate API documentation:</p>
+				<pre><code class="lang-bash">./docgen.ps1
+</code></pre>
+				<p>Before committing changes run dockerized build and test as:</p>
+				<pre><code class="lang-bash">./build.ps1
+./test.ps1
+./clear.ps1
+</code></pre>
+				<h2 id="contacts">Contacts</h2>
 				<p>The Node.js version of Pip.Services is created and maintained by:</p>
 				<ul>
 					<li><strong>Volodymyr Tkachenko</strong></li>
@@ -95,6 +132,9 @@
 				<ul>
 					<li class="globals  ">
 						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/auth.html">auth</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/build.html">build</a>

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>build | pip-services3-rpc-node</title>
+	<title>ISwaggerService | pip-services3-rpc-node</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="build.html">build</a>
+					<a href="../modules/services.html">services</a>
+				</li>
+				<li>
+					<a href="services.iswaggerservice.html">ISwaggerService</a>
 				</li>
 			</ul>
-			<h1>External module build</h1>
+			<h1>Interface ISwaggerService</h1>
 		</div>
 	</div>
 </header>
@@ -66,19 +69,64 @@
 		<div class="col-8 col-content">
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Interface to perform Swagger registrations.</p>
+					</div>
 				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">ISwaggerService</span>
+					</li>
+				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Classes</h3>
+							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-class tsd-parent-kind-external-module"><a href="../classes/build.defaultrpcfactory.html" class="tsd-kind-icon">Default<wbr>Rpc<wbr>Factory</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="services.iswaggerservice.html#registeropenapispec" class="tsd-kind-icon">register<wbr>Open<wbr>Api<wbr>Spec</a></li>
 							</ul>
 						</section>
 					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="registeropenapispec" class="tsd-anchor"></a>
+					<h3>register<wbr>Open<wbr>Api<wbr>Spec</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">register<wbr>Open<wbr>Api<wbr>Spec<span class="tsd-signature-symbol">(</span>baseRoute<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, content<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in services/ISwaggerService.ts:10</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Perform required Swagger registration steps.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>baseRoute: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>content: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -89,29 +137,95 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="auth.html">auth</a>
+						<a href="../modules/auth.html">auth</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/build.html">build</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/clients.html">clients</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/connect.html">connect</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/index.html">index</a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="build.html">build</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="clients.html">clients</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="connect.html">connect</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="index.html">index</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="services.html">services</a>
+						<a href="../modules/services.html">services</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/build.defaultrpcfactory.html" class="tsd-kind-icon">Default<wbr>Rpc<wbr>Factory</a>
+						<a href="../classes/services.aboutoperations.html" class="tsd-kind-icon">About<wbr>Operations</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="../classes/services.commandablehttpservice.html" class="tsd-kind-icon">Commandable<wbr>Http<wbr>Service</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="../classes/services.commandableswaggerdocument.html" class="tsd-kind-icon">Commandable<wbr>Swagger<wbr>Document</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="../classes/services.heartbeatoperations.html" class="tsd-kind-icon">Heartbeat<wbr>Operations</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="../classes/services.heartbeatrestservice.html" class="tsd-kind-icon">Heartbeat<wbr>Rest<wbr>Service</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="../classes/services.httpendpoint.html" class="tsd-kind-icon">Http<wbr>Endpoint</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="../classes/services.httprequestdetector.html" class="tsd-kind-icon">Http<wbr>Request<wbr>Detector</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="../classes/services.httpresponsesender.html" class="tsd-kind-icon">Http<wbr>Response<wbr>Sender</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="../classes/services.restoperations.html" class="tsd-kind-icon">Rest<wbr>Operations</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="../classes/services.restservice.html" class="tsd-kind-icon">Rest<wbr>Service</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="../classes/services.statusoperations.html" class="tsd-kind-icon">Status<wbr>Operations</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="../classes/services.statusrestservice.html" class="tsd-kind-icon">Status<wbr>Rest<wbr>Service</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="services.iregisterable.html" class="tsd-kind-icon">IRegisterable</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="services.iswaggerservice.html" class="tsd-kind-icon">ISwagger<wbr>Service</a>
+						<ul>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="services.iswaggerservice.html#registeropenapispec" class="tsd-kind-icon">register<wbr>Open<wbr>Api<wbr>Spec</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/services.html#_" class="tsd-kind-icon">_</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/services.html#_-1" class="tsd-kind-icon">_</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/services.html#_-2" class="tsd-kind-icon">_</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/services.html#fs" class="tsd-kind-icon">fs</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/services.html#fs-1" class="tsd-kind-icon">fs</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/services.html#os" class="tsd-kind-icon">os</a>
 					</li>
 				</ul>
 			</nav>
