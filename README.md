@@ -5,7 +5,7 @@ This module is a part of the [Pip.Services](http://pipservices.org) polyglot mic
 The rpc module provides the synchronous communication using local calls or the HTTP(S) protocol. It contains both server and client side implementations.
 
 The module contains the following packages:
-- **Auth** - authentication and authorisation components
+- **Auth** - authentication and authorization components
 - **Build** - HTTP service factory
 - **Clients** - mechanisms for retrieving connection settings from the microservice’s configuration and providing clients and services with these settings
 - **Connect** - helper module to retrieve connections for HTTP-based services and clients
