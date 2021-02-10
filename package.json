@@ -48,12 +48,14 @@
         "restify-cors-middleware": "^1.1.1"
     },
     "devDependencies": {
-        "@types/node": "*",
-        "@types/lodash": "^4.0.0",
-        "@types/async": "^2.0.0",
-        "@types/mocha": "*",
+        "@types/async": "3.2.5",
         "@types/chai": "*",
-        "mocha": "^2.2.0",
-        "chai": "^3.5.0"
+        "@types/lodash": "4.14.168",
+        "@types/mocha": "*",
+        "@types/node": "*",
+        "chai": "4.3.0",
+        "mocha": "*",
+        "ts-node": "9.1.1",
+        "typescript": "^4.1.3"
     }
 }
