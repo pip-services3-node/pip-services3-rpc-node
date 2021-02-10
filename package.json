@@ -43,9 +43,9 @@
         "pip-services3-commons-node": "^3.0.4",
         "pip-services3-components-node": "^3.0.6",
         "querystring": "^0.2.0",
-        "restify": "^7.7.0",
+        "restify": "8.5.1",
         "restify-clients": "^2.6.4",
-        "restify-cors-middleware": "^1.1.1"
+        "restify-cors-middleware2": "2.1.2"
     },
     "devDependencies": {
         "@types/async": "3.2.5",
