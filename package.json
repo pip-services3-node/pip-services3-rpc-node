@@ -1,6 +1,6 @@
 {
     "name": "pip-services3-rpc-node",
-    "version": "3.3.1",
+    "version": "3.3.3",
     "author": "Conceptual Vision Consulting LLC",
     "description": "Remote procedure calls for Pip.Services in Node.js",
     "contributors": [
@@ -43,17 +43,19 @@
         "pip-services3-commons-node": "^3.0.4",
         "pip-services3-components-node": "^3.0.6",
         "querystring": "^0.2.0",
-        "restify": "^7.7.0",
+        "restify": "8.5.1",
         "restify-clients": "^2.6.4",
-        "restify-cors-middleware": "^1.1.1"
+        "restify-cors-middleware2": "2.1.2"
     },
     "devDependencies": {
-        "@types/node": "*",
-        "@types/lodash": "^4.0.0",
-        "@types/async": "^2.0.0",
-        "@types/mocha": "*",
+        "@types/async": "3.2.5",
         "@types/chai": "*",
-        "mocha": "^2.2.0",
-        "chai": "^3.5.0"
+        "@types/lodash": "4.14.168",
+        "@types/mocha": "*",
+        "@types/node": "*",
+        "chai": "4.3.0",
+        "mocha": "*",
+        "ts-node": "9.1.1",
+        "typescript": "^4.1.3"
     }
 }

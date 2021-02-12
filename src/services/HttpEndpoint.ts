@@ -216,7 +216,7 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
                 //     this._server.use(restify.plugins.throttle(options.get("throttle")));
                 
                 // Configure CORS requests
-                let corsMiddleware = require('restify-cors-middleware');
+                let corsMiddleware = require('restify-cors-middleware2');
                 let cors = corsMiddleware({
                     preflightMaxAge: 5, //Optional
                     origins: ['*'],

@@ -1,5 +1,11 @@
 # <img src="https://uploads-ssl.webflow.com/5ea5d3315186cf5ec60c3ee4/5edf1c94ce4c859f2b188094_logo.svg" alt="Pip.Services Logo" width="200"> <br/> Remote Procedure Calls for Node.js Changelog
 
+## <a name="3.3.3"></a> 3.3.3 (2021-02-10)
+### Updates
+* replaces restify-cors-middleware with restify-cors-middleware2 until restify-cors-middleware is updated to work with the latest restify (asuuming it ever is). See https://github.com/Tabcorp/restify-cors-middleware/issues/73
+* Uses node:14 docker image to build/test
+* Update to latest Restify
+
 ## <a name="3.2.2"></a> 3.2.2 (2020-04-08)
 
 ### Features
