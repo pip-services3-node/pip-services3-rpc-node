@@ -17,7 +17,7 @@ const pip_services3_commons_node_1 = require("pip-services3-commons-node");
  * ### Configuration parameters ###
  *
  * - connection:
- *   - discovery_key:               (optional) a key to retrieve the connection from [[https://rawgit.com/pip-services-node/pip-services3-components-node/master/doc/api/interfaces/connect.idiscovery.html IDiscovery]]
+ *   - discovery_key:               (optional) a key to retrieve the connection from [[https://pip-services3-node.github.io/pip-services3-components-node/interfaces/connect.idiscovery.html IDiscovery]]
  *   - ...                          other connection parameters
  *
  * - connections:                   alternative to connection
@@ -28,10 +28,10 @@ const pip_services3_commons_node_1 = require("pip-services3-commons-node");
  *
  * ### References ###
  *
- * - <code>\*:discovery:\*:\*:1.0</code>            (optional) [[https://rawgit.com/pip-services-node/pip-services3-components-node/master/doc/api/interfaces/connect.idiscovery.html IDiscovery]] services
+ * - <code>\*:discovery:\*:\*:1.0</code>            (optional) [[https://pip-services3-node.github.io/pip-services3-components-node/interfaces/connect.idiscovery.html IDiscovery]] services
  *
- * @see [[https://rawgit.com/pip-services-node/pip-services3-components-node/master/doc/api/classes/connect.connectionparams.html ConnectionParams]]
- * @see [[https://rawgit.com/pip-services-node/pip-services3-components-node/master/doc/api/classes/connect.connectionresolver.html ConnectionResolver]]
+ * @see [[https://pip-services3-node.github.io/pip-services3-components-node/classes/connect.connectionparams.html ConnectionParams]]
+ * @see [[https://pip-services3-node.github.io/pip-services3-components-node/classes/connect.connectionresolver.html ConnectionResolver]]
  *
  * ### Example ###
  *

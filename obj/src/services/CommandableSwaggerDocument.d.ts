@@ -1,3 +1,4 @@
+/** @module services */
 import { ConfigParams, ICommand } from "pip-services3-commons-node";
 export declare class CommandableSwaggerDocument {
     private content;
