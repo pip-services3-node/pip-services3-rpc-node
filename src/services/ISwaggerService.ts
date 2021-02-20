@@ -7,5 +7,5 @@ export interface ISwaggerService {
     /**
      * Perform required Swagger registration steps.
      */
-    registerOpenApiSpec(baseRoute: string, content: string): void;
+    registerOpenApiSpec(baseRoute: string, swaggerRoute: string): void;
 }
