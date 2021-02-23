@@ -18,6 +18,7 @@ import { Schema } from 'pip-services3-commons-node';
 
 import { HttpEndpoint } from './HttpEndpoint';
 import { IRegisterable } from './IRegisterable';
+import { ISwaggerService } from './ISwaggerService';
 import { HttpResponseSender } from './HttpResponseSender';
 
 /**
@@ -96,7 +97,8 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
 
     private static readonly _defaultConfig: ConfigParams = ConfigParams.fromTuples(
         "base_route", "",
-        "dependencies.endpoint", "*:endpoint:http:*:1.0"
+        "dependencies.endpoint", "*:endpoint:http:*:1.0",
+        "dependencies.swagger", "*:swagger-service:*:*:1.0"
     );
 
     protected _config: ConfigParams;
@@ -125,6 +127,7 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
      */
     protected _counters: CompositeCounters = new CompositeCounters();
 
+    protected _swaggerService: ISwaggerService;
     protected _swaggerEnable: boolean = false;
     protected _swaggerRoute: string = "swagger";
 
@@ -168,6 +171,8 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
         }
         // Add registration callback to the endpoint
         this._endpoint.register(this);
+
+        this._swaggerService = this._dependencyResolver.getOneOptional<ISwaggerService>("swagger");
     }
 
     /**
@@ -179,6 +184,7 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
             this._endpoint.unregister(this);
             this._endpoint = null;
         }
+        this._swaggerService = null;
     }
 
     private createEndpoint(): HttpEndpoint {
@@ -464,6 +470,10 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
                 res.write(content);
                 res.end();
             });
+
+            if (this._swaggerService != null) {
+                this._swaggerService.registerOpenApiSpec(this._baseRoute, this._swaggerRoute);
+            }
         }
     }
 }

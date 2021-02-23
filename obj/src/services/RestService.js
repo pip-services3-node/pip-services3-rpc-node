@@ -135,6 +135,7 @@ class RestService {
         }
         // Add registration callback to the endpoint
         this._endpoint.register(this);
+        this._swaggerService = this._dependencyResolver.getOneOptional("swagger");
     }
     /**
      * Unsets (clears) previously set references to dependent components.
@@ -145,6 +146,7 @@ class RestService {
             this._endpoint.unregister(this);
             this._endpoint = null;
         }
+        this._swaggerService = null;
     }
     createEndpoint() {
         let endpoint = new HttpEndpoint_1.HttpEndpoint();
@@ -385,9 +387,12 @@ class RestService {
                 res.write(content);
                 res.end();
             });
+            if (this._swaggerService != null) {
+                this._swaggerService.registerOpenApiSpec(this._baseRoute, this._swaggerRoute);
+            }
         }
     }
 }
 exports.RestService = RestService;
-RestService._defaultConfig = pip_services3_commons_node_2.ConfigParams.fromTuples("base_route", "", "dependencies.endpoint", "*:endpoint:http:*:1.0");
+RestService._defaultConfig = pip_services3_commons_node_2.ConfigParams.fromTuples("base_route", "", "dependencies.endpoint", "*:endpoint:http:*:1.0", "dependencies.swagger", "*:swagger-service:*:*:1.0");
 //# sourceMappingURL=RestService.js.map

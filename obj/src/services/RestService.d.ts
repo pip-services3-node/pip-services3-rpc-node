@@ -11,6 +11,7 @@ import { Timing } from 'pip-services3-components-node';
 import { Schema } from 'pip-services3-commons-node';
 import { HttpEndpoint } from './HttpEndpoint';
 import { IRegisterable } from './IRegisterable';
+import { ISwaggerService } from './ISwaggerService';
 /**
  * Abstract service that receives remove calls via HTTP/REST protocol.
  *
@@ -108,6 +109,7 @@ export declare abstract class RestService implements IOpenable, IConfigurable, I
      * The performance counters.
      */
     protected _counters: CompositeCounters;
+    protected _swaggerService: ISwaggerService;
     protected _swaggerEnable: boolean;
     protected _swaggerRoute: string;
     /**
