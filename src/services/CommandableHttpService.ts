@@ -107,7 +107,7 @@ export abstract class CommandableHttpService extends RestService {
 
             this.registerRoute('post', route, null, (req, res) => {
                 let params = req.body || {};
-                let correlationId = req.query.correlation_id;
+                let correlationId = this.getCorrelationId(req);
                 let args = Parameters.fromValue(params);
                 let timing = this.instrument(correlationId, this._baseRoute + '.' + command.getName());
 

@@ -45,7 +45,7 @@ export class DummyRestService extends RestService {
 
     private getPageByFilter(req: any, res: any) {
         this._controller.getPageByFilter(
-            req.params.correlation_id,
+            this.getCorrelationId(req),
             new FilterParams(req.params),
             new PagingParams(req.params),
             this.sendResult(req, res)
@@ -54,7 +54,7 @@ export class DummyRestService extends RestService {
 
     private getOneById(req, res) {
         this._controller.getOneById(
-            req.params.correlation_id,
+            this.getCorrelationId(req),
             req.params.dummy_id,
             this.sendResult(req, res)
         );
@@ -62,7 +62,7 @@ export class DummyRestService extends RestService {
 
     private create(req, res) {
         this._controller.create(
-            req.params.correlation_id,
+            this.getCorrelationId(req),
             req.body,
             this.sendCreatedResult(req, res)
         );
@@ -70,7 +70,7 @@ export class DummyRestService extends RestService {
 
     private update(req, res) {
         this._controller.update(
-            req.params.correlation_id,
+            this.getCorrelationId(req),
             req.body,
             this.sendResult(req, res)
         );
@@ -78,7 +78,7 @@ export class DummyRestService extends RestService {
 
     private deleteById(req, res) {
         this._controller.deleteById(
-            req.params.correlation_id,
+            this.getCorrelationId(req),
             req.params.dummy_id,
             this.sendDeletedResult(req, res)
         );

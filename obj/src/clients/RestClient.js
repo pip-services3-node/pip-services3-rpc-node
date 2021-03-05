@@ -20,7 +20,7 @@ const HttpConnectionResolver_1 = require("../connect/HttpConnectionResolver");
  *
  * - base_route:              base route for remote URI
  * - connection(s):
- *   - discovery_key:         (optional) a key to retrieve the connection from [[https://rawgit.com/pip-services-node/pip-services3-components-node/master/doc/api/interfaces/connect.idiscovery.html IDiscovery]]
+ *   - discovery_key:         (optional) a key to retrieve the connection from [[https://pip-services3-node.github.io/pip-services3-components-node/interfaces/connect.idiscovery.html IDiscovery]]
  *   - protocol:              connection protocol: http or https
  *   - host:                  host name or IP address
  *   - port:                  port number
@@ -32,9 +32,9 @@ const HttpConnectionResolver_1 = require("../connect/HttpConnectionResolver");
  *
  * ### References ###
  *
- * - <code>\*:logger:\*:\*:1.0</code>         (optional) [[https://rawgit.com/pip-services-node/pip-services3-components-node/master/doc/api/interfaces/log.ilogger.html ILogger]] components to pass log messages
- * - <code>\*:counters:\*:\*:1.0</code>         (optional) [[https://rawgit.com/pip-services-node/pip-services3-components-node/master/doc/api/interfaces/count.icounters.html ICounters]] components to pass collected measurements
- * - <code>\*:discovery:\*:\*:1.0</code>        (optional) [[https://rawgit.com/pip-services-node/pip-services3-components-node/master/doc/api/interfaces/connect.idiscovery.html IDiscovery]] services to resolve connection
+ * - <code>\*:logger:\*:\*:1.0</code>         (optional) [[https://pip-services3-node.github.io/pip-services3-components-node/interfaces/log.ilogger.html ILogger]] components to pass log messages
+ * - <code>\*:counters:\*:\*:1.0</code>         (optional) [[https://pip-services3-node.github.io/pip-services3-components-node/interfaces/count.icounters.html ICounters]] components to pass collected measurements
+ * - <code>\*:discovery:\*:\*:1.0</code>        (optional) [[https://pip-services3-node.github.io/pip-services3-components-node/interfaces/connect.idiscovery.html IDiscovery]] services to resolve connection
  *
  * @see [[RestService]]
  * @see [[CommandableHttpService]]
@@ -101,6 +101,7 @@ class RestClient {
          * The invocation timeout in milliseconds.
          */
         this._timeout = 10000;
+        this._correlationIdPlace = "query";
     }
     /**
      * Configures component by passing configuration parameters.
@@ -115,6 +116,7 @@ class RestClient {
         this._connectTimeout = config.getAsIntegerWithDefault("options.connect_timeout", this._connectTimeout);
         this._timeout = config.getAsIntegerWithDefault("options.timeout", this._timeout);
         this._baseRoute = config.getAsStringWithDefault("base_route", this._baseRoute);
+        this._correlationIdPlace = config.getAsStringWithDefault("options.correlation_id_place", this._correlationIdPlace);
     }
     /**
      * Sets references to dependent components.
@@ -293,6 +295,8 @@ class RestClient {
                 builder += "/";
             builder += this._baseRoute;
         }
+        if (route.length == 0)
+            route = "/";
         if (route[0] != "/")
             builder += "/";
         builder += route;
@@ -315,7 +319,12 @@ class RestClient {
             data = {};
         }
         route = this.createRequestRoute(route);
-        params = this.addCorrelationId(params, correlationId);
+        if (this._correlationIdPlace == "query" || this._correlationIdPlace == "both") {
+            params = this.addCorrelationId(params, correlationId);
+        }
+        if (this._correlationIdPlace == "headers" || this._correlationIdPlace == "both") {
+            this._headers['correlation_id'] = correlationId;
+        }
         if (!_.isEmpty(params))
             route += '?' + querystring.stringify(params);
         let self = this;
@@ -356,5 +365,5 @@ class RestClient {
     }
 }
 exports.RestClient = RestClient;
-RestClient._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples("connection.protocol", "http", "connection.host", "0.0.0.0", "connection.port", 3000, "options.request_max_size", 1024 * 1024, "options.connect_timeout", 10000, "options.timeout", 10000, "options.retries", 3, "options.debug", true);
+RestClient._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples("connection.protocol", "http", "connection.host", "0.0.0.0", "connection.port", 3000, "options.request_max_size", 1024 * 1024, "options.connect_timeout", 10000, "options.timeout", 10000, "options.retries", 3, "options.debug", true, "options.correlation_id_place", "query");
 //# sourceMappingURL=RestClient.js.map

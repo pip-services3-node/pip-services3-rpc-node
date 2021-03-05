@@ -83,7 +83,8 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
         "options.connect_timeout", 10000,
         "options.timeout", 10000,
         "options.retries", 3,
-        "options.debug", true
+        "options.debug", true,
+        "options.correlation_id_place", "query",
     );
 
     /**
@@ -131,6 +132,8 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
      */
     protected _uri: string;
 
+    protected _correlationIdPlace: string = "query"
+
     /**
      * Configures component by passing configuration parameters.
      * 
@@ -146,12 +149,13 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
         this._timeout = config.getAsIntegerWithDefault("options.timeout", this._timeout);
 
         this._baseRoute = config.getAsStringWithDefault("base_route", this._baseRoute);
+        this._correlationIdPlace = config.getAsStringWithDefault("options.correlation_id_place", this._correlationIdPlace);
     }
 
     /**
-	 * Sets references to dependent components.
-	 * 
-	 * @param references 	references to locate the component dependencies. 
+     * Sets references to dependent components.
+     * 
+     * @param references 	references to locate the component dependencies. 
      */
     public setReferences(references: IReferences): void {
         this._logger.setReferences(references);
@@ -195,18 +199,18 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
     }
 
     /**
-	 * Checks if the component is opened.
-	 * 
-	 * @returns true if the component has been opened and false otherwise.
+     * Checks if the component is opened.
+     * 
+     * @returns true if the component has been opened and false otherwise.
      */
     public isOpen(): boolean {
         return this._client != null;
     }
 
     /**
-	 * Opens the component.
-	 * 
-	 * @param correlationId 	(optional) transaction id to trace execution through call chain.
+     * Opens the component.
+     * 
+     * @param correlationId 	(optional) transaction id to trace execution through call chain.
      * @param callback 			callback function that receives error or null no errors occured.
      */
     public open(correlationId: string, callback?: (err: any) => void): void {
@@ -250,9 +254,9 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
     }
 
     /**
-	 * Closes component and frees used resources.
-	 * 
-	 * @param correlationId 	(optional) transaction id to trace execution through call chain.
+     * Closes component and frees used resources.
+     * 
+     * @param correlationId 	(optional) transaction id to trace execution through call chain.
      * @param callback 			callback function that receives error or null no errors occured.
      */
     public close(correlationId: string, callback?: (err: any) => void): void {
@@ -340,7 +344,7 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
                 builder += "/";
             builder += this._baseRoute;
         }
-
+        if (route.length == 0) route = "/";
         if (route[0] != "/")
             builder += "/";
         builder += route;
@@ -369,8 +373,14 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
         }
 
         route = this.createRequestRoute(route);
+        if (this._correlationIdPlace == "query" || this._correlationIdPlace == "both") {
+            params = this.addCorrelationId(params, correlationId)
+        }
 
-        params = this.addCorrelationId(params, correlationId)
+        if (this._correlationIdPlace == "headers" || this._correlationIdPlace == "both") {
+            this._headers['correlation_id'] = correlationId;
+        }
+
         if (!_.isEmpty(params))
             route += '?' + querystring.stringify(params);
 

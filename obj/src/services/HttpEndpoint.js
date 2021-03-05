@@ -81,7 +81,7 @@ class HttpEndpoint {
      *
      * @param config    configuration parameters, containing a "connection(s)" section.
      *
-     * @see [[https://rawgit.com/pip-services-node/pip-services3-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" package)
+     * @see [[https://pip-services3-node.github.io/pip-services3-commons-node/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" package)
      */
     configure(config) {
         config = config.setDefaults(HttpEndpoint._defaultConfig);
@@ -101,7 +101,7 @@ class HttpEndpoint {
      * @param references    an IReferences object, containing references to a logger, counters,
      *                      and a connection resolver.
      *
-     * @see [[https://rawgit.com/pip-services-node/pip-services3-commons-node/master/doc/api/interfaces/refer.ireferences.html IReferences]] (in the PipServices "Commons" package)
+     * @see [[https://pip-services3-node.github.io/pip-services3-commons-node/interfaces/refer.ireferences.html IReferences]] (in the PipServices "Commons" package)
      */
     setReferences(references) {
         this._logger.setReferences(references);
@@ -178,7 +178,7 @@ class HttpEndpoint {
                 //if (options.get("throttle") != null)
                 //     this._server.use(restify.plugins.throttle(options.get("throttle")));
                 // Configure CORS requests
-                let corsMiddleware = require('restify-cors-middleware');
+                let corsMiddleware = require('restify-cors-middleware2');
                 let cors = corsMiddleware({
                     preflightMaxAge: 5,
                     origins: ['*'],
@@ -312,6 +312,18 @@ class HttpEndpoint {
         return route;
     }
     /**
+     * Returns correlationId from request
+     * @param req -  http request
+     * @return Returns correlationId from request
+     */
+    getCorrelationId(req) {
+        let correlationId = req.query.correlation_id;
+        if (_.isEmpty(correlationId)) {
+            correlationId = req.headers['correlation_id'];
+        }
+        return correlationId;
+    }
+    /**
      * Registers an action in this objects REST server (service) by the given method and route.
      *
      * @param method        the HTTP method of the route.
@@ -329,7 +341,7 @@ class HttpEndpoint {
             // Perform validation
             if (schema != null) {
                 let params = _.extend({}, req.params, req.query, { body: req.body });
-                let correlationId = params.correlaton_id;
+                let correlationId = this.getCorrelationId(req);
                 let err = schema.validateAndReturnException(correlationId, params, false);
                 if (err != null) {
                     HttpResponseSender_1.HttpResponseSender.sendError(req, res, err);

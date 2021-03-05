@@ -1,4 +1,5 @@
 "use strict";
+/** @module services */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommandableSwaggerDocument = void 0;
 const _ = require('lodash');

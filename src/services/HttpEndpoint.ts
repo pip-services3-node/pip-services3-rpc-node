@@ -363,6 +363,19 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
     }
 
     /**
+     * Returns correlationId from request
+     * @param req -  http request
+     * @return Returns correlationId from request
+     */
+    public getCorrelationId(req: any): string {
+        let correlationId = req.query.correlation_id;
+        if (_.isEmpty(correlationId)) {
+            correlationId = req.headers['correlation_id']
+        }
+        return correlationId
+    }
+
+    /**
      * Registers an action in this objects REST server (service) by the given method and route.
      * 
      * @param method        the HTTP method of the route.
@@ -382,7 +395,7 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
             // Perform validation
             if (schema != null) {
                 let params = _.extend({}, req.params, req.query, { body: req.body });
-                let correlationId = params.correlaton_id;
+                let correlationId = this.getCorrelationId(req);
                 let err = schema.validateAndReturnException(correlationId, params, false);
                 if (err != null) {
                     HttpResponseSender.sendError(req, res, err);

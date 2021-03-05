@@ -35,7 +35,11 @@ export abstract class RestOperations implements IConfigurable, IReferenceable {
     }
 
     protected getCorrelationId(req: any): any {
-        return req.params.correlation_id;
+        let correlationId = req.query.correlation_id;
+        if (_.isEmpty(correlationId)) {
+            correlationId = req.headers['correlation_id']
+        }
+        return correlationId
     }
 
     protected getFilterParams(req: any): FilterParams {

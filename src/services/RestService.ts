@@ -442,6 +442,19 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
     }
 
     /**
+     * Returns correlationId from request
+     * @param req -  http request
+     * @return Returns correlationId from request
+     */
+    public getCorrelationId(req: any): string {
+        let correlationId = req.query.correlation_id;
+        if (_.isEmpty(correlationId)) {
+            correlationId = req.headers['correlation_id']
+        }
+        return correlationId
+    }
+
+    /**
      * Registers all service routes in HTTP endpoint.
      * 
      * This method is called by the service and must be overriden
@@ -458,8 +471,8 @@ export abstract class RestService implements IOpenable, IConfigurable, IReferenc
         if (this._swaggerEnable) {
             this.registerRoute("get", this._swaggerRoute, null, (req, res) => {
                 res.writeHead(200, {
-                'Content-Length': Buffer.byteLength(content),
-                'Content-Type': 'application/x-yaml'
+                    'Content-Length': Buffer.byteLength(content),
+                    'Content-Type': 'application/x-yaml'
                 });
                 res.write(content);
                 res.end();

@@ -29,7 +29,11 @@ class RestOperations {
         this._dependencyResolver.setReferences(references);
     }
     getCorrelationId(req) {
-        return req.params.correlation_id;
+        let correlationId = req.query.correlation_id;
+        if (_.isEmpty(correlationId)) {
+            correlationId = req.headers['correlation_id'];
+        }
+        return correlationId;
     }
     getFilterParams(req) {
         let filter = pip_services3_commons_node_1.FilterParams.fromValue(_.omit(req.query, 'skip', 'take', 'total'));
