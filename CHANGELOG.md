@@ -1,5 +1,14 @@
 # <img src="https://uploads-ssl.webflow.com/5ea5d3315186cf5ec60c3ee4/5edf1c94ce4c859f2b188094_logo.svg" alt="Pip.Services Logo" width="200"> <br/> Remote Procedure Calls for Node.js Changelog
 
+## <a name="3.5.1"></a> 3.5.1 (2021-03-5)
+
+### Features
+* **services** Added working with correlationId in headers
+* **clients** Added working with correlationId in headers
+
+### Bug Fixes
+* **clients** Fix bug with empty route in createRequestRoute method
+
 ## <a name="3.5.0"></a> 3.5.0 (2021-02-21)
 
 ### Features
