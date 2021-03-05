@@ -97,7 +97,11 @@ class CommandableHttpService extends RestService_1.RestService {
             route = route[0] != '/' ? '/' + route : route;
             this.registerRoute('post', route, null, (req, res) => {
                 let params = req.body || {};
+<<<<<<< HEAD
                 let correlationId = this.getCorrelationId(req);
+=======
+                let correlationId = req.headers.correlation_id || req.query.correlation_id;
+>>>>>>> 3f0dbb5b461a5effcf3342d716addb884dfbc257
                 let args = pip_services3_commons_node_1.Parameters.fromValue(params);
                 let timing = this.instrument(correlationId, this._baseRoute + '.' + command.getName());
                 command.execute(correlationId, args, (err, result) => {
