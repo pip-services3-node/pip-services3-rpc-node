@@ -10,4 +10,5 @@ export interface IDummyController {
     create(correlationId: string, entity: Dummy, callback: (err: any, result: Dummy) => void): void;
     update(correlationId: string, entity: Dummy, callback: (err: any, result: Dummy) => void): void;
     deleteById(correlationId: string, id: string, callback: (err: any, result: Dummy) => void): void;
+    checkCorrelationId(correlationId: string, callback: (err: any, result: any) => void): void;
 }

@@ -73,5 +73,17 @@ export class DummyRestClient extends RestClient implements IDummyClient {
             }
         );
     }
+
+    public checkCorrelationId(correlationId: string, callback: (err: any, result: any) => void): void {
+        this.call('get', 
+        '/dummies/check/correlation_id',
+        correlationId, 
+        {}, 
+        (err, result) => {
+            this.instrument(correlationId, 'dummy.check_correlation_id');
+            callback(err, result);
+        }
+    );
+    }
   
 }

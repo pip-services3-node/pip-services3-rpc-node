@@ -10,7 +10,8 @@ import { DummyClientFixture } from './DummyClientFixture';
 var restConfig = ConfigParams.fromTuples(
     "connection.protocol", "http",
     "connection.host", "localhost",
-    "connection.port", 3000
+    "connection.port", 3000,
+    "options.correlation_id_place", "headers",
 );
 
 suite('DummyRestClient', ()=> {

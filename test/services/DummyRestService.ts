@@ -83,6 +83,10 @@ export class DummyRestService extends RestService {
             this.sendDeletedResult(req, res)
         );
     }    
+
+    private checkCorrelationId(req, res) {
+        this._controller.checkCorrelationId(this.getCorrelationId(req), this.sendResult(req, res));
+    }
         
     public register() {
         this.registerInterceptor('/dummies', this.incrementNumberOfCalls);
@@ -96,6 +100,12 @@ export class DummyRestService extends RestService {
                 .withOptionalProperty("body", new FilterParamsSchema()),
             this.getPageByFilter
         );
+
+        this.registerRoute(
+            "get", "/dummies/check/correlation_id",
+            new ObjectSchema(true),
+            this.checkCorrelationId,
+        )
 
         this.registerRoute(
             'get', '/dummies/:dummy_id', 

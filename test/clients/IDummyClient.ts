@@ -10,4 +10,5 @@ export interface IDummyClient {
     createDummy(correlationId: string, dummy: Dummy, callback: (err: any, result: Dummy) => void): void;
     updateDummy(correlationId: string, dummy: Dummy, callback: (err: any, result: Dummy) => void): void;
     deleteDummy(correlationId: string, dummyId: string, callback: (err: any, result: Dummy) => void): void;
+    checkCorrelationId(correlationId: string, callback: (err: any, result: any) => void): void;
 }

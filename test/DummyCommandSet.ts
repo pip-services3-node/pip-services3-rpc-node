@@ -26,6 +26,7 @@ export class DummyCommandSet extends CommandSet {
 		this.addCommand(this.makeCreateCommand());
 		this.addCommand(this.makeUpdateCommand());
 		this.addCommand(this.makeDeleteByIdCommand());
+		this.addCommand(this.makeCheckCorrelationIdCommand());
 	}
 
 	private makeGetPageByFilterCommand(): ICommand {
@@ -89,5 +90,17 @@ export class DummyCommandSet extends CommandSet {
 			}
 		);
 	}
+
+	private makeCheckCorrelationIdCommand(): ICommand {
+		return new Command(
+			"check_correlation_id",
+            new ObjectSchema(true),
+			(correlationId: string, args: Parameters, callback: (err: any, result: any) => void) => {
+				this._controller.checkCorrelationId(correlationId, callback);
+			}
+		);
+	}
+
+	
 
 }

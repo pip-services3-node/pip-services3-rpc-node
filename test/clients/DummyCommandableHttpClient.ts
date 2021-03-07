@@ -9,15 +9,16 @@ import { IDummyClient } from './IDummyClient';
 import { Dummy } from '../Dummy';
 
 export class DummyCommandableHttpClient extends CommandableHttpClient implements IDummyClient {
-        
+
     public constructor() {
         super('dummy');
     }
 
+
     public getDummies(correlationId: string, filter: FilterParams, paging: PagingParams, callback: (err: any, result: DataPage<Dummy>) => void): void {
         this.callCommand(
-            'get_dummies', 
-            correlationId, 
+            'get_dummies',
+            correlationId,
             {
                 filter: filter,
                 paging: paging
@@ -28,13 +29,13 @@ export class DummyCommandableHttpClient extends CommandableHttpClient implements
 
     public getDummyById(correlationId: string, dummyId: string, callback: (err: any, result: Dummy) => void): void {
         this.callCommand(
-            'get_dummy_by_id', 
+            'get_dummy_by_id',
             correlationId,
             {
                 dummy_id: dummyId
-            }, 
+            },
             callback
-        );        
+        );
     }
 
     public createDummy(correlationId: string, dummy: any, callback: (err: any, result: Dummy) => void): void {
@@ -43,7 +44,7 @@ export class DummyCommandableHttpClient extends CommandableHttpClient implements
             correlationId,
             {
                 dummy: dummy
-            }, 
+            },
             callback
         );
     }
@@ -54,7 +55,7 @@ export class DummyCommandableHttpClient extends CommandableHttpClient implements
             correlationId,
             {
                 dummy: dummy
-            }, 
+            },
             callback
         );
     }
@@ -62,12 +63,21 @@ export class DummyCommandableHttpClient extends CommandableHttpClient implements
     public deleteDummy(correlationId: string, dummyId: string, callback: (err: any, result: Dummy) => void): void {
         this.callCommand(
             'delete_dummy',
-            correlationId, 
+            correlationId,
             {
                 dummy_id: dummyId
             },
             callback
         );
     }
-  
+
+    public checkCorrelationId(correlationId: string, callback: (err: any, result: any) => void): void {
+        this.callCommand(
+            'check_correlation_id',
+            correlationId,
+            null,
+            callback
+        );
+    }
+
 }

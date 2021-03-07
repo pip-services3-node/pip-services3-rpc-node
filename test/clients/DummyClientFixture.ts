@@ -114,6 +114,18 @@ export class DummyClientFixture {
                         callback();
                     }
                 );
+            },
+            // Check correlation id
+            (callback) => {
+                this._client.checkCorrelationId(
+                    "test_cor_id",
+                    (err, result) => {
+                        assert.isNull(err);
+                        assert.isNotNull(result);
+                        assert.equal(result["correlationId"], "test_cor_id");
+                        callback();
+                    }
+                );
             }
         ], done);
     }

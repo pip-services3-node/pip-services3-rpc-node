@@ -21,6 +21,8 @@ suite('DummyCommandableHttpService', ()=> {
     var _dummy1: Dummy;
     var _dummy2: Dummy;
 
+    let headers: any = {};
+
     let service: DummyCommandableHttpService;
 
     let rest: any;
@@ -46,7 +48,7 @@ suite('DummyCommandableHttpService', ()=> {
 
     setup(() => {
         let url = 'http://localhost:3000';
-        rest = restify.createJsonClient({ url: url, version: '*' });
+        rest = restify.createJsonClient({ url: url, version: '*', headers: headers });
 
         _dummy1 = { id: null, key: "Key 1", content: "Content 1"};
         _dummy2 = { id: null, key: "Key 2", content: "Content 2"};
@@ -149,15 +151,37 @@ suite('DummyCommandableHttpService', ()=> {
                     },
                     (err, req, res, dummy) => {
                         assert.isNull(err);
-                        
                         // assert.isObject(dummy);
-
                         callback();
                     }
                 );
             }
         ], done);
     });
+
+
+    test('Check correlationId', (done) => {
+        async.series([
+            // check transmit correllationId over params
+            (callback) => {
+                rest.post("/dummy/check_correlation_id?correlation_id=test_cor_id",null, (err, req, res, item) => {
+                    assert.isNull(err);
+                    assert.equal(item["correlationId"], "test_cor_id");
+                    callback();
+                });
+            },
+            // check transmit correllationId over header
+            (callback) => {
+                headers["correlation_id"] = "test_cor_id_header"
+                rest.post("/dummy/check_correlation_id", null, (err, req, res, item) => {
+                    assert.isNull(err);
+                    assert.equal(item["correlationId"], "test_cor_id_header");
+                    callback();
+                });
+            },
+        ], done);
+    });
+    
 
     test('Get OpenApi Spec', (done) => {
         let url = 'http://localhost:3000';

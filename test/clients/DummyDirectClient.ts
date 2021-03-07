@@ -86,5 +86,16 @@ export class DummyDirectClient extends DirectClient<IDummyController> implements
             }
         );
     }
+
+    public checkCorrelationId(correlationId: string, callback: (err: any, result: any) => void): void {
+        let timing = this.instrument(correlationId, 'dummy.check_correlation_id');
+        this._controller.checkCorrelationId(
+            correlationId, 
+            (err, result) => {
+                timing.endTiming();
+                callback(err, result);
+            }
+        );
+    }
   
 }
