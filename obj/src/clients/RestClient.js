@@ -29,6 +29,7 @@ const HttpConnectionResolver_1 = require("../connect/HttpConnectionResolver");
  *   - retries:               number of retries (default: 3)
  *   - connect_timeout:       connection timeout in milliseconds (default: 10 sec)
  *   - timeout:               invocation timeout in milliseconds (default: 10 sec)
+ *   - correlation_id_place   place for adding correalationId, query - in query string, headers - in headers, both - in query and headers (default: query)
  *
  * ### References ###
  *
