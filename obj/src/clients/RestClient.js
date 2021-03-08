@@ -295,9 +295,7 @@ class RestClient {
                 builder += "/";
             builder += this._baseRoute;
         }
-        if (route.length == 0)
-            route = "/";
-        if (route[0] != "/")
+        if (route.length != 0 && route[0] != "/")
             builder += "/";
         builder += route;
         return builder;
