@@ -109,6 +109,13 @@ class HttpEndpoint {
         this._connectionResolver.setReferences(references);
     }
     /**
+     * Gets an HTTP server instance.
+     * @returns an HTTP server instance of <code>null</code> if endpoint is closed.
+     */
+    getServer() {
+        return this._server;
+    }
+    /**
      * @returns whether or not this endpoint is open with an actively listening REST server.
      */
     isOpen() {

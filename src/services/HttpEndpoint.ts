@@ -136,6 +136,14 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
 	}
 
     /**
+     * Gets an HTTP server instance.
+     * @returns an HTTP server instance of <code>null</code> if endpoint is closed.
+     */
+    public getServer(): any {
+        return this._server;
+    }
+
+    /**
      * @returns whether or not this endpoint is open with an actively listening REST server.
      */
 	public isOpen(): boolean {

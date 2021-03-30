@@ -193,6 +193,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="services.restservice.html#_logger" class="tsd-kind-icon">_logger</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="services.restservice.html#_swaggerenable" class="tsd-kind-icon">_swagger<wbr>Enable</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="services.restservice.html#_swaggerroute" class="tsd-kind-icon">_swagger<wbr>Route</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="services.restservice.html#_swaggerservice" class="tsd-kind-icon">_swagger<wbr>Service</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -200,6 +201,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="services.restservice.html#close" class="tsd-kind-icon">close</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="services.restservice.html#configure" class="tsd-kind-icon">configure</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="services.restservice.html#getcorrelationid" class="tsd-kind-icon">get<wbr>Correlation<wbr>Id</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="services.restservice.html#instrument" class="tsd-kind-icon">instrument</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="services.restservice.html#instrumenterror" class="tsd-kind-icon">instrument<wbr>Error</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="services.restservice.html#isopen" class="tsd-kind-icon">is<wbr>Open</a></li>
@@ -229,7 +231,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 					<div class="tsd-signature tsd-kind-icon">_base<wbr>Route<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in services/RestService.ts:110</li>
+							<li>Defined in services/RestService.ts:112</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -244,7 +246,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 					<div class="tsd-signature tsd-kind-icon">_config<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ConfigParams</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in services/RestService.ts:102</li>
+							<li>Defined in services/RestService.ts:104</li>
 						</ul>
 					</aside>
 				</section>
@@ -254,7 +256,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 					<div class="tsd-signature tsd-kind-icon">_counters<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CompositeCounters</span><span class="tsd-signature-symbol"> =&nbsp;new CompositeCounters()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in services/RestService.ts:126</li>
+							<li>Defined in services/RestService.ts:128</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -269,7 +271,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 					<div class="tsd-signature tsd-kind-icon">_dependency<wbr>Resolver<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DependencyResolver</span><span class="tsd-signature-symbol"> =&nbsp;new DependencyResolver(RestService._defaultConfig)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in services/RestService.ts:118</li>
+							<li>Defined in services/RestService.ts:120</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -284,7 +286,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 					<div class="tsd-signature tsd-kind-icon">_endpoint<span class="tsd-signature-symbol">:</span> <a href="services.httpendpoint.html" class="tsd-signature-type">HttpEndpoint</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in services/RestService.ts:114</li>
+							<li>Defined in services/RestService.ts:116</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -299,7 +301,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 					<div class="tsd-signature tsd-kind-icon">_logger<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CompositeLogger</span><span class="tsd-signature-symbol"> =&nbsp;new CompositeLogger()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in services/RestService.ts:122</li>
+							<li>Defined in services/RestService.ts:124</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -314,7 +316,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 					<div class="tsd-signature tsd-kind-icon">_swagger<wbr>Enable<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in services/RestService.ts:128</li>
+							<li>Defined in services/RestService.ts:131</li>
 						</ul>
 					</aside>
 				</section>
@@ -324,7 +326,17 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 					<div class="tsd-signature tsd-kind-icon">_swagger<wbr>Route<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;swagger&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in services/RestService.ts:129</li>
+							<li>Defined in services/RestService.ts:132</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a name="_swaggerservice" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _swagger<wbr>Service</h3>
+					<div class="tsd-signature tsd-kind-icon">_swagger<wbr>Service<span class="tsd-signature-symbol">:</span> <a href="../interfaces/services.iswaggerservice.html" class="tsd-signature-type">ISwaggerService</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in services/RestService.ts:130</li>
 						</ul>
 					</aside>
 				</section>
@@ -341,7 +353,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in services/RestService.ts:273</li>
+									<li>Defined in services/RestService.ts:279</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -396,7 +408,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in services/RestService.ts:136</li>
+									<li>Defined in services/RestService.ts:139</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -417,6 +429,38 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getcorrelationid" class="tsd-anchor"></a>
+					<h3>get<wbr>Correlation<wbr>Id</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Correlation<wbr>Id<span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in services/RestService.ts:455</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns correlationId from request</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>req: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>http request</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>Returns correlationId from request</p>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 					<a name="instrument" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> instrument</h3>
@@ -427,7 +471,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in services/RestService.ts:204</li>
+									<li>Defined in services/RestService.ts:210</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -466,7 +510,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in services/RestService.ts:219</li>
+									<li>Defined in services/RestService.ts:225</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -542,7 +586,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in services/RestService.ts:234</li>
+									<li>Defined in services/RestService.ts:240</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -565,7 +609,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in services/RestService.ts:244</li>
+									<li>Defined in services/RestService.ts:250</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -621,7 +665,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/services.iregisterable.html">IRegisterable</a>.<a href="../interfaces/services.iregisterable.html#register">register</a></p>
 								<ul>
-									<li>Defined in services/RestService.ts:450</li>
+									<li>Defined in services/RestService.ts:469</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -645,7 +689,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in services/RestService.ts:430</li>
+									<li>Defined in services/RestService.ts:436</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -718,7 +762,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in services/RestService.ts:457</li>
+									<li>Defined in services/RestService.ts:476</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -741,7 +785,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in services/RestService.ts:452</li>
+									<li>Defined in services/RestService.ts:471</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -764,7 +808,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in services/RestService.ts:381</li>
+									<li>Defined in services/RestService.ts:387</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -834,7 +878,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in services/RestService.ts:404</li>
+									<li>Defined in services/RestService.ts:410</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -946,7 +990,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in services/RestService.ts:325</li>
+									<li>Defined in services/RestService.ts:331</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1009,7 +1053,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in services/RestService.ts:342</li>
+									<li>Defined in services/RestService.ts:348</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1072,7 +1116,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in services/RestService.ts:355</li>
+									<li>Defined in services/RestService.ts:361</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1117,7 +1161,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in services/RestService.ts:308</li>
+									<li>Defined in services/RestService.ts:314</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1180,7 +1224,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in services/RestService.ts:153</li>
+									<li>Defined in services/RestService.ts:156</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1211,7 +1255,7 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in services/RestService.ts:176</li>
+									<li>Defined in services/RestService.ts:181</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1309,11 +1353,17 @@ service.open(<span class="hljs-string">"123"</span>, <span class="hljs-function"
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 								<a href="services.restservice.html#_swaggerroute" class="tsd-kind-icon">_swagger<wbr>Route</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="services.restservice.html#_swaggerservice" class="tsd-kind-icon">_swagger<wbr>Service</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="services.restservice.html#close" class="tsd-kind-icon">close</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="services.restservice.html#configure" class="tsd-kind-icon">configure</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="services.restservice.html#getcorrelationid" class="tsd-kind-icon">get<wbr>Correlation<wbr>Id</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 								<a href="services.restservice.html#instrument" class="tsd-kind-icon">instrument</a>

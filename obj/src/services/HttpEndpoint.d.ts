@@ -94,6 +94,11 @@ export declare class HttpEndpoint implements IOpenable, IConfigurable, IReferenc
      */
     setReferences(references: IReferences): void;
     /**
+     * Gets an HTTP server instance.
+     * @returns an HTTP server instance of <code>null</code> if endpoint is closed.
+     */
+    getServer(): any;
+    /**
      * @returns whether or not this endpoint is open with an actively listening REST server.
      */
     isOpen(): boolean;
