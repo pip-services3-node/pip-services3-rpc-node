@@ -351,6 +351,8 @@ class RestClient {
             this._client.post(route, data, action);
         else if (method == 'put')
             this._client.put(route, data, action);
+        else if (method == 'patch')
+            this._client.patch(route, data, action);
         else if (method == 'delete')
             this._client.del(route, action);
         else {
