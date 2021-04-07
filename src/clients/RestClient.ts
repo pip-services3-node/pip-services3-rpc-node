@@ -407,6 +407,7 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
         else if (method == 'head') this._client.head(route, action);
         else if (method == 'post') this._client.post(route, data, action);
         else if (method == 'put') this._client.put(route, data, action);
+        else if (method == 'patch') this._client.patch(route, data, action);
         else if (method == 'delete') this._client.del(route, action);
         else {
             let error = new UnknownException(correlationId, 'UNSUPPORTED_METHOD', 'Method is not supported by REST client')
