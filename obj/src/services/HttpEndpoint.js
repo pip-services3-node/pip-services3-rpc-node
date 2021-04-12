@@ -143,7 +143,7 @@ class HttpEndpoint {
             this._uri = connection.getUri();
             try {
                 let options = {};
-                if (connection.getProtocol('http') == 'https') {
+                if (connection.getProtocolWithDefault('http') == 'https') {
                     let sslKeyFile = credential.getAsNullableString('ssl_key_file');
                     let privateKey = fs.readFileSync(sslKeyFile).toString();
                     let sslCrtFile = credential.getAsNullableString('ssl_crt_file');

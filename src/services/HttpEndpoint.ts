@@ -176,7 +176,7 @@ export class HttpEndpoint implements IOpenable, IConfigurable, IReferenceable {
             try {
                 let options: any = {};
 
-                if (connection.getProtocol('http') == 'https') {
+                if (connection.getProtocolWithDefault('http') == 'https') {
                     let sslKeyFile = credential.getAsNullableString('ssl_key_file');
                     let privateKey = fs.readFileSync(sslKeyFile).toString();
         

@@ -83,7 +83,7 @@ class HttpConnectionResolver {
         let uri = connection.getUri();
         if (uri != null)
             return null;
-        let protocol = connection.getProtocol("http");
+        let protocol = connection.getProtocolWithDefault("http");
         if ("http" != protocol && "https" != protocol) {
             return new pip_services3_commons_node_1.ConfigException(correlationId, "WRONG_PROTOCOL", "Protocol is not supported by REST connection")
                 .withDetails("protocol", protocol);
@@ -121,7 +121,7 @@ class HttpConnectionResolver {
             return;
         let uri = connection.getUri();
         if (uri == null || uri == "") {
-            let protocol = connection.getProtocol('http');
+            let protocol = connection.getProtocolWithDefault('http');
             let host = connection.getHost();
             let port = connection.getPort();
             uri = protocol + "://" + host;

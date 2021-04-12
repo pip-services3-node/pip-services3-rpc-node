@@ -1,6 +1,6 @@
 {
     "name": "pip-services3-rpc-node",
-    "version": "3.6.1",
+    "version": "3.6.2",
     "author": "Conceptual Vision Consulting LLC",
     "description": "Remote procedure calls for Pip.Services in Node.js",
     "contributors": [
@@ -41,7 +41,7 @@
     },
     "dependencies": {
         "pip-services3-commons-node": "^3.0.4",
-        "pip-services3-components-node": "^3.0.6",
+        "pip-services3-components-node": "^3.2.2",
         "querystring": "^0.2.0",
         "restify": "8.5.1",
         "restify-clients": "^2.6.4",

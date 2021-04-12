@@ -11,7 +11,7 @@ import { IReferences } from 'pip-services3-commons-node';
 import { ConfigParams } from 'pip-services3-commons-node';
 import { CompositeLogger } from 'pip-services3-components-node';
 import { CompositeCounters } from 'pip-services3-components-node';
-import { Timing } from 'pip-services3-components-node';
+import { CounterTiming } from 'pip-services3-components-node';
 import { ApplicationExceptionFactory } from 'pip-services3-commons-node';
 import { ConnectionException } from 'pip-services3-commons-node';
 import { UnknownException } from 'pip-services3-commons-node';
@@ -166,13 +166,13 @@ export abstract class RestClient implements IOpenable, IConfigurable, IReference
 
     /**
      * Adds instrumentation to log calls and measure call time.
-     * It returns a Timing object that is used to end the time measurement.
+     * It returns a CounterTiming object that is used to end the time measurement.
      * 
      * @param correlationId     (optional) transaction id to trace execution through call chain.
      * @param name              a method name.
-     * @returns Timing object to end the time measurement.
+     * @returns CounterTiming object to end the time measurement.
      */
-    protected instrument(correlationId: string, name: string): Timing {
+    protected instrument(correlationId: string, name: string): CounterTiming {
         const typeName = this.constructor.name || "unknown-target";
         this._logger.trace(correlationId, "Calling %s method of %s", name, typeName);
         this._counters.incrementOne(typeName + "." + name + '.call_count');
