@@ -81,7 +81,7 @@ export class CommandableHttpClient extends RestClient {
      * @param params            command parameters.
      * @param callback          callback function that receives result or error.
      */
-    public callCommand(name: string, correlationId: string, params: any, callback: (err: any, result: any) => void): void {
+    protected callCommand(name: string, correlationId: string, params: any, callback: (err: any, result: any) => void): void {
         let timing = this.instrument(correlationId, this._baseRoute + '.' + name);
 
         this.call('post', name,
