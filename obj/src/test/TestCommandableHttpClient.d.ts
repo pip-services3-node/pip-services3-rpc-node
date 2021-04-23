@@ -1,5 +1,5 @@
 /** @module clients */
-import { CommandableHttpClient } from './CommandableHttpClient';
+import { CommandableHttpClient } from '../clients/CommandableHttpClient';
 /**
  * Provides a commandable HTTP client for automated tests
  */

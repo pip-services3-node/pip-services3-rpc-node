@@ -1,16 +1,10 @@
-"use strict";
 /** @module clients */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.TestRestClient = void 0;
-const RestClient_1 = require("./RestClient");
+import { RestClient } from '../clients/RestClient';
 /**
  * Provides a Rest client for automated tests
  */
-class TestRestClient extends RestClient_1.RestClient {
-    constructor(baseRoute) {
-        super();
-        this._baseRoute = baseRoute;
-    }
+export declare class TestRestClient extends RestClient {
+    constructor(baseRoute: string);
     /**
      * Calls a remote method via HTTP/REST protocol.
      *
@@ -21,9 +15,5 @@ class TestRestClient extends RestClient_1.RestClient {
      * @param data              (optional) body object.
      * @param callback          (optional) callback function that receives result object or error.
      */
-    call(method, route, correlationId, params = {}, data, callback) {
-        super.call(method, route, correlationId, params, data, callback);
-    }
+    call(method: string, route: string, correlationId?: string, params?: any, data?: any, callback?: (err: any, result: any) => void): void;
 }
-exports.TestRestClient = TestRestClient;
-//# sourceMappingURL=TestRestClient.js.map
