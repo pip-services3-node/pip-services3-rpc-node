@@ -12,6 +12,8 @@ import { IRegisterable } from './IRegisterable';
  *
  * Parameters to pass to the [[configure]] method for component configuration:
  *
+ * - cors_headers - a comma-separated list of allowed CORS headers
+ * - cors_origins - a comma-separated list of allowed CORS origins
  * - connection(s) - the connection resolver's connections:
  *     - "connection.discovery_key" - the key to use for connection resolving in a discovery service;
  *     - "connection.protocol" - the connection's protocol;
@@ -60,10 +62,14 @@ export declare class HttpEndpoint implements IOpenable, IConfigurable, IReferenc
     private _protocolUpgradeEnabled;
     private _uri;
     private _registrations;
+    private _allowedHeaders;
+    private _allowedOrigins;
     /**
      * Configures this HttpEndpoint using the given configuration parameters.
      *
      * __Configuration parameters:__
+     * - cors_headers - a comma-separated list of allowed CORS headers
+     * - cors_origins - a comma-separated list of allowed CORS origins
      * - __connection(s)__ - the connection resolver's connections;
      *     - "connection.discovery_key" - the key to use for connection resolving in a discovery service;
      *     - "connection.protocol" - the connection's protocol;

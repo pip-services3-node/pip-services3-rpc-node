@@ -1,5 +1,10 @@
 # <img src="https://uploads-ssl.webflow.com/5ea5d3315186cf5ec60c3ee4/5edf1c94ce4c859f2b188094_logo.svg" alt="Pip.Services Logo" width="200"> <br/> Remote Procedure Calls for Pip.Services in Node.js Changelog
 
+## <a name="3.8.0"></a> 3.8.0 (2021-07-29)
+
+### Features
+* **services** Added configuration for CORS headers and origins
+
 ## <a name="3.7.0"></a> 3.7.0 (2021-04-21)
 
 ### Features
