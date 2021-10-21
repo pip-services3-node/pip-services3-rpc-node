@@ -168,6 +168,10 @@ suite('DummyRestService', ()=> {
                     callback();
                 });
             },
+            (callback) => { // check interceptors call numbers
+                assert.equal(service.getNumberOfCalls(), 4);
+                callback();
+            }
         ], done);
     });
 
