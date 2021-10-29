@@ -9,6 +9,9 @@ class CommandableSwaggerDocument {
         this.content = '';
         this.version = "3.0.2";
         this.infoVersion = "1";
+        this.objectType = new Map([
+            ['type', 'object']
+        ]);
         this.baseRoute = baseRoute;
         this.commands = commands !== null && commands !== void 0 ? commands : [];
         config = config !== null && config !== void 0 ? config : new pip_services3_commons_node_1.ConfigParams();
@@ -77,14 +80,30 @@ class CommandableSwaggerDocument {
         var schema = command._schema; //command.getSchema();// as ObjectSchema;
         if (schema == null || schema.getProperties() == null)
             return null;
+        return this.createPropertyData(schema, true);
+    }
+    createPropertyData(schema, includeRequired) {
         var properties = new Map();
         var required = [];
         schema.getProperties().forEach(property => {
-            properties.set(property.getName(), new Map([
-                ["type", this.typeToString(property.getType())]
-            ]));
-            if (property.isRequired)
-                required.push(property.getName());
+            if (property.getType() == null) {
+                properties.set(property.Name, this.objectType);
+            }
+            else {
+                var propertyName = property.getName();
+                var propertyType = property.getType();
+                if (propertyType instanceof pip_services3_commons_node_1.ArraySchema) {
+                    properties.set(propertyName, new Map([
+                        ["type", "array"],
+                        ["items", this.createPropertyTypeData(propertyType.getValueType())]
+                    ]));
+                }
+                else {
+                    properties.set(propertyName, this.createPropertyTypeData(propertyType));
+                }
+                if (includeRequired && property.isRequired)
+                    required.push(propertyName);
+            }
         });
         var data = new Map([
             ["properties", properties]
@@ -93,6 +112,55 @@ class CommandableSwaggerDocument {
             data.set("required", required);
         }
         return data;
+    }
+    createPropertyTypeData(propertyType) {
+        if (propertyType instanceof pip_services3_commons_node_1.ObjectSchema) {
+            var objectMap = this.createPropertyData(propertyType, false);
+            return new Map([...Array.from(this.objectType.entries()), ...Array.from(objectMap.entries())]);
+        }
+        else {
+            var typeCode;
+            if (propertyType in pip_services3_commons_node_1.TypeCode) {
+                typeCode = propertyType;
+            }
+            else {
+                typeCode = pip_services3_commons_node_1.TypeConverter.toTypeCode(propertyType);
+            }
+            if (typeCode == pip_services3_commons_node_1.TypeCode.Unknown || typeCode == pip_services3_commons_node_1.TypeCode.Map) {
+                typeCode = pip_services3_commons_node_1.TypeCode.Object;
+            }
+            switch (typeCode) {
+                case pip_services3_commons_node_1.TypeCode.Integer:
+                    return new Map([
+                        ["type", "integer"],
+                        ["format", "int32"]
+                    ]);
+                case pip_services3_commons_node_1.TypeCode.Long:
+                    return new Map([
+                        ["type", "number"],
+                        ["format", "int64"]
+                    ]);
+                case pip_services3_commons_node_1.TypeCode.Float:
+                    return new Map([
+                        ["type", "number"],
+                        ["format", "float"]
+                    ]);
+                case pip_services3_commons_node_1.TypeCode.Double:
+                    return new Map([
+                        ["type", "number"],
+                        ["format", "double"]
+                    ]);
+                case pip_services3_commons_node_1.TypeCode.DateTime:
+                    return new Map([
+                        ["type", "string"],
+                        ["format", "date-time"]
+                    ]);
+                default:
+                    return new Map([
+                        ["type", pip_services3_commons_node_1.TypeConverter.toString(typeCode)]
+                    ]);
+            }
+        }
     }
     createResponsesData() {
         return new Map([
@@ -163,20 +231,6 @@ class CommandableSwaggerDocument {
     }
     getSpaces(length) {
         return ' '.repeat(length * 2);
-    }
-    typeToString(type) {
-        // allowed types: array, boolean, integer, number, object, string
-        if (type == pip_services3_commons_node_1.TypeCode.Integer || type == pip_services3_commons_node_1.TypeCode.Long)
-            return 'integer';
-        if (type == pip_services3_commons_node_1.TypeCode.Double || type == pip_services3_commons_node_1.TypeCode.Float)
-            return 'number';
-        if (type == pip_services3_commons_node_1.TypeCode.String)
-            return 'string';
-        if (type == pip_services3_commons_node_1.TypeCode.Boolean)
-            return 'boolean';
-        if (type == pip_services3_commons_node_1.TypeCode.Array)
-            return 'array';
-        return 'object';
     }
 }
 exports.CommandableSwaggerDocument = CommandableSwaggerDocument;

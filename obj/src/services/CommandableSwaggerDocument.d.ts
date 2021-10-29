@@ -14,11 +14,14 @@ export declare class CommandableSwaggerDocument {
     infoContactEmail: string;
     infoLicenseName: string;
     infoLicenseUrl: string;
+    protected readonly objectType: Map<string, any>;
     constructor(baseRoute: string, config: ConfigParams, commands: ICommand[]);
     toString(): string;
     private createPathsData;
     private createRequestBodyData;
     private createSchemaData;
+    private createPropertyData;
+    private createPropertyTypeData;
     private createResponsesData;
     protected writeData(indent: number, data: Map<string, any>): void;
     protected writeName(indent: number, name: string): void;
@@ -26,5 +29,4 @@ export declare class CommandableSwaggerDocument {
     protected writeAsObject(indent: number, name: string, value: any): void;
     protected writeAsString(indent: number, name: string, value: string): void;
     protected getSpaces(length: number): string;
-    protected typeToString(type: any): string;
 }

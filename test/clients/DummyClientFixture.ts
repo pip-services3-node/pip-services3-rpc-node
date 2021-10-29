@@ -14,8 +14,8 @@ export class DummyClientFixture {
     }
 
     public testCrudOperations(done: any): void {
-        let dummy1 = { id: null, key: "Key 1", content: "Content 1" };
-        let dummy2 = { id: null, key: "Key 2", content: "Content 2" };
+        let dummy1 = { id: null, key: "Key 1", content: "Content 1", array: [ { key: "SubKey 1", content: "SubContent 1"} ] };
+        let dummy2 = { id: null, key: "Key 2", content: "Content 2", array: [ { key: "SubKey 1", content: "SubContent 1"} ] };
 
         async.series([
             // Create one dummy
