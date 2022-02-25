@@ -10,12 +10,15 @@ import { Dummy } from '../Dummy';
 import { DummyController } from '../DummyController';
 import { DummyCommandableHttpService } from './DummyCommandableHttpService';
 
+//import * as fs from 'fs';
+
 var restConfig = ConfigParams.fromTuples(
     "connection.protocol", "http",
     "connection.host", "localhost",
     "connection.port", 3000,
     "swagger.enable", "true"
 );
+
 
 suite('DummyCommandableHttpService', ()=> {
     var _dummy1: Dummy;
@@ -50,8 +53,8 @@ suite('DummyCommandableHttpService', ()=> {
         let url = 'http://localhost:3000';
         rest = restify.createJsonClient({ url: url, version: '*', headers: headers });
 
-        _dummy1 = { id: null, key: "Key 1", content: "Content 1"};
-        _dummy2 = { id: null, key: "Key 2", content: "Content 2"};
+        _dummy1 = { id: null, key: "Key 1", content: "Content 1", array: [ { key: "SubKey 1", content: "SubContent 1"} ]};
+        _dummy2 = { id: null, key: "Key 2", content: "Content 2", array: [ { key: "SubKey 1", content: "SubContent 1"} ]};
     });
 
     test('CRUD Operations', (done) => {
@@ -193,7 +196,15 @@ suite('DummyCommandableHttpService', ()=> {
                     assert.isNull(err);
 
                     assert.isTrue(res.body.startsWith("openapi:"));
-        
+
+                    // uncomment and copy to editor.swagger.io for check
+                    // fs.writeFile('file.txt', res.body,  function(err) {
+                    //     if (err) {
+                    //         return console.error(err);
+                    //     }
+                    //     console.log("File created!");
+                    // });
+                    
                     callback();
                 });
             },
