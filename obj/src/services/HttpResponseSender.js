@@ -21,8 +21,8 @@ class HttpResponseSender {
     static sendError(req, res, error) {
         error = error || {};
         error = pip_services3_commons_node_1.ApplicationException.unwrapError(error);
-        let result = _.pick(error, 'code', 'status', 'name', 'details', 'component', 'message', 'stack', 'cause');
-        result = _.defaults(result, { code: 'Undefined', status: 500, message: 'Unknown error' });
+        let result = _.pick(error, 'type', 'category', 'code', 'status', 'name', 'details', 'component', 'message', 'stack', 'cause');
+        result = _.defaults(result, { category: pip_services3_commons_node_1.ErrorCategory.Unknown, code: 'Undefined', status: 500, message: 'Unknown error' });
         res.status(result.status);
         res.json(result);
     }
