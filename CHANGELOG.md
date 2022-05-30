@@ -1,5 +1,9 @@
 # <img src="https://uploads-ssl.webflow.com/5ea5d3315186cf5ec60c3ee4/5edf1c94ce4c859f2b188094_logo.svg" alt="Pip.Services Logo" width="200"> <br/> Remote Procedure Calls for Pip.Services in Node.js Changelog
 
+## <a name="3.9.2"></a> 3.9.2 (2022-05-20)
+### Bug Fixes
+- HttpResponseSender fixed sendError addind error type and category 
+
 ## <a name="3.9.1"></a> 3.9.1 (2021-10-29)
 
 ### Bug Fixes

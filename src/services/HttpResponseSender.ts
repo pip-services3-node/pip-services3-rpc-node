@@ -2,7 +2,7 @@
 /** @hidden */
 let _ = require('lodash');
 
-import { ApplicationException } from 'pip-services3-commons-node';
+import { ApplicationException, ErrorCategory } from 'pip-services3-commons-node';
 
 /**
  * Helper class that handles HTTP-based responses.
@@ -20,9 +20,9 @@ export class HttpResponseSender {
     public static sendError(req: any, res: any, error: any): void {
         error = error || {};
         error = ApplicationException.unwrapError(error);
-        
-        let result = _.pick(error, 'code', 'status', 'name', 'details', 'component', 'message', 'stack', 'cause');
-        result = _.defaults(result, { code: 'Undefined', status: 500, message: 'Unknown error' });
+
+        let result = _.pick(error, 'type', 'category', 'code', 'status', 'name', 'details', 'component', 'message', 'stack', 'cause');
+        result = _.defaults(result, { category: ErrorCategory.Unknown, code: 'Undefined', status: 500, message: 'Unknown error' });
 
         res.status(result.status);
         res.json(result);
