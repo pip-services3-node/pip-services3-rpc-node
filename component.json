@@ -1,5 +1,5 @@
 {
-    "name":  "pip-services3-rc-node",
+    "name":  "pip-services3-rpc-node",
     "type": "module",
     "language": "node",
     "version": "3.9.2",
